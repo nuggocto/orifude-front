@@ -1,0 +1,126 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-29T23:17:57Z",
+  "title": "Design System: Orifude",
+  "extensions": {
+    "colorMeta": {
+      "ink": { "role": "neutral", "displayName": "Soft Ink", "canonical": "#292823", "tonalRamp": ["oklch(15% 0.009 97.7)", "oklch(27% 0.009 97.7)", "oklch(39% 0.009 97.7)", "oklch(51% 0.009 97.7)", "oklch(63% 0.009 97.7)", "oklch(75% 0.009 97.7)", "oklch(87% 0.009 97.7)", "oklch(95% 0.009 97.7)"] },
+      "washi-ground": { "role": "neutral", "displayName": "Washi Ground", "canonical": "#fbf7f1", "tonalRamp": ["oklch(15% 0.009 78.3)", "oklch(27% 0.009 78.3)", "oklch(39% 0.009 78.3)", "oklch(51% 0.009 78.3)", "oklch(63% 0.009 78.3)", "oklch(75% 0.009 78.3)", "oklch(87% 0.009 78.3)", "oklch(95% 0.009 78.3)"] },
+      "washi-sheet": { "role": "neutral", "displayName": "Washi Sheet", "canonical": "#faf7f0", "tonalRamp": ["oklch(15% 0.010 87.5)", "oklch(27% 0.010 87.5)", "oklch(39% 0.010 87.5)", "oklch(51% 0.010 87.5)", "oklch(63% 0.010 87.5)", "oklch(75% 0.010 87.5)", "oklch(87% 0.010 87.5)", "oklch(95% 0.010 87.5)"] },
+      "washi-deep": { "role": "neutral", "displayName": "Deep Washi", "canonical": "#e5dccb", "tonalRamp": ["oklch(15% 0.025 83.4)", "oklch(27% 0.025 83.4)", "oklch(39% 0.025 83.4)", "oklch(51% 0.025 83.4)", "oklch(63% 0.025 83.4)", "oklch(75% 0.025 83.4)", "oklch(87% 0.025 83.4)", "oklch(95% 0.025 83.4)"] },
+      "moss": { "role": "primary", "displayName": "Soft Moss", "canonical": "#858a72", "tonalRamp": ["oklch(15% 0.035 117.0)", "oklch(27% 0.035 117.0)", "oklch(39% 0.035 117.0)", "oklch(51% 0.035 117.0)", "oklch(63% 0.035 117.0)", "oklch(75% 0.035 117.0)", "oklch(87% 0.035 117.0)", "oklch(95% 0.035 117.0)"] },
+      "moss-deep": { "role": "primary", "displayName": "Deep Moss", "canonical": "#626851", "tonalRamp": ["oklch(15% 0.036 119.6)", "oklch(27% 0.036 119.6)", "oklch(39% 0.036 119.6)", "oklch(51% 0.036 119.6)", "oklch(63% 0.036 119.6)", "oklch(75% 0.036 119.6)", "oklch(87% 0.036 119.6)", "oklch(95% 0.036 119.6)"] },
+      "clay": { "role": "secondary", "displayName": "Clay", "canonical": "#a48b68", "tonalRamp": ["oklch(15% 0.057 75.8)", "oklch(27% 0.057 75.8)", "oklch(39% 0.057 75.8)", "oklch(51% 0.057 75.8)", "oklch(63% 0.057 75.8)", "oklch(75% 0.057 75.8)", "oklch(87% 0.057 75.8)", "oklch(95% 0.057 75.8)"] },
+      "branch": { "role": "tertiary", "displayName": "Ink Branch", "canonical": "#62594d", "tonalRamp": ["oklch(15% 0.022 75.1)", "oklch(27% 0.022 75.1)", "oklch(39% 0.022 75.1)", "oklch(51% 0.022 75.1)", "oklch(63% 0.022 75.1)", "oklch(75% 0.022 75.1)", "oklch(87% 0.022 75.1)", "oklch(95% 0.022 75.1)"] },
+      "ash": { "role": "tertiary", "displayName": "Warm Ash", "canonical": "#a59e91", "tonalRamp": ["oklch(15% 0.020 83.1)", "oklch(27% 0.020 83.1)", "oklch(39% 0.020 83.1)", "oklch(51% 0.020 83.1)", "oklch(63% 0.020 83.1)", "oklch(75% 0.020 83.1)", "oklch(87% 0.020 83.1)", "oklch(95% 0.020 83.1)"] },
+      "ember": { "role": "secondary", "displayName": "Ember", "canonical": "#a45b52", "tonalRamp": ["oklch(15% 0.097 28.0)", "oklch(27% 0.097 28.0)", "oklch(39% 0.097 28.0)", "oklch(51% 0.097 28.0)", "oklch(63% 0.097 28.0)", "oklch(75% 0.097 28.0)", "oklch(87% 0.097 28.0)", "oklch(95% 0.097 28.0)"] },
+      "terminal": { "role": "neutral", "displayName": "Terminal Black", "canonical": "#171814", "tonalRamp": ["oklch(15% 0.008 118.5)", "oklch(27% 0.008 118.5)", "oklch(39% 0.008 118.5)", "oklch(51% 0.008 118.5)", "oklch(63% 0.008 118.5)", "oklch(75% 0.008 118.5)", "oklch(87% 0.008 118.5)", "oklch(95% 0.008 118.5)"] },
+      "terminal-ink": { "role": "neutral", "displayName": "Terminal Parchment", "canonical": "#e7e4d8", "tonalRamp": ["oklch(15% 0.016 95.2)", "oklch(27% 0.016 95.2)", "oklch(39% 0.016 95.2)", "oklch(51% 0.016 95.2)", "oklch(63% 0.016 95.2)", "oklch(75% 0.016 95.2)", "oklch(87% 0.016 95.2)", "oklch(95% 0.016 95.2)"] },
+      "focus-oxide": { "role": "secondary", "displayName": "Oxide Focus", "canonical": "#7a3f38", "tonalRamp": ["oklch(15% 0.083 28.0)", "oklch(27% 0.083 28.0)", "oklch(39% 0.083 28.0)", "oklch(51% 0.083 28.0)", "oklch(63% 0.083 28.0)", "oklch(75% 0.083 28.0)", "oklch(87% 0.083 28.0)", "oklch(95% 0.083 28.0)"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Opening Display", "purpose": "The opening promise inside the largest paper fold." },
+      "headline": { "displayName": "Editorial Headline", "purpose": "Major section openings." },
+      "title": { "displayName": "Paper Title", "purpose": "Compact editorial headings and boundary labels." },
+      "body": { "displayName": "Factual Body", "purpose": "Product explanation, privacy limits, and release facts." },
+      "action": { "displayName": "Correspondence Action", "purpose": "Primary action labels." },
+      "label": { "displayName": "Evidence Label", "purpose": "Transcripts, metadata, checksums, and compact process copy." }
+    },
+    "shadows": [
+      { "name": "paper-lift", "value": "0 22px 50px rgb(74 65 53 / 15%)", "purpose": "Large washi folds only." },
+      { "name": "action-lift", "value": "0 10px 24px rgb(41 40 35 / 18%)", "purpose": "Primary action at rest." },
+      { "name": "terminal-proof", "value": "0 16px 35px rgb(41 40 35 / 20%)", "purpose": "Recorded terminal media inside a paper fold." },
+      { "name": "dark-proof", "value": "0 12px 26px rgb(41 40 35 / 14%)", "purpose": "Install command blocks." },
+      { "name": "safety-note", "value": "0 20px 42px rgb(41 40 35 / 20%)", "purpose": "The charcoal safety panel." }
+    ],
+    "motion": [
+      { "name": "feedback-fast", "value": "160ms ease-out", "purpose": "Skip-link reveal and similarly direct control feedback." },
+      { "name": "feedback-standard", "value": "180ms ease-out", "purpose": "Navigation underline and primary-action state changes." },
+      { "name": "reduced-motion", "value": "0.01ms", "purpose": "Collapses transitions when the visitor requests reduced motion." }
+    ],
+    "breakpoints": [
+      { "name": "composition", "value": "68rem" },
+      { "name": "single-column", "value": "46rem" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary action",
+      "kind": "button",
+      "refersTo": "action-primary",
+      "description": "The main download or release-status action, shaped as a clipped moss paper tab.",
+      "html": "<a class=\"ds-action-primary\" href=\"#\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M12 3v12m0 0 5-5m-5 5-5-5M5 19h14\"></path></svg>Release status v0.2.0</a>",
+      "css": ".ds-action-primary { display: inline-flex; gap: .75rem; align-items: center; min-height: 3.25rem; padding: .75rem 1.25rem; color: var(--washi-light, #faf7f0); font-family: \"Alegreya Variable\", Georgia, serif; font-size: 1.2rem; font-weight: 600; text-decoration: none; background: var(--moss-deep, #626851); box-shadow: 0 10px 24px rgb(41 40 35 / 18%); clip-path: polygon(0 8%, 96% 0, 100% 88%, 4% 100%); transition: transform 180ms ease-out, background 180ms ease-out, box-shadow 180ms ease-out; } .ds-action-primary svg { width: 1.2rem; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.8; } .ds-action-primary:hover { background: #555c46; box-shadow: 0 13px 28px rgb(41 40 35 / 24%); transform: translateY(-2px) rotate(-.3deg); } .ds-action-primary:focus-visible { outline: 3px solid var(--focus, #7a3f38); outline-offset: 4px; } .ds-action-primary:active { box-shadow: 0 5px 12px rgb(41 40 35 / 18%); transform: translateY(1px); }"
+    },
+    {
+      "name": "Navigation link",
+      "kind": "nav",
+      "description": "A quiet Alegreya anchor with an ink-like moss underline.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Page sections\"><a href=\"#\">Journey</a><a href=\"#\">Principles</a><a href=\"#\">Download</a></nav>",
+      "css": ".ds-nav { display: flex; flex-wrap: wrap; gap: 2rem; align-items: center; } .ds-nav a { position: relative; color: var(--ink, #292823); font-family: \"Alegreya Variable\", Georgia, serif; font-size: 1.1rem; text-decoration: none; } .ds-nav a::after { position: absolute; right: 0; bottom: -.35rem; left: 0; height: 1px; content: \"\"; background: var(--moss-deep, #626851); transform: scaleX(0); transform-origin: right; transition: transform 180ms ease-out; } .ds-nav a:hover::after, .ds-nav a:focus-visible::after { transform: scaleX(1); transform-origin: left; } .ds-nav a:focus-visible { outline: 3px solid var(--focus, #7a3f38); outline-offset: 4px; }"
+    },
+    {
+      "name": "Folded paper",
+      "kind": "card",
+      "refersTo": "paper-fold",
+      "description": "The main correspondence container with texture, clipped edges, and a visible folded corner.",
+      "html": "<article class=\"ds-paper-fold\"><h3>A small exchange</h3><p>One letter goes to one unrelated stranger, who may send one reply.</p></article>",
+      "css": ".ds-paper-fold { position: relative; max-width: 30rem; padding: 3rem; overflow: hidden; color: var(--ink, #292823); background: var(--washi-light, #faf7f0); box-shadow: 0 22px 50px rgb(74 65 53 / 15%); clip-path: polygon(2% 5%, 55% 0, 100% 9%, 95% 89%, 58% 100%, 5% 92%, 0 39%); transform: rotate(-.8deg); } .ds-paper-fold::after { position: absolute; right: 0; bottom: 0; width: 22%; height: 24%; content: \"\"; background: linear-gradient(142deg, transparent 49%, rgb(98 89 77 / 12%) 50%, rgb(229 220 203 / 68%) 51%); } .ds-paper-fold h3 { margin: 0 0 1rem; font-family: \"Alegreya Variable\", Georgia, serif; font-size: 2rem; font-weight: 560; line-height: .98; letter-spacing: -.025em; } .ds-paper-fold p { max-width: 48ch; margin: 0; font-family: \"Atkinson Hyperlegible Next Variable\", system-ui, sans-serif; line-height: 1.55; }"
+    },
+    {
+      "name": "Terminal proof",
+      "kind": "custom",
+      "refersTo": "terminal-panel",
+      "description": "A dark, warm terminal record that stays visually separate from the washi field.",
+      "html": "<figure class=\"ds-terminal-proof\"><figcaption>A real letter, carried once</figcaption><pre><code>$ orifude write\n$ orifude fold\n$ orifude release</code></pre></figure>",
+      "css": ".ds-terminal-proof { max-width: 30rem; margin: 0; padding: 2rem; color: var(--terminal-ink, #e7e4d8); background: var(--terminal, #171814); box-shadow: 0 16px 35px rgb(41 40 35 / 20%); clip-path: polygon(0 5%, 95% 0, 100% 93%, 8% 100%); transform: rotate(1deg); } .ds-terminal-proof figcaption { margin-bottom: 1rem; font-family: \"Alegreya Variable\", Georgia, serif; font-size: 1.75rem; font-weight: 520; } .ds-terminal-proof pre { margin: 0; padding: 1rem; overflow-x: auto; border: 1px solid rgb(231 228 216 / 20%); background: #0d0e0c; } .ds-terminal-proof code { font-family: ui-monospace, \"SFMono-Regular\", Consolas, monospace; font-size: .88rem; line-height: 1.55; }"
+    },
+    {
+      "name": "Disclosure row",
+      "kind": "custom",
+      "description": "A native FAQ disclosure divided by fine branch-colored rules.",
+      "html": "<details class=\"ds-disclosure\"><summary>Is Orifude end-to-end encrypted?</summary><p>No. Correspondence is encrypted in storage, but the authorized post office decrypts messages for delivery.</p></details>",
+      "css": ".ds-disclosure { max-width: 42rem; color: var(--ink, #292823); border-top: 1px solid rgb(98 89 77 / 42%); border-bottom: 1px solid rgb(98 89 77 / 42%); } .ds-disclosure summary { padding: 1.5rem 3rem 1.5rem 0; cursor: pointer; font-family: \"Alegreya Variable\", Georgia, serif; font-size: 1.5rem; font-weight: 600; } .ds-disclosure summary:focus-visible { outline: 3px solid var(--focus, #7a3f38); outline-offset: 4px; } .ds-disclosure p { max-width: 67ch; margin: 0 0 1.75rem; color: #4c473f; font-family: \"Atkinson Hyperlegible Next Variable\", system-ui, sans-serif; line-height: 1.55; }"
+    },
+    {
+      "name": "Download artifact",
+      "kind": "custom",
+      "description": "A compact platform artifact link paired with a visible checksum prefix.",
+      "html": "<div class=\"ds-artifact\"><a href=\"#\"><span>amd64</span><small>.tar.gz</small></a><code title=\"full checksum\">a8d13b4cc512…</code></div>",
+      "css": ".ds-artifact { display: grid; grid-template-columns: 1fr auto; gap: .75rem; align-items: center; max-width: 28rem; padding-top: 1.5rem; border-top: 1px solid var(--branch, #62594d); } .ds-artifact a { display: flex; justify-content: space-between; padding: .65rem .75rem; color: var(--washi-light, #faf7f0); text-decoration: none; background: var(--moss-deep, #626851); transition: background 180ms ease-out; } .ds-artifact a:hover { background: #555c46; } .ds-artifact a:focus-visible { outline: 3px solid var(--focus, #7a3f38); outline-offset: 4px; } .ds-artifact code { color: #514b42; font-family: ui-monospace, \"SFMono-Regular\", Consolas, monospace; font-size: .75rem; font-variant-numeric: tabular-nums; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Folded branch",
+    "overview": "Orifude uses a quiet editorial composition built from warm washi, ink, and a single branch that carries the eye between folded letter panels. The page should feel handled and human without becoming nostalgic theater. Broad negative space, horizontal reading, and crisp product evidence keep the material treatment usable.\n\nThe visual world is controlled rather than polished smooth. Paper silhouettes vary in angle and scale. Fine crease lines, fiber texture, and sparse moss or clay details give the folds physical character. The supplied wordmark remains clean, the squirrel courier appears only at a meaningful delivery transition, and terminal evidence stays recognizably terminal evidence.",
+    "keyCharacteristics": [
+      "Asymmetric folded-paper fields instead of a regular card grid.",
+      "One irregular ink branch linking major moments without crossing copy.",
+      "Warm, low-chroma color with moss actions and clay markers.",
+      "Alegreya for the correspondence voice and Atkinson Hyperlegible Next for factual copy.",
+      "Real TUI proof set against tactile paper, with little motion beyond control feedback."
+    ],
+    "rules": [
+      { "name": "The Scarce Accent Rule", "body": "Moss identifies action and clay identifies small moments. Neither becomes a large decorative field.", "section": "colors" },
+      { "name": "The Warm Black Rule", "body": "Use soft ink and terminal black. Avoid neutral blue-black or stark pure black.", "section": "colors" },
+      { "name": "The Two Voices Rule", "body": "Alegreya speaks for invitations and section structure. Atkinson carries evidence and limits. Monospace appears only where the content is a command, checksum, or terminal recording.", "section": "typography" },
+      { "name": "The Branch Behind Rule", "body": "The branch may connect and frame sections, but it stays behind content and never crosses a paragraph, control, or focus outline.", "section": "layout" },
+      { "name": "The Paper Owns the Shadow Rule", "body": "Shadows describe a lifted sheet, proof block, or pressed action. Do not add shadow to ordinary text groups, dividers, or navigation.", "section": "elevation" },
+      { "name": "The Fold, Don't Frame Rule", "body": "A content container either behaves like a sheet of paper or stays flat in the page flow. Do not substitute generic rounded cards.", "section": "shapes" }
+    ],
+    "dos": [
+      "Do use broad negative space and varied paper scale to establish hierarchy.",
+      "Do keep text horizontal, crisp, and independent of decorative overlap.",
+      "Do pair every terminal recording with controls, captions, fallback text, and a transcript.",
+      "Do preserve visible focus and collapse transitions to `0.01ms` when reduced motion is requested.",
+      "Do use the supplied wordmark and courier artwork without redrawing their identity."
+    ],
+    "donts": [
+      "Don't turn the page into a dashboard, a stack of rounded SaaS cards, or a fake browser client.",
+      "Don't add gratuitous entrance animation, parallax, drifting paper, or branch motion.",
+      "Don't repeat the courier outside a meaningful delivery moment.",
+      "Don't use Japanese pastiche, invented cultural claims, or decorative motifs that imply authenticity.",
+      "Don't let texture, folds, branch strokes, or low contrast interfere with copy, controls, or verification data."
+    ]
+  }
+}

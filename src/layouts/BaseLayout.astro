@@ -1,0 +1,52 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#f1ece1" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" href="/assets/orifude-icon.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Orifude" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content="https://orifude.com/assets/social-card.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="The Orifude folded-leaf wordmark" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="https://orifude.com/assets/social-card.png" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <!--
+      THESIS: A single ink branch carries folded correspondence through the page; no generic card-stack landing template.
+      OWN-WORLD: Washi fields, ink rules, moss actions, clay details, asymmetric paper folds, and crisp humanist type.
+      STORY: Understand the one-letter exchange, see the real terminal journey, learn its limits, then verify and download it.
+      FIRST VIEWPORT: Wordmark above a dominant hero fold; one branch crosses toward the terminal proof and the download action stays inside the opening fold.
+      FORM: Folded branch, selected from the surface composition round; seed 611667c2.
+      FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+    -->
+    <a class="skip-link" href="#main-content">Skip to the letter</a>
+    <slot />
+  </body>
+</html>

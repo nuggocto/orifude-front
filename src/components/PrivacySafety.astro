@@ -1,0 +1,44 @@
+<section class="boundaries" aria-labelledby="boundaries-title">
+  <div class="boundaries__paper paper-fold">
+    <div class="section-heading">
+      <h2 id="boundaries-title">Privacy without a fairy tale</h2>
+      <p>
+        The design limits who can read a letter and what strangers learn about
+        each other. It does not pretend the service is invisible.
+      </p>
+    </div>
+    <div class="boundaries__columns">
+      <div>
+        <h3>What is protected</h3>
+        <ul>
+          <li>PostgreSQL stores application-encrypted correspondence.</li>
+          <li>Only the matched participants can request an ordinary message.</li>
+          <li>Aliases are non-searchable and reveal no profile or history.</li>
+          <li>This static website has no letter API, account state, or analytics.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>What remains visible</h3>
+        <ul>
+          <li>Orifude is not end-to-end encrypted.</li>
+          <li>The authorized post office can decrypt ordinary messages.</li>
+          <li>The service retains operational metadata and participant relationships.</li>
+          <li>A compromised running service is outside storage-encryption protection.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <aside class="safety" aria-labelledby="safety-title">
+    <h2 id="safety-title">Report, burn, and block</h2>
+    <p>
+      A recipient can report a letter or reply using a fixed reason. Reporting
+      hides the exchange, stores separately encrypted evidence for restricted
+      moderation, and permanently blocks future matching.
+    </p>
+    <p>
+      The other person is not told who blocked them. A lost-device revocation
+      credential can delete an identity, but it cannot read letters or create a
+      session.
+    </p>
+  </aside>
+</section>

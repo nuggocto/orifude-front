@@ -1,0 +1,87 @@
+---
+import { currentRelease, platformNames } from "../data/releases";
+
+const groupedArtifacts =
+  currentRelease.status === "published"
+    ? Object.groupBy(currentRelease.artifacts, (artifact) => artifact.os)
+    : {};
+---
+
+<section class="downloads" id="download" aria-labelledby="download-title">
+  <div class="downloads__heading">
+    <h2 id="download-title">Take the branch with you</h2>
+    <p>
+      {
+        currentRelease.status === "published"
+          ? `Orifude ${currentRelease.version} is available for Linux, macOS, and Windows on amd64 and arm64. Every archive has a published SHA-256 checksum.`
+          : `Orifude ${currentRelease.version} is being prepared for Linux, macOS, and Windows on amd64 and arm64. Every archive will ship with a SHA-256 checksum.`
+      }
+    </p>
+  </div>
+
+  {
+    currentRelease.status === "preparing" ? (
+      <div class="release-pending" role="status">
+        <strong>The v0.2.0 archives are being prepared.</strong>
+        <p>
+          The links will appear only after all six artifacts and their checksums
+          have been published and verified.
+        </p>
+      </div>
+    ) : (
+      <div class="artifact-groups">
+        {Object.entries(groupedArtifacts).map(([os, artifacts]) => (
+          <section class="artifact-group" aria-labelledby={`platform-${os}`}>
+            <h3 id={`platform-${os}`}>
+              {platformNames[os as keyof typeof platformNames]}
+            </h3>
+            <ul>
+              {artifacts?.map((artifact) => (
+                <li>
+                  <a href={artifact.url}>
+                    <span>{artifact.arch}</span>
+                    <small>{artifact.format}</small>
+                  </a>
+                  <code title={artifact.sha256}>{artifact.sha256.slice(0, 12)}…</code>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
+      </div>
+    )
+  }
+
+  <div class="install-paths">
+    <div>
+      <h3>POSIX shell</h3>
+      <pre><code>curl -fsSLo install-orifude.sh https://orifude.com/install.sh
+less install-orifude.sh
+sh install-orifude.sh --version 0.2.0</code></pre>
+    </div>
+    <div>
+      <h3>PowerShell</h3>
+      <pre><code>Invoke-WebRequest https://orifude.com/install.ps1 -OutFile install-orifude.ps1
+Get-Content .\install-orifude.ps1
+.\install-orifude.ps1 -Version 0.2.0</code></pre>
+    </div>
+    <div>
+      <h3>Package managers</h3>
+      <pre><code>brew install nuggocto/tap/orifude
+scoop bucket add nuggocto https://github.com/nuggocto/scoop-bucket
+scoop install nuggocto/orifude
+paru -S orifude-bin</code></pre>
+    </div>
+  </div>
+
+  {
+    currentRelease.status === "published" && (
+      <a class="checksum-link" href={currentRelease.checksumURL}>
+        View the complete SHA-256 checksum file
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M7 17 17 7M8 7h9v9"></path>
+        </svg>
+      </a>
+    )
+  }
+</section>

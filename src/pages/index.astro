@@ -1,0 +1,39 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import BranchLine from "../components/BranchLine.astro";
+import Downloads from "../components/Downloads.astro";
+import Faq from "../components/Faq.astro";
+import Hero from "../components/Hero.astro";
+import OpeningScene from "../components/OpeningScene.astro";
+import Principles from "../components/Principles.astro";
+import PrivacySafety from "../components/PrivacySafety.astro";
+
+const title = "Orifude · Send a letter into the quiet";
+const description =
+  "A one-to-one terminal letter exchange. Write once, fold it, and let the post office carry it to one unrelated stranger.";
+---
+
+<BaseLayout {title} {description}>
+  <div class="site-shell">
+    <BranchLine />
+    <Hero />
+    <main id="main-content">
+      <OpeningScene />
+      <Principles />
+      <PrivacySafety />
+      <Downloads />
+      <Faq />
+    </main>
+    <footer class="site-footer">
+      <div>
+        <p>Orifude is open source under Apache-2.0.</p>
+        <p>The name is coined and makes no claim of cultural authenticity.</p>
+      </div>
+      <nav aria-label="Project links">
+        <a href="https://github.com/nuggocto/orifude">Source</a>
+        <a href="https://github.com/nuggocto/orifude/issues">Issues</a>
+        <a href="mailto:vincent@sshmoi.com">vincent@sshmoi.com</a>
+      </nav>
+    </footer>
+  </div>
+</BaseLayout>

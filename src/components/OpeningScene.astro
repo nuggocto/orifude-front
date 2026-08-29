@@ -1,0 +1,123 @@
+---
+import courier from "../assets/orifude-courier-cutout.webp";
+import { currentRelease } from "../data/releases";
+
+const releaseAction =
+  currentRelease.status === "published"
+    ? `Download ${currentRelease.version}`
+    : `Release status ${currentRelease.version}`;
+---
+
+<section class="opening" id="top" aria-labelledby="hero-title">
+  <div class="opening__hero paper-fold">
+    <div class="opening__copy">
+      <h1 id="hero-title">
+        Send a letter into the quiet and let a stranger find it.
+      </h1>
+      <p>
+        Orifude is a one-to-one letter exchange that lives entirely in your
+        terminal. Write once. The post office carries it to one unrelated
+        stranger, who may send one reply.
+      </p>
+      <div class="hero__actions">
+        <a class="primary-action" href="#download">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 3v12m0 0 5-5m-5 5-5-5M5 19h14"></path>
+          </svg>
+          {releaseAction}
+        </a>
+        <a class="text-action" href="#journey">How it works</a>
+      </div>
+      <p class="alpha-note">
+        <span aria-hidden="true"></span>
+        Private alpha. Online access remains invite-only.
+      </p>
+    </div>
+  </div>
+
+  <div class="opening__terminal paper-fold" aria-labelledby="journey-title">
+    <div>
+      <h2 id="journey-title">A real letter, carried once</h2>
+      <p>Shipped TUI. Synthetic local post office. No browser imitation.</p>
+    </div>
+    <video
+      controls
+      preload="metadata"
+      poster="/assets/terminal-demo-poster.webp"
+      width="1200"
+      height="720"
+      aria-describedby="terminal-transcript"
+    >
+      <source src="/assets/terminal-demo.webm" type="video/webm" />
+      <track
+        kind="captions"
+        src="/assets/terminal-demo.vtt"
+        srclang="en"
+        label="English"
+        default
+      />
+      Your browser cannot play the recording. The complete text transcript is
+      available below.
+    </video>
+    <details class="transcript" id="terminal-transcript">
+      <summary>Read the terminal journey</summary>
+      <ol>
+        <li>Sora creates a local demonstration identity.</li>
+        <li>Sora writes, previews, folds, and releases a letter.</li>
+        <li>A waiting letter from Mori is claimed and explicitly unfolded.</li>
+        <li>Sora writes the one allowed reply and keeps the exchange.</li>
+      </ol>
+    </details>
+  </div>
+
+  <svg class="opening__branch" viewBox="0 0 1600 420" aria-hidden="true">
+    <defs>
+      <filter
+        id="opening-branch-roughness"
+        x="-3%"
+        y="-8%"
+        width="106%"
+        height="116%"
+      >
+        <feTurbulence
+          type="fractalNoise"
+          baseFrequency="0.009 0.035"
+          numOctaves="2"
+          seed="611667"
+          result="branchNoise"
+        />
+        <feDisplacementMap
+          in="SourceGraphic"
+          in2="branchNoise"
+          scale="7"
+          xChannelSelector="R"
+          yChannelSelector="G"
+        />
+      </filter>
+    </defs>
+    <path
+      class="opening__branch-fill"
+      d="M-90 287 C 206 407 329 266 560 229 C 798 191 889 286 1097 179 C 1305 72 1408 128 1692 213 L 1685 252 C 1399 169 1300 119 1117 220 C 897 340 811 248 575 281 C 331 316 218 462 -96 326 Z"
+    ></path>
+  </svg>
+
+  <figure class="opening__courier">
+    <img
+      src={courier.src}
+      width="388"
+      height="520"
+      alt="A squirrel holding a folded letter on an ink branch"
+      decoding="async"
+    />
+  </figure>
+
+  <div class="opening__process paper-fold" id="journey" aria-labelledby="exchange-title">
+    <h2 id="exchange-title">One letter. One stranger. One reply.</h2>
+    <ol>
+      <li><strong>Write</strong><span>Compose in the terminal.</span></li>
+      <li><strong>Fold and release</strong><span>Preview it, then let it go.</span></li>
+      <li><strong>Unfold</strong><span>One unrelated recipient opens it.</span></li>
+      <li><strong>Keep one reply</strong><span>One answer closes the exchange.</span></li>
+    </ol>
+  </div>
+</section>
