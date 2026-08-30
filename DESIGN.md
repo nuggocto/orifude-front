@@ -17,19 +17,13 @@ colors:
 typography:
   display:
     fontFamily: '"Alegreya Variable", Georgia, serif'
-    fontSize: "clamp(3.8rem, 5.7vw, 5.8rem)"
+    fontSize: "clamp(2.75rem, 4.6vw, 4.35rem)"
     fontWeight: 470
-    lineHeight: 0.98
-    letterSpacing: "-0.025em"
-  headline:
-    fontFamily: '"Alegreya Variable", Georgia, serif'
-    fontSize: "clamp(3.4rem, 6vw, 6rem)"
-    fontWeight: 520
-    lineHeight: 0.94
+    lineHeight: 1
     letterSpacing: "-0.025em"
   title:
     fontFamily: '"Alegreya Variable", Georgia, serif'
-    fontSize: "clamp(1.55rem, 2.3vw, 2.1rem)"
+    fontSize: "clamp(1.35rem, 1.8vw, 1.65rem)"
     fontWeight: 600
     lineHeight: 1.15
     letterSpacing: "-0.025em"
@@ -38,15 +32,11 @@ typography:
     fontSize: "1rem"
     fontWeight: 400
     lineHeight: 1.58
-  action:
-    fontFamily: '"Alegreya Variable", Georgia, serif'
-    fontSize: "1.3rem"
-    fontWeight: 650
-  mono:
+  technical:
     fontFamily: 'ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace'
-    fontSize: "0.92rem"
+    fontSize: "1rem"
     fontWeight: 400
-    lineHeight: 1.65
+    lineHeight: 1.55
 spacing:
   xs: "0.75rem"
   sm: "1rem"
@@ -59,7 +49,7 @@ components:
   action-primary:
     backgroundColor: "{colors.moss-deep}"
     textColor: "{colors.paper-light}"
-    typography: "{typography.action}"
+    typography: "{typography.title}"
     padding: "0.8rem 1.25rem"
     height: "3.5rem"
   action-primary-hover:
@@ -78,7 +68,7 @@ components:
   artifact-action:
     backgroundColor: "{colors.moss}"
     textColor: "{colors.paper-light}"
-    typography: "{typography.action}"
+    typography: "{typography.title}"
     padding: "0.9rem 1rem"
 ---
 
@@ -143,12 +133,9 @@ The palette stays warm and low-chroma. Paper and charcoal carry most of the page
 
 ### Hierarchy
 
-- **Display** (470, `clamp(3.8rem, 5.7vw, 5.8rem)`, 0.98): The opening promise, constrained to an 11ch measure on wide screens.
-- **Headline** (520, `clamp(3.4rem, 6vw, 6rem)`, 0.94): Major section statements. Headlines balance their wraps and use tight leading.
-- **Title** (600, `clamp(1.55rem, 2.3vw, 2.1rem)`, 1.15): FAQ questions and compact editorial headings.
-- **Body** (400, `1rem`, 1.58): Product explanations, privacy facts, and supporting copy. The base is 18px and drops to 17px below 38rem.
-- **Action** (650, `1.3rem`): The main install action in sentence case.
-- **Mono** (400, `0.92rem`, 1.65): Package commands. Archive checksums use a slightly smaller mono setting and may wrap anywhere.
+- **Display** (470, `clamp(2.75rem, 4.6vw, 4.35rem)`, 1): Opening and section statements. Short statements should fit within two lines on their intended viewport.
+- **Title** (600, `clamp(1.35rem, 1.8vw, 1.65rem)`, 1.15): Questions, actions, artifact labels, and compact editorial headings.
+- **Body** (400, `1rem`, 1.58): Product explanations, privacy facts, status copy, commands, and checksums. Technical content changes to the monospace family without creating another size tier. The root is 18px and becomes 16px below 38rem.
 
 ### Named Rules
 
@@ -162,7 +149,7 @@ The header is capped at 100rem. The opening uses an asymmetric two-column grid u
 
 Spacing is generous and variable. Section gaps commonly grow from 7rem to 13rem, while panel padding grows from 2rem to 9rem. This scale change provides hierarchy without a page full of frames. The package-manager panel appears before the manual archive and checksum controls. The FAQ heading sits directly above a balanced two-column disclosure grid.
 
-At 58rem, the opening and content grids become a single semantic column, sticky copy returns to normal flow, and the FAQ becomes one column. At 38rem, the base type drops to 17px, the first navigation item hides, fold padding tightens, and install content reaches the narrow viewport edge without clipping commands. Text remains horizontal and readable at every size.
+At 58rem, the opening and content grids become a single semantic column, sticky copy returns to normal flow, and the FAQ becomes one column. Section links leave the header while the Changelog and GitHub actions remain available. At 38rem, the root becomes 16px, fold padding tightens, and install content reaches the narrow viewport edge without clipping commands. Decorative folds flatten on narrow screens so they cannot crop text or controls. Text remains horizontal and readable at every size.
 
 **The Clear Passage Rule.** The courier may rest between the two opening folds, but it never crosses text, the recording, controls, or a focus outline. Do not add a page-wide branch.
 
@@ -207,7 +194,7 @@ When the transcript opens, its containing proof sheet drops all rotation and cli
 
 ### Terminal proof and transcript
 
-The recording uses native video controls, a poster, captions, fallback text, and an adjacent native transcript disclosure. The proof remains real TUI evidence, never a redrawn terminal or browser mockup.
+The recording uses native video controls, a poster, fallback text, and an adjacent native transcript disclosure. It has no caption track because subtitles would obscure the short terminal recording. The complete text alternative remains immediately below the video. The proof remains real TUI evidence, never a redrawn terminal or browser mockup.
 
 Opening the transcript removes clipping and rotation from the whole proof sheet, then gives the transcript a light-paper reading field with `1.25rem` padding. The change has no animation. The expanded state must remain opaque and text must not overlap or bleed outside its surface.
 
@@ -221,7 +208,7 @@ The FAQ heading sits immediately above the disclosures. The disclosures form a b
 
 ### Navigation and footer
 
-The supplied wordmark anchors the left side of a spacious header. Plain Alegreya links align right and reveal their underline on hover or focus. The smallest viewport hides only "How it works" so Privacy and Download remain available. The footer is a flat deep-moss field with the license and project links.
+The supplied wordmark anchors the left side of a spacious header. Section links align right and reveal their underline on hover or focus. Changelog and GitHub use compact moss actions and remain visible at every supported width. Section links disappear below 58rem so the permanent actions fit without clipping. The footer is a flat deep-moss field with the license and project links.
 
 ### Courier
 
@@ -237,7 +224,7 @@ Use the supplied squirrel courier once between the promise and proof folds. It i
 - **Do** flatten the proof sheet into an opaque, unrotated reading surface when its transcript opens.
 - **Do** place package-manager installation before manual archives and SHA-256 verification.
 - **Do** keep the FAQ heading directly above its two-column disclosure grid, then collapse that grid to one column on mobile.
-- **Do** preserve native controls, visible focus, captions, fallback text, semantic order, and reduced-motion behavior.
+- **Do** preserve native controls, visible focus, fallback text, the adjacent transcript, semantic order, and reduced-motion behavior.
 
 ### Don't:
 

@@ -33,7 +33,7 @@
 | Courier | One supplied squirrel cutout rests between the sheets without masking copy or controls | Existing optimized transparent raster |
 | Branch marks | Only the branch contained in the supplied courier artwork remains | Existing optimized transparent raster |
 | Release action | One direct install action on the promise sheet | Semantic anchor and CSS |
-| Terminal proof | The real compose, release, claim, unfold, reply, and keepsake journey | Existing VHS WebM, poster, captions, transcript |
+| Terminal proof | The real compose, release, claim, unfold, reply, and keepsake journey | Existing VHS WebM, poster, and adjacent transcript |
 | Product story | Three editorial beats with distinct scale, not repeated equal cards | Semantic sections and lists |
 | Privacy boundary | One folded paper section states service-side decryption honestly | Semantic HTML and CSS |
 | Download records | Six platform artifacts and hashes remain scannable without a grid of bordered cards | Semantic groups and code text |
@@ -47,10 +47,9 @@
 - Typography: Alegreya carries the wordmark-adjacent display voice and actions;
   Atkinson Hyperlegible Next carries body copy; system monospace is restricted
   to commands and checksums.
-- Type ramp: opening `clamp(3.8rem, 5.7vw, 5.8rem)` with `0.98` leading;
-  section title `clamp(3.4rem, 6vw, 6rem)`; body
-  `clamp(1.05rem, 1.35vw, 1.25rem)`;
-  technical text `0.95rem`. No eyebrow labels or miniature metadata tier.
+- Type ramp: display `clamp(2.75rem, 4.6vw, 4.35rem)`, title
+  `clamp(1.35rem, 1.8vw, 1.65rem)`, and body `1rem`. Technical text uses
+  the body size in monospace. No eyebrow labels or miniature metadata tier.
 - Corners: square or lightly irregular printed edges; no rounded card family.
 - Lines: ordinary content uses no container borders. A rare 2px ink rule may
   separate tabular release facts; hairline grids are absent.
