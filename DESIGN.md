@@ -74,7 +74,7 @@ components:
     backgroundColor: "{colors.paper-deep}"
     textColor: "{colors.ink}"
     typography: "{typography.body}"
-    padding: "0.75rem 0.9rem"
+    padding: "0.65rem 0.7rem"
   copy-action-hover:
     backgroundColor: "{colors.clay}"
     textColor: "{colors.paper-light}"
@@ -82,7 +82,7 @@ components:
     backgroundColor: "{colors.moss}"
     textColor: "{colors.paper-light}"
     typography: "{typography.body}"
-    padding: "0.75rem 0.9rem"
+    padding: "0.65rem 0.7rem"
   copy-action-compact-hover:
     backgroundColor: "{colors.ink}"
     textColor: "{colors.paper-light}"
@@ -223,7 +223,9 @@ The package-manager block is one broad proof-charcoal field. On desktop, the lar
 
 ### Copyable code
 
-Commands and SHA-256 values use the same two-column control: code beside a native `Copy` button. Each route supplies a specific accessible label for the value, such as a Homebrew command or a Linux amd64 checksum. The visible button changes to `Copied` or `Failed` for 1.8 seconds, while a hidden polite live region announces the labeled success or tells the visitor to select and copy the text manually.
+Commands and SHA-256 values use the same two-column control: code beside a native `Copy` button, separated by `0.75rem`. The code column and button remain distinct instead of sharing one visual field. At and below 38rem, the gap tightens to `0.5rem` and the button column becomes a fixed `4.25rem`. Each route supplies a specific accessible label for the value, such as a Homebrew command or a Linux amd64 checksum. The visible button changes to `Copied` or `Failed` for 1.8 seconds, while a hidden polite live region announces the labeled success or tells the visitor to select and copy the text manually.
+
+The code field uses `width: 100%`, `min-width: 0`, and `max-width: 100%`, so the flexible column can shrink without forcing the grid beyond its container. The `Copy` button is centered vertically with a `4.25rem` minimum width, a `2.75rem` minimum height, and `0.65rem 0.7rem` padding. On compact screens, the fixed grid column supplies the button width while its own minimum width drops to zero.
 
 The command variant keeps every line complete with preformatted whitespace and horizontal scrolling inside the code area. It never wraps a command to fit the viewport. The compact checksum variant uses a light-paper code field, permits wrapping anywhere in the hash, and gives the adjacent action a moss field. Both variants keep technical text and the control label at the existing body size, so this pattern does not add a font family or size tier.
 
