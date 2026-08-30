@@ -215,7 +215,7 @@ The supplied wordmark anchors the left side of the shared header and always retu
 
 ### Changelog release notes
 
-The changelog is a Read-mode route within the same warm-paper, charcoal, and muted-moss identity. One quiet folded introduction establishes the page, then release history returns to the page field. Each desktop release pairs a sticky version, date, and source link with flat grouped notes. Below 58rem, the header becomes static and the release reads from top to bottom in one column.
+The changelog at `/changelog/` is a Read-mode route within the same warm-paper, charcoal, and muted-moss identity. One quiet folded introduction establishes the page, then release history returns to the page field. Each desktop release pairs a sticky version, date, and source link with flat grouped notes. Below 58rem, the header becomes static and the release reads from top to bottom in one column.
 
 ### Courier
 

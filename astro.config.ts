@@ -4,7 +4,7 @@ import { defineConfig } from "astro/config";
 export default defineConfig({
   output: "static",
   site: "https://orifude.com",
-  trailingSlash: "never",
+  trailingSlash: "always",
   vite: {
     plugins: [tailwindcss()],
   },

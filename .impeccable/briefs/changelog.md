@@ -1,6 +1,6 @@
 # Changelog brief
 
-- Scope: the static release history at `/changelog`.
+- Scope: the static release history at `/changelog/`.
 - Mode: Read.
 - Audience: visitors checking what changed in a published Orifude release and
   source readers who need the matching GitHub release.
