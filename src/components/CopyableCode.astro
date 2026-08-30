@@ -1,0 +1,22 @@
+---
+interface Props {
+  label: string;
+  value: string;
+  compact?: boolean;
+}
+
+const { label, value, compact = false } = Astro.props;
+---
+
+<div class:list={["copyable-code", { "copyable-code--compact": compact }]}>
+  <pre><code>{value}</code></pre>
+  <button
+    type="button"
+    class="copy-button"
+    data-copy-button
+    aria-label={`Copy ${label}`}
+  >
+    Copy
+  </button>
+  <span class="visually-hidden" data-copy-status aria-live="polite"></span>
+</div>

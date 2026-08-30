@@ -1,7 +1,32 @@
 ---
+import CopyableCode from "./CopyableCode.astro";
 import { currentRelease, platformNames } from "../data/releases";
 
 const systems = ["linux", "darwin", "windows"] as const;
+
+const packageCommands = [
+  {
+    label: "Homebrew on macOS or Linux",
+    command: "brew install nuggocto/tap/orifude",
+  },
+  {
+    label: "Scoop on Windows",
+    command:
+      "scoop bucket add nuggocto https://github.com/nuggocto/scoop-bucket\nscoop install nuggocto/orifude",
+  },
+  {
+    label: "AUR on Arch Linux",
+    command: "paru -S orifude-bin",
+  },
+] as const;
+
+const posixInstaller = `curl -fsSLo install-orifude.sh https://orifude.com/install.sh
+less install-orifude.sh
+sh install-orifude.sh --version 0.2.0`;
+
+const powershellInstaller = `Invoke-WebRequest https://orifude.com/install.ps1 -OutFile install-orifude.ps1
+Get-Content .\\install-orifude.ps1
+.\\install-orifude.ps1 -Version 0.2.0`;
 ---
 
 <section class="downloads" id="download" aria-labelledby="download-title">
@@ -21,30 +46,33 @@ const systems = ["linux", "darwin", "windows"] as const;
 
     <div class="install-command">
       <h4>Choose the command for your system.</h4>
-      <pre><code># Homebrew on macOS or Linux
-brew install nuggocto/tap/orifude
-
-# Scoop on Windows
-scoop bucket add nuggocto https://github.com/nuggocto/scoop-bucket
-scoop install nuggocto/orifude
-
-# AUR on Arch Linux
-paru -S orifude-bin</code></pre>
+      <div class="package-commands">
+        {
+          packageCommands.map(({ label, command }) => (
+            <section class="package-command" aria-label={label}>
+              <h5>{label}</h5>
+              <CopyableCode label={`${label} command`} value={command} />
+            </section>
+          ))
+        }
+      </div>
     </div>
 
     <div class="install-options">
       <details>
         <summary>Use the verified POSIX shell installer.</summary>
-        <pre><code>curl -fsSLo install-orifude.sh https://orifude.com/install.sh
-less install-orifude.sh
-sh install-orifude.sh --version 0.2.0</code></pre>
+        <CopyableCode
+          label="verified POSIX shell installer commands"
+          value={posixInstaller}
+        />
       </details>
 
       <details>
         <summary>Use the verified PowerShell installer.</summary>
-        <pre><code>Invoke-WebRequest https://orifude.com/install.ps1 -OutFile install-orifude.ps1
-Get-Content .\install-orifude.ps1
-.\install-orifude.ps1 -Version 0.2.0</code></pre>
+        <CopyableCode
+          label="verified PowerShell installer commands"
+          value={powershellInstaller}
+        />
       </details>
 
       <p>
@@ -55,7 +83,10 @@ Get-Content .\install-orifude.ps1
   </div>
 
   <div class="archive-intro">
-    <h3>Download and verify the release archive yourself.</h3>
+    <h3>
+      <span>Download and verify the</span>
+      <span>release archive yourself.</span>
+    </h3>
     <p>
       Every archive below is immutable. Compare its SHA-256 value with the
       published checksum file before you install it.
@@ -83,7 +114,11 @@ Get-Content .\install-orifude.ps1
                         <span>{artifact.arch}</span>
                         <span>{artifact.format}</span>
                       </a>
-                      <code>{artifact.sha256}</code>
+                      <CopyableCode
+                        compact
+                        label={`${platformNames[os]} ${artifact.arch} SHA-256 checksum`}
+                        value={artifact.sha256}
+                      />
                     </li>
                   ))}
               </ul>
@@ -102,3 +137,5 @@ Get-Content .\install-orifude.ps1
   }
 
 </section>
+
+<script is:inline src="/scripts/copy-code.js"></script>

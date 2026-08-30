@@ -70,6 +70,22 @@ components:
     textColor: "{colors.paper-light}"
     typography: "{typography.title}"
     padding: "0.9rem 1rem"
+  copy-action:
+    backgroundColor: "{colors.paper-deep}"
+    textColor: "{colors.ink}"
+    typography: "{typography.body}"
+    padding: "0.75rem 0.9rem"
+  copy-action-hover:
+    backgroundColor: "{colors.clay}"
+    textColor: "{colors.paper-light}"
+  copy-action-compact:
+    backgroundColor: "{colors.moss}"
+    textColor: "{colors.paper-light}"
+    typography: "{typography.body}"
+    padding: "0.75rem 0.9rem"
+  copy-action-compact-hover:
+    backgroundColor: "{colors.ink}"
+    textColor: "{colors.paper-light}"
 ---
 
 # Design System: Orifude
@@ -204,6 +220,14 @@ Opening the transcript removes clipping and rotation from the whole proof sheet,
 ### Install and archive controls
 
 The package-manager block is one broad proof-charcoal field. On desktop, the large literary heading and literal monospace commands sit on the left. Native disclosures for the verified POSIX and PowerShell installers sit on the right, with the package-manager explanation beneath them. Below 58rem, those groups become one column in the same semantic order. The manual archive section follows, grouped by operating system. Moss artifact actions pair architecture and format, while the full SHA-256 value remains visible below each action.
+
+### Copyable code
+
+Commands and SHA-256 values use the same two-column control: code beside a native `Copy` button. Each route supplies a specific accessible label for the value, such as a Homebrew command or a Linux amd64 checksum. The visible button changes to `Copied` or `Failed` for 1.8 seconds, while a hidden polite live region announces the labeled success or tells the visitor to select and copy the text manually.
+
+The command variant keeps every line complete with preformatted whitespace and horizontal scrolling inside the code area. It never wraps a command to fit the viewport. The compact checksum variant uses a light-paper code field, permits wrapping anywhere in the hash, and gives the adjacent action a moss field. Both variants keep technical text and the control label at the existing body size, so this pattern does not add a font family or size tier.
+
+Clipboard behavior lives in the same-origin external `/scripts/copy-code.js` file. Keep the strict `script-src 'self'` policy. Do not move the behavior into inline script or add `unsafe-inline`.
 
 ### Disclosure grid
 
