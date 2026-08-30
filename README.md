@@ -40,11 +40,11 @@ TypeScript, and the production build.
 The initial site requires no environment variables. Release metadata is
 checked into `src/data/releases.ts` and validated with Zod during the build.
 Cloudflare Pages runs `pnpm build` and publishes `dist` without a post-office
-secret, database binding, or API token.
+secret, database binding, or API token. Its small Pages middleware redirects
+`www.orifude.com` to the canonical apex while preserving the path and query.
 
 ## Assets
 
-Optimized site assets are derived from the original Orifude artwork in
-`/home/nuggocto/Pictures/Orifude`. Do not modify the originals. The terminal
-recording is generated from the sibling `orifude` repository's deterministic
-VHS journey.
+Optimized site assets are derived from the original Orifude artwork without
+changing the source files. Their origins and generated recording inputs are
+recorded in [`ASSETS.md`](ASSETS.md).

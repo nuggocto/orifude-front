@@ -1,21 +1,25 @@
 ---
-import wordmark from "../assets/orifude-wordmark-transparent.webp";
+import wordmark160 from "../assets/orifude-wordmark-160.webp";
+import wordmark240 from "../assets/orifude-wordmark-240.webp";
+import wordmark480 from "../assets/orifude-wordmark-480.webp";
 ---
 
 <header class="site-header" aria-label="Primary navigation">
   <a class="brand-link" href="#top" aria-label="Orifude home">
     <img
-      src={wordmark.src}
-      width="1200"
-      height="291"
+      src={wordmark240.src}
+      srcset={`${wordmark160.src} 160w, ${wordmark240.src} 240w, ${wordmark480.src} 480w`}
+      sizes="(max-width: 608px) 136px, 224px"
+      width="240"
+      height="58"
       alt="Orifude"
+      loading="eager"
       decoding="sync"
-      fetchpriority="high"
     />
   </a>
   <nav class="site-nav" aria-label="Page sections">
-    <a href="#journey">Journey</a>
-    <a href="#principles">Principles</a>
+    <a href="#journey">How it works</a>
+    <a href="#privacy">Privacy</a>
     <a href="#download">Download</a>
   </nav>
 </header>

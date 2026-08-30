@@ -5,13 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "pnpm validate:releases && astro check && astro build",
+    "build": "pnpm validate:releases && pnpm validate:redirect && astro check && astro build",
     "preview": "astro preview",
     "lint": "oxlint .",
     "lint:fix": "oxlint --fix .",
     "fmt": "oxfmt --write .",
     "fmt:check": "oxfmt --check .",
     "validate:releases": "node --experimental-strip-types src/data/releases.test.ts",
+    "validate:redirect": "node --experimental-strip-types src/redirect.test.ts",
     "check": "pnpm fmt:check && pnpm lint && pnpm build"
   },
   "dependencies": {

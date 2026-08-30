@@ -1,44 +1,31 @@
 ---
 import courier from "../assets/orifude-courier-cutout.webp";
+import courier255 from "../assets/orifude-courier-255.webp";
 import { currentRelease } from "../data/releases";
 
-const releaseAction =
-  currentRelease.status === "published"
-    ? `Download ${currentRelease.version}`
-    : `Release status ${currentRelease.version}`;
+const version = currentRelease.version;
 ---
 
 <section class="opening" id="top" aria-labelledby="hero-title">
   <div class="opening__hero paper-fold">
     <div class="opening__copy">
-      <h1 id="hero-title">
-        Send a letter into the quiet and let a stranger find it.
-      </h1>
+      <h1 id="hero-title">Your letter will find someone you have never met.</h1>
       <p>
-        Orifude is a one-to-one letter exchange that lives entirely in your
-        terminal. Write once. The post office carries it to one unrelated
-        stranger, who may send one reply.
+        With Orifude, you write a private, pseudonymous letter in your terminal,
+        and the post office carries it to one unrelated person who may reply once.
       </p>
       <div class="hero__actions">
-        <a class="primary-action" href="#download">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12 3v12m0 0 5-5m-5 5-5-5M5 19h14"></path>
-          </svg>
-          {releaseAction}
-        </a>
-        <a class="text-action" href="#journey">How it works</a>
+        <a class="primary-action" href="#download">Install {version}</a>
+        <a class="text-action" href="#journey">See how it works</a>
       </div>
-      <p class="alpha-note">
-        <span aria-hidden="true"></span>
-        Private alpha. Online access remains invite-only.
-      </p>
+      <p class="alpha-note">Private alpha. Online identity creation is invite-only.</p>
     </div>
   </div>
 
-  <div class="opening__terminal paper-fold" aria-labelledby="journey-title">
+  <div class="opening__terminal paper-fold">
     <div>
-      <h2 id="journey-title">A real letter, carried once</h2>
-      <p>Shipped TUI. Synthetic local post office. No browser imitation.</p>
+      <h2>See a complete exchange in the real TUI.</h2>
+      <p>The recording uses a local demonstration post office and stores no real correspondence.</p>
     </div>
     <video
       controls
@@ -60,64 +47,50 @@ const releaseAction =
       available below.
     </video>
     <details class="transcript" id="terminal-transcript">
-      <summary>Read the terminal journey</summary>
+      <summary>Read the recording as text</summary>
       <ol>
         <li>Sora creates a local demonstration identity.</li>
         <li>Sora writes, previews, folds, and releases a letter.</li>
         <li>A waiting letter from Mori is claimed and explicitly unfolded.</li>
-        <li>Sora writes the one allowed reply and keeps the exchange.</li>
+        <li>Sora sends the one allowed reply and keeps the exchange.</li>
       </ol>
     </details>
   </div>
 
-  <svg class="opening__branch" viewBox="0 0 1600 420" aria-hidden="true">
-    <defs>
-      <filter
-        id="opening-branch-roughness"
-        x="-3%"
-        y="-8%"
-        width="106%"
-        height="116%"
-      >
-        <feTurbulence
-          type="fractalNoise"
-          baseFrequency="0.009 0.035"
-          numOctaves="2"
-          seed="611667"
-          result="branchNoise"
-        />
-        <feDisplacementMap
-          in="SourceGraphic"
-          in2="branchNoise"
-          scale="7"
-          xChannelSelector="R"
-          yChannelSelector="G"
-        />
-      </filter>
-    </defs>
-    <path
-      class="opening__branch-fill"
-      d="M-90 287 C 206 407 329 266 560 229 C 798 191 889 286 1097 179 C 1305 72 1408 128 1692 213 L 1685 252 C 1399 169 1300 119 1117 220 C 897 340 811 248 575 281 C 331 316 218 462 -96 326 Z"
-    ></path>
-  </svg>
+  <img
+    class="opening__courier"
+    src={courier255.src}
+    srcset={`${courier255.src} 255w, ${courier.src} 388w`}
+    sizes="(max-width: 608px) 62vw, (max-width: 928px) 304px, 21vw"
+    width="388"
+    height="520"
+    alt="A squirrel holding a folded letter on a branch"
+    loading="eager"
+    decoding="async"
+    fetchpriority="high"
+  />
+</section>
 
-  <figure class="opening__courier">
-    <img
-      src={courier.src}
-      width="388"
-      height="520"
-      alt="A squirrel holding a folded letter on an ink branch"
-      decoding="async"
-    />
-  </figure>
-
-  <div class="opening__process paper-fold" id="journey" aria-labelledby="exchange-title">
-    <h2 id="exchange-title">One letter. One stranger. One reply.</h2>
-    <ol>
-      <li><strong>Write</strong><span>Compose in the terminal.</span></li>
-      <li><strong>Fold and release</strong><span>Preview it, then let it go.</span></li>
-      <li><strong>Unfold</strong><span>One unrelated recipient opens it.</span></li>
-      <li><strong>Keep one reply</strong><span>One answer closes the exchange.</span></li>
-    </ol>
+<section class="journey" id="journey" aria-labelledby="journey-title">
+  <div class="journey__intro">
+    <h2 id="journey-title">Your letter travels to one stranger and goes no farther.</h2>
+    <p>
+      You do not choose an audience or browse for a recipient. The post office
+      quietly carries your words to one eligible person.
+    </p>
   </div>
+  <ol class="journey__steps">
+    <li>
+      <strong>You write a letter and let it go.</strong>
+      <span>The TUI lets you read it once more before you release it.</span>
+    </li>
+    <li>
+      <strong>The post office finds one stranger.</strong>
+      <span>That person may claim your letter and choose to unfold it.</span>
+    </li>
+    <li>
+      <strong>A single reply completes the exchange.</strong>
+      <span>Either person can keep the finished correspondence privately.</span>
+    </li>
+  </ol>
 </section>

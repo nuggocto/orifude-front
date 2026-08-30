@@ -1,0 +1,40 @@
+{
+  "title": "Choose the broadside composition",
+  "question": "All three use the same approved woodland-broadside world. Choose the hierarchy that should govern the finished page.",
+  "options": [
+    {
+      "id": "overlap",
+      "label": "Courier overlap",
+      "thesis": "The letter ritual leads, with the terminal proof tucked into the same physical scene.",
+      "palette": ["#292823", "#fbf7f1", "#626851", "#a48b68"],
+      "materials": ["warm paper", "relief ink", "courier cutout"],
+      "viewport": "A monumental promise, squirrel courier, branch, and terminal proof overlap as one authored printed sheet.",
+      "risk": "The overlap requires careful responsive translation so the evidence never competes with the sentence.",
+      "comp": ".impeccable/mocks/decision/woodland-broadside.webp"
+    },
+    {
+      "id": "split",
+      "label": "Editorial split",
+      "thesis": "The emotional promise and the working release sit side by side with equal confidence.",
+      "palette": ["#292823", "#fbf7f1", "#626851", "#a48b68"],
+      "materials": ["warm paper", "dense moss field", "engraved branch"],
+      "viewport": "A huge left-hand promise faces one solid download-and-terminal field on the right, with the next chapter visible below.",
+      "risk": "The right field must not become a conventional product card.",
+      "comp": ".impeccable/mocks/broadside-split.webp"
+    },
+    {
+      "id": "centered",
+      "label": "Quiet proclamation",
+      "thesis": "One unforgettable sentence owns the screen, followed immediately by download and proof.",
+      "palette": ["#292823", "#fbf7f1", "#626851", "#a48b68"],
+      "materials": ["warm paper", "broad relief headline", "dark proof strip"],
+      "viewport": "The centered promise fills the upper half; one moss action and a wide terminal strip anchor the lower half.",
+      "risk": "It can become poster-like unless the proof and following content remain clearly interactive web structure.",
+      "comp": ".impeccable/mocks/broadside-centered.webp"
+    }
+  ],
+  "reroll": false,
+  "canon": false,
+  "outcome": "Superseded by direct user feedback. None of these broadside compositions ships; the final page uses the simpler folded-letter reference and keeps the courier clear of all text and controls.",
+  "steer": true
+}

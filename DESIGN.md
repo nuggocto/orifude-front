@@ -1,58 +1,56 @@
 ---
 name: Orifude
-description: Quiet terminal correspondence carried through a folded-paper editorial world.
+description: A private terminal letter exchange made tangible through warm paper, charcoal ink, and one quiet courier.
 colors:
-  ink: "#292823"
-  washi-ground: "#fbf7f1"
-  washi-sheet: "#faf7f0"
-  washi-deep: "#e5dccb"
-  moss: "#858a72"
-  moss-deep: "#626851"
-  clay: "#a48b68"
-  branch: "#62594d"
-  ash: "#a59e91"
-  ember: "#a45b52"
-  terminal: "#171814"
-  terminal-ink: "#e7e4d8"
+  ink: "#31312c"
+  ink-soft: "#4f4d45"
+  paper: "#f3efe8"
+  paper-light: "#fbf8f1"
+  paper-deep: "#d8d1c4"
+  moss: "#5c5c4c"
+  moss-deep: "#4d4d3c"
+  clay: "#765f4f"
+  ember: "#914e45"
   focus-oxide: "#7a3f38"
+  proof: "#393a34"
+  proof-ink: "#f3efe8"
 typography:
   display:
     fontFamily: '"Alegreya Variable", Georgia, serif'
-    fontSize: "clamp(3.3rem, 4.7vw, 4.7rem)"
+    fontSize: "clamp(3.8rem, 5.7vw, 5.8rem)"
     fontWeight: 470
-    lineHeight: 1.01
+    lineHeight: 0.98
     letterSpacing: "-0.025em"
   headline:
     fontFamily: '"Alegreya Variable", Georgia, serif'
-    fontSize: "clamp(2.6rem, 5vw, 4.75rem)"
-    fontWeight: 560
-    lineHeight: 0.98
+    fontSize: "clamp(3.4rem, 6vw, 6rem)"
+    fontWeight: 520
+    lineHeight: 0.94
     letterSpacing: "-0.025em"
   title:
     fontFamily: '"Alegreya Variable", Georgia, serif'
-    fontSize: "2rem"
-    fontWeight: 560
-    lineHeight: 0.98
+    fontSize: "clamp(1.55rem, 2.3vw, 2.1rem)"
+    fontWeight: 600
+    lineHeight: 1.15
     letterSpacing: "-0.025em"
   body:
     fontFamily: '"Atkinson Hyperlegible Next Variable", system-ui, sans-serif'
     fontSize: "1rem"
     fontWeight: 400
-    lineHeight: 1.55
+    lineHeight: 1.58
   action:
     fontFamily: '"Alegreya Variable", Georgia, serif'
-    fontSize: "1.2rem"
-    fontWeight: 600
-    lineHeight: 1.2
-  label:
-    fontFamily: '"Atkinson Hyperlegible Next Variable", system-ui, sans-serif'
-    fontSize: "0.88rem"
+    fontSize: "1.3rem"
     fontWeight: 650
-    lineHeight: 1.55
+  mono:
+    fontFamily: 'ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace'
+    fontSize: "0.92rem"
+    fontWeight: 400
+    lineHeight: 1.65
 spacing:
-  xs: "0.55rem"
-  sm: "0.75rem"
-  md: "1rem"
+  xs: "0.75rem"
+  sm: "1rem"
+  md: "1.25rem"
   lg: "1.5rem"
   xl: "2rem"
   2xl: "3rem"
@@ -60,74 +58,78 @@ spacing:
 components:
   action-primary:
     backgroundColor: "{colors.moss-deep}"
-    textColor: "{colors.washi-sheet}"
+    textColor: "{colors.paper-light}"
     typography: "{typography.action}"
-    padding: "0.75rem 1.25rem"
-    height: "3.25rem"
-  action-text:
-    textColor: "{colors.moss-deep}"
-    typography: "{typography.label}"
-  paper-fold:
-    backgroundColor: "{colors.washi-sheet}"
+    padding: "0.8rem 1.25rem"
+    height: "3.5rem"
+  action-primary-hover:
+    backgroundColor: "{colors.paper-deep}"
     textColor: "{colors.ink}"
-  terminal-panel:
-    backgroundColor: "{colors.terminal}"
-    textColor: "{colors.terminal-ink}"
-    padding: "1.25rem 1.4rem"
+  paper-fold:
+    backgroundColor: "{colors.paper-light}"
+    textColor: "{colors.ink}"
+  proof-panel:
+    backgroundColor: "{colors.proof}"
+    textColor: "{colors.proof-ink}"
+  transcript-expanded:
+    backgroundColor: "{colors.paper-light}"
+    textColor: "{colors.ink}"
+    padding: "1.25rem"
+  artifact-action:
+    backgroundColor: "{colors.moss}"
+    textColor: "{colors.paper-light}"
+    typography: "{typography.action}"
+    padding: "0.9rem 1rem"
 ---
 
 # Design System: Orifude
 
 ## Overview
 
-**Creative North Star: "Folded branch"**
+**Creative North Star: "The letter in transit"**
 
-Orifude uses a quiet editorial composition built from warm washi, ink, and a single branch that carries the eye between folded letter panels. The page should feel handled and human without becoming nostalgic theater. Broad negative space, horizontal reading, and crisp product evidence keep the material treatment usable.
+Orifude makes a private exchange tangible through two folded sheets and the supplied squirrel courier moving between them. The opening places a human promise beside a real TUI recording. The rest of the page settles into a spacious editorial rhythm, so privacy limits, install paths, and checksums read as plainly as the invitation.
 
-The visual world is controlled rather than polished smooth. Paper silhouettes vary in angle and scale. Fine crease lines, fiber texture, and sparse moss or clay details give the folds physical character. The supplied wordmark remains clean, the squirrel courier appears only at a meaningful delivery transition, and terminal evidence stays recognizably terminal evidence.
+Warm paper, charcoal ink, muted moss, and readable literary type give the site a handled quality without turning it into a scrapbook or period piece. Fold lines are sparse and structural. The courier appears once, and every decorative layer yields to text, controls, and product evidence.
 
 **Key Characteristics:**
 
-- Asymmetric folded-paper fields instead of a regular card grid.
-- One irregular ink branch linking major moments without crossing copy.
-- Warm, low-chroma color with moss actions and clay markers.
-- Alegreya for the correspondence voice and Atkinson Hyperlegible Next for factual copy.
-- Real TUI proof set against tactile paper, with little motion beyond control feedback.
+- Two quiet folded sheets hold the opening promise and the real TUI proof.
+- Alegreya carries invitations and section structure; Atkinson Hyperlegible Next carries facts and limits.
+- Warm paper and charcoal dominate, with moss for action and clay for quiet status.
+- Long sections use open editorial grids rather than repeated cards.
+- The courier marks delivery once and never crosses copy, video controls, or focus outlines.
 
 ## Colors
 
-The palette is warm, muted, and materially specific. Washi dominates, ink carries copy, and the accent colors remain scarce.
+The palette stays warm and low-chroma. Paper and charcoal carry most of the page, while moss, clay, and oxide appear only when they have a job.
 
 ### Primary
 
-- **Deep moss:** Used for the main action, selection, link emphasis, and small process markers. It is the active color, not a broad background wash.
-- **Soft moss:** Available for quieter brand accents and artwork support where deep moss would read too heavily.
+- **Deep moss:** The main action color and the footer field. Its weight makes an action clear without introducing a bright digital accent.
+- **Muted moss:** Archive actions, scrollbar color, and other secondary active fields.
 
 ### Secondary
 
-- **Clay:** Marks sequence, status, and small handmade details such as the private-alpha dot.
-- **Ember:** Reserved for warning or destructive meaning. It does not compete with the download action.
-
-### Tertiary
-
-- **Ink branch:** Draws connective lines, dividers, and the authored branch. Its brown cast keeps those structures softer than body copy.
-- **Warm ash:** Supports quiet secondary detail where branch or ink would be too strong.
+- **Clay brown:** Private-alpha copy and other quiet status language.
+- **Ember:** Reserved for warning or destructive meaning. It is available to the system but does not decorate the shipped landing page.
+- **Oxide focus:** The shared keyboard focus outline. It remains distinct from action color.
 
 ### Neutral
 
-- **Soft ink:** The default text and strong structural color.
-- **Washi ground:** The continuous page field beneath every section.
-- **Washi sheet:** The lighter face of folded panels.
-- **Deep washi:** Used for fold edges, paper depth, and scrollbar contrast.
-- **Terminal black:** Contains recorded terminal output and install commands.
-- **Terminal parchment:** Keeps terminal text warm enough to belong to the paper palette.
-- **Oxide focus:** Creates the high-contrast focus outline without borrowing the moss action color.
+- **Charcoal ink:** Default copy and the strongest structural color.
+- **Soft charcoal:** Supporting explanations and dense factual copy.
+- **Warm paper:** The continuous textured page field and the browser theme color.
+- **Light paper:** Fold faces, selected text, and expanded disclosure surfaces.
+- **Deep paper:** Fold contrast, scrollbar track, and the primary action hover state.
+- **Proof charcoal:** Install guidance, safety boundaries, and terminal media grounds.
+- **Proof paper:** Text on proof charcoal.
 
 ### Named Rules
 
-**The Scarce Accent Rule.** Moss identifies action and clay identifies small moments. Neither becomes a large decorative field.
+**The Paper and Ink Rule.** Paper and charcoal own the page. Moss marks actions, clay marks quiet status, and neither becomes decoration.
 
-**The Warm Black Rule.** Use soft ink and terminal black. Avoid neutral blue-black or stark pure black.
+**The Warm Black Rule.** Use charcoal or proof charcoal. Do not introduce pure black or a blue-black neutral.
 
 ## Typography
 
@@ -135,103 +137,113 @@ The palette is warm, muted, and materially specific. Washi dominates, ink carrie
 
 **Body Font:** Atkinson Hyperlegible Next Variable with system sans-serif fallback
 
-**Label/Mono Font:** Atkinson Hyperlegible Next Variable for labels; the system monospace stack for commands and checksums
+**Label/Mono Font:** The system monospace stack for commands, artifacts, and SHA-256 values
 
-**Character:** Alegreya gives headlines and controls the voice of written correspondence. Atkinson keeps privacy boundaries, release facts, and dense supporting copy easy to read.
+**Character:** Alegreya gives the correspondence its human voice without sacrificing readability at large sizes. Atkinson separates product facts from the invitation, while monospace stays tied to terminal and verification material.
 
 ### Hierarchy
 
-- **Display** (470, `clamp(3.3rem, 4.7vw, 4.7rem)`, 1.01): The opening promise. Keep it to a short balanced block, normally no wider than 12 characters per line.
-- **Headline** (560, `clamp(2.6rem, 5vw, 4.75rem)`, 0.98): Major section openings with tight leading and balanced wraps.
-- **Title** (560, `2rem`, 0.98): Card headings, boundary labels, and compact editorial statements.
-- **Body** (400, `1rem`, 1.55): Explanations and factual product copy. Long passages stay near 65 characters per line.
-- **Action** (600, `1.2rem`, 1.2): Primary action labels in Alegreya. Sentence case keeps them literary rather than promotional.
-- **Label** (650, `0.88rem`, 1.55): Transcript summaries, metadata, checksums, and compact process text.
+- **Display** (470, `clamp(3.8rem, 5.7vw, 5.8rem)`, 0.98): The opening promise, constrained to an 11ch measure on wide screens.
+- **Headline** (520, `clamp(3.4rem, 6vw, 6rem)`, 0.94): Major section statements. Headlines balance their wraps and use tight leading.
+- **Title** (600, `clamp(1.55rem, 2.3vw, 2.1rem)`, 1.15): FAQ questions and compact editorial headings.
+- **Body** (400, `1rem`, 1.58): Product explanations, privacy facts, and supporting copy. The base is 18px and drops to 17px below 38rem.
+- **Action** (650, `1.3rem`): The main install action in sentence case.
+- **Mono** (400, `0.92rem`, 1.65): Package commands. Archive checksums use a slightly smaller mono setting and may wrap anywhere.
 
 ### Named Rules
 
-**The Two Voices Rule.** Alegreya speaks for invitations and section structure. Atkinson carries evidence and limits. Monospace appears only where the content is a command, checksum, or terminal recording.
+**The Two Voices Rule.** Alegreya speaks for the letter and page structure. Atkinson states product facts. Monospace appears only when the content is terminal or verification material.
+
+**The Sentence Rule.** Headlines and controls use natural sentence copy. Do not stack slogans, add tiny uppercase kickers, or turn section introductions into fragments.
 
 ## Layout
 
-The page uses a 90rem maximum shell and generous vertical intervals. Major content groups narrow to 82rem through 94rem depending on how much room their composition needs. Desktop sections use asymmetric grids, usually a wider proof or paper field beside a narrower editorial counterpoint.
+The header is capped at 100rem. The opening uses an asymmetric two-column grid up to 94rem wide: a larger promise fold and a narrower proof fold, separated by enough room for the courier. Supporting sections usually use an 84rem editorial measure with a statement on one side and evidence on the other. The privacy section returns to a broad 94rem folded sheet.
 
-The opening scene is a composed overlap on wide screens. A hero fold, terminal fold, branch, courier, and process fold occupy one 62rem stage. At 68rem, the elements widen and restack inside a taller stage. At 46rem, every item returns to semantic document flow, the process becomes a single column, secondary navigation is reduced, and clipped silhouettes simplify without disappearing.
+Spacing is generous and variable. Section gaps commonly grow from 7rem to 13rem, while panel padding grows from 2rem to 9rem. This scale change provides hierarchy without a page full of frames. The package-manager panel appears before the manual archive and checksum controls. The FAQ heading sits directly above a balanced two-column disclosure grid.
 
-Spacing follows a loose editorial rhythm rather than a dense application grid. Control interiors use the smaller steps. Section gaps and paper padding use 2rem through 4rem, with larger fluid values where the fold needs breathing room. Text never depends on overlap, branch position, or rotation to preserve reading order.
+At 58rem, the opening and content grids become a single semantic column, sticky copy returns to normal flow, and the FAQ becomes one column. At 38rem, the base type drops to 17px, the first navigation item hides, fold padding tightens, and install content reaches the narrow viewport edge without clipping commands. Text remains horizontal and readable at every size.
 
-**The Branch Behind Rule.** The branch may connect and frame sections, but it stays behind content and never crosses a paragraph, control, or focus outline.
+**The Clear Passage Rule.** The courier may rest between the two opening folds, but it never crosses text, the recording, controls, or a focus outline. Do not add a page-wide branch.
+
+**The Evidence Order Rule.** Package-manager installation comes before installers, archives, and checksum verification. Preserve that sequence on every viewport.
 
 ## Elevation & Depth
 
-Depth is a restrained hybrid of soft paper shadows, crease gradients, texture, rotation, and tonal layering. Paper folds share one broad ambient shadow. Terminal media and command blocks use slightly darker, tighter shadows. Flat text sections and dividers do not float.
+The system uses shallow physical depth. Paper texture, fine crease lines, clipped silhouettes, slight rotation, and two soft shadows establish the material. There are no glows. Most content stays flat on the page, including the journey, principles, downloads introduction, FAQ heading, and disclosure grid.
 
 ### Shadow Vocabulary
 
-- **Paper lift** (`0 22px 50px rgb(74 65 53 / 15%)`): Large washi folds only.
-- **Action lift** (`0 10px 24px rgb(41 40 35 / 18%)`): The primary action at rest, with a slightly deeper shadow on hover and a tighter shadow when pressed.
-- **Terminal proof** (`0 16px 35px rgb(41 40 35 / 20%)`): Recorded terminal media inside its paper fold.
-- **Dark proof** (`0 12px 26px rgb(41 40 35 / 14%)`): Install command blocks against the page field.
-- **Safety note** (`0 20px 42px rgb(41 40 35 / 20%)`): The charcoal safety panel that breaks from the paper field.
+- **Paper lift** (`0 1.5rem 3.5rem rgb(74 65 53 / 12%)`): Folded paper surfaces only.
+- **Proof media** (`0 1rem 2.25rem rgb(32 31 27 / 20%)`): The real TUI recording within its fold.
+- **Courier contact** (`drop-shadow(0 0.8rem 1rem rgb(49 49 44 / 14%))`): The single supplied courier cutout.
 
 ### Named Rules
 
-**The Paper Owns the Shadow Rule.** Shadows describe a lifted sheet, proof block, or pressed action. Do not add shadow to ordinary text groups, dividers, or navigation.
+**The Paper Owns the Shadow Rule.** Shadows explain physical overlap. Ordinary text groups, disclosure rows, navigation, and archive lists remain flat.
 
 ## Shapes
 
-The system has almost no rounded rectangles. Large panels use individually authored polygon silhouettes with clipped corners, uneven edges, and slight rotation. Fine diagonal gradients and borders suggest creases inside the sheet. The only true circle is a small status marker.
+Large paper surfaces use a few asymmetrical polygon clips, slight rotations, and hairline diagonal crease gradients. The treatment is deliberately simple. It suggests a folded letter without turning each section into origami. The main action uses a restrained clipped-paper silhouette instead of rounded corners.
 
-Supporting marks are also irregular. Principle markers skew like small folded slips, the branch uses rounded ink strokes, and the primary action is a clipped paper tab. Variations should preserve legibility and semantic order, not turn every object into a different novelty shape.
+When the transcript opens, its containing proof sheet drops all rotation and clipping. The result is a flat, opaque, unrotated reading surface. FAQ disclosures stay rectangular and gain a light-paper field only while open. The system has no pills, generic rounded rectangles, or card-grid silhouette.
 
-**The Fold, Don't Frame Rule.** A content container either behaves like a sheet of paper or stays flat in the page flow. Do not substitute generic rounded cards.
+**The Fold, Don't Frame Rule.** Use a fold only for the opening letters or a major privacy boundary. Everything else stays in the page flow or uses one broad proof field.
 
 ## Components
 
 ### Actions
 
-- **Primary:** A deep-moss paper tab with warm light text, Alegreya labeling, a 3.25rem minimum height, and `0.75rem 1.25rem` padding. Its asymmetrical clipped outline replaces corner radius.
-- **Hover / Focus:** Hover lifts the tab by 2px, darkens the moss, and deepens its shadow. Active state presses it down by 1px. Keyboard focus uses the shared 3px oxide outline with a 4px offset.
-- **Text:** A strong moss text link with the ordinary link underline behavior unless its placement already supplies a clear interactive treatment.
+- **Primary:** A deep-moss clipped tab with light paper text, Alegreya labeling, a 3.5rem minimum height, and `0.8rem 1.25rem` padding.
+- **Hover / Focus:** Hover swaps to deep paper with charcoal text. Keyboard focus uses a 3px oxide outline with a 5px offset. State feedback lasts 160ms and collapses under reduced motion.
+- **Text:** Strong deep-moss body text with a conventional underline. It stays quieter than the install action.
 
-### Cards / Containers
+### Folded sheets
 
-- **Corner Style:** Individually clipped polygon edges, usually with a rotation below 2 degrees.
-- **Background:** Washi sheet for correspondence panels, terminal black for technical proof, and deep charcoal for the safety interruption.
-- **Shadow Strategy:** Only lifted paper and proof blocks use the named shadows.
-- **Border:** Fine branch-colored rules separate lists and suggest paper edges. They remain translucent.
-- **Internal Padding:** Usually 2rem through 4rem, with fluid padding on large folds.
+- **Shape:** Each major sheet has its own restrained polygon silhouette and rotation of about one degree or less.
+- **Background:** Light paper with repeated washi texture and two fine crease gradients.
+- **Depth:** Use paper lift. Folds do not become a repeated card family.
+- **Opening pair:** One fold carries the promise and primary action. One carries the real TUI recording and transcript.
 
-### Navigation
+### Terminal proof and transcript
 
-The wordmark sits on the left of a quiet top rule. Alegreya links sit on the right with generous spacing. Hover and keyboard focus draw a thin moss underline from left to right. On narrow screens, the middle link may hide while the download path stays available.
+The recording uses native video controls, a poster, captions, fallback text, and an adjacent native transcript disclosure. The proof remains real TUI evidence, never a redrawn terminal or browser mockup.
 
-### Terminal proof
+Opening the transcript removes clipping and rotation from the whole proof sheet, then gives the transcript a light-paper reading field with `1.25rem` padding. The change has no animation. The expanded state must remain opaque and text must not overlap or bleed outside its surface.
 
-Terminal evidence uses warm parchment text on terminal black, a thin translucent border, and a compact shadow. Video remains a real recording with controls, poster, captions, fallback copy, and a visible transcript disclosure. Install commands use the same dark proof language and a system monospace stack.
+### Install and archive controls
 
-### Disclosure rows
+The package-manager block is one broad proof-charcoal field with a large literary heading and literal commands in monospace. Native disclosures reveal the verified POSIX and PowerShell installers. The manual archive section follows it, grouped by operating system. Moss artifact actions pair architecture and format, while the full SHA-256 value remains visible below each action.
 
-FAQ and transcript disclosures use native `details` and `summary`. Thin branch rules establish rhythm. The summary label is Alegreya for FAQ questions and a strong Atkinson label inside terminal evidence. The browser marker remains intact.
+### Disclosure grid
 
-### Courier and branch
+The FAQ heading sits immediately above the disclosures. The disclosures form a balanced two-column grid with a modest row gap on wide screens and one column below 58rem. Native markers remain visible. Open rows use a light-paper background; closed rows stay flat on the page.
 
-The branch is an authored, irregular SVG with round joins and a paper-aware brown. The supplied squirrel courier appears once, where delivery moves from promise to terminal proof. It is an event marker, not a mascot repeated around the page.
+### Navigation and footer
+
+The supplied wordmark anchors the left side of a spacious header. Plain Alegreya links align right and reveal their underline on hover or focus. The smallest viewport hides only "How it works" so Privacy and Download remain available. The footer is a flat deep-moss field with the license and project links.
+
+### Courier
+
+Use the supplied squirrel courier once between the promise and proof folds. It is a delivery cue, not a repeated mascot. It ignores pointer input and stays clear of usable content.
 
 ## Do's and Don'ts
 
 ### Do:
 
-- **Do** use broad negative space and varied paper scale to establish hierarchy.
-- **Do** keep text horizontal, crisp, and independent of decorative overlap.
-- **Do** pair every terminal recording with controls, captions, fallback text, and a transcript.
-- **Do** preserve visible focus and collapse transitions to `0.01ms` when reduced motion is requested.
-- **Do** use the supplied wordmark and courier artwork without redrawing their identity.
+- **Do** keep the opening promise and real TUI proof on two quiet folded sheets.
+- **Do** use broad negative space and editorial grids to separate ideas.
+- **Do** keep the courier clear of text, media controls, and focus outlines.
+- **Do** flatten the proof sheet into an opaque, unrotated reading surface when its transcript opens.
+- **Do** place package-manager installation before manual archives and SHA-256 verification.
+- **Do** keep the FAQ heading directly above its two-column disclosure grid, then collapse that grid to one column on mobile.
+- **Do** preserve native controls, visible focus, captions, fallback text, semantic order, and reduced-motion behavior.
 
 ### Don't:
 
-- **Don't** turn the page into a dashboard, a stack of rounded SaaS cards, or a fake browser client.
-- **Don't** add gratuitous entrance animation, parallax, drifting paper, or branch motion.
-- **Don't** repeat the courier outside a meaningful delivery moment.
-- **Don't** use Japanese pastiche, invented cultural claims, or decorative motifs that imply authenticity.
-- **Don't** let texture, folds, branch strokes, or low contrast interfere with copy, controls, or verification data.
+- **Don't** add glows, a slogan stack, a rounded-card grid, or a page-wide branch.
+- **Don't** make the website look or behave like a browser participant client.
+- **Don't** rotate readable text, expanded transcripts, commands, or verification data.
+- **Don't** repeat or redraw the courier.
+- **Don't** add Japanese pastiche or imply that the coined name is a claim of cultural authenticity.
+- **Don't** animate disclosure content, drifting paper, courier movement, or decorative folds.

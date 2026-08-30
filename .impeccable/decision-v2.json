@@ -1,0 +1,88 @@
+{
+  "title": "Choose Orifude's new visual world",
+  "question": "The current site keeps its product truth and brand palette, but loses the border-heavy interface styling. Choose the printed world that should carry the exchange.",
+  "options": [
+    {
+      "id": "assigned",
+      "label": "Woodland broadside",
+      "kicker": "THE ROLL",
+      "lineage": "relief-printed folktale broadsides and independent press posters",
+      "thesis": "One bold printed sheet makes a private letter feel like an event worth releasing.",
+      "palette": ["#292823", "#fbf7f1", "#626851", "#a48b68"],
+      "materials": ["warm uncoated paper", "dense relief ink", "one supplied courier illustration"],
+      "viewport": "An oversized human sentence fills most of the first screen; the squirrel courier and one dark download block complete the composition without cards or framing.",
+      "risk": "The print character must stay contemporary and legible rather than becoming rustic decoration.",
+      "raised": [
+        {"from": "Bioluminescent wake", "raise": "One meaningful transition records the moment a letter leaves, while the rest of the page stays still."},
+        {"from": "Cutting bench", "raise": "The journey is edited down to three unmistakable beats instead of a long stack of sections."},
+        {"from": "Kiosk print", "raise": "Downloads use whole, confident color fields rather than bordered package cards."}
+      ],
+      "comp": ".impeccable/mocks/decision/woodland-broadside.webp"
+    },
+    {
+      "id": "model-pick",
+      "label": "Literary Sunday edition",
+      "kicker": "IMPECCABLE’S PICK",
+      "lineage": "independent literary reviews and large-format newspaper features",
+      "thesis": "Orifude reads as a beautifully edited story whose final paragraph is the download.",
+      "palette": ["#292823", "#fbf7f1", "#858a72", "#a45b52"],
+      "materials": ["soft newsprint", "large editorial photography", "restrained spot color"],
+      "viewport": "A generous two-part editorial opening pairs a large promise with the real terminal recording, then moves through a short, readable story.",
+      "risk": "It is the most familiar direction and could feel like a magazine template if the composition becomes polite.",
+      "comp": ".impeccable/mocks/decision/literary-edition.webp"
+    },
+    {
+      "id": "challenger-film",
+      "label": "Cutting-bench sequence",
+      "verdict": "declined",
+      "lineage": "film workprints and physical editing benches",
+      "thesis": "The exchange is cut into a rail of release, carry, and reply frames.",
+      "palette": ["#171814", "#fbf7f1", "#a48b68"],
+      "materials": ["coarse film grain", "grease-pencil marks", "paper flags"],
+      "viewport": "A horizontal three-frame journey leads directly to the working terminal proof.",
+      "case": "The sequence is clear, but the industrial control language does not identify with a private, gentle correspondence ritual.",
+      "kept": "A strict three-beat edit replaces repetitive explanatory sections.",
+      "risk": "Perforations, rails, and labels would recreate the thin-line and monospace clutter the redesign must remove."
+    },
+    {
+      "id": "challenger-origami",
+      "label": "Fold sequence",
+      "verdict": "declined",
+      "lineage": "instructional paper-fold diagrams",
+      "thesis": "A single sheet changes state as the visitor learns the exchange.",
+      "palette": ["#fbf7f1", "#a45b52", "#292823"],
+      "materials": ["visible paper fiber", "crease diagrams", "ink notes"],
+      "viewport": "One sheet folds from message to released letter across the opening.",
+      "case": "The mechanism is immediately clear, but an explicit Japanese craft system conflicts with the requirement not to imply cultural authenticity for a coined name.",
+      "kept": "Each product state stays distinct and recoverable.",
+      "risk": "Literal folding would overwhelm the actual one-to-one correspondence promise."
+    },
+    {
+      "id": "challenger-kiosk",
+      "label": "Three-ink kiosk",
+      "verdict": "declined",
+      "lineage": "restricted-ink public ephemera and package labels",
+      "thesis": "Each platform release is a strongly printed object in one shared system.",
+      "palette": ["#292823", "#fbf7f1", "#626851"],
+      "materials": ["recycled board", "off-register ink", "geometric marks"],
+      "viewport": "A compact product statement sits above whole-field platform packages.",
+      "case": "It makes distribution strong, but turns the emotional exchange into a package catalog.",
+      "kept": "Whole color fields give downloads enough visual authority without bordered cards.",
+      "risk": "A repeated cell grid would feel like another component library."
+    }
+  ],
+  "reroll": {"registers": ["safer", "bolder"]},
+  "buildPath": {"value": "comp", "toggle": true},
+  "canon": true,
+  "outcome": "Superseded by direct user feedback. The shipped direction returns to the simpler folded-letter composition recorded in .impeccable/mocks/folded-branch-approved.png, without the page-wide branch, oversized slogan treatment, or overlapping proof.",
+  "canonCard": {
+    "label": "Polished product landing page",
+    "thesis": "A conventional product page explains, demonstrates, and distributes Orifude with excellent restraint.",
+    "palette": ["#fbf7f1", "#292823", "#626851"],
+    "materials": ["clean editorial grid", "real terminal recording", "plain download controls"],
+    "viewport": "A concise headline, a direct download action, and a polished terminal screenshot follow the expected landing-page hierarchy.",
+    "risk": "It would be easy to use, but intentionally less ownable and memorable.",
+    "comp": ".impeccable/mocks/decision/category-canon.webp"
+  },
+  "steer": true
+}

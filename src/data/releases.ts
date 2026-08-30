@@ -100,11 +100,54 @@ export type Release = z.infer<typeof releaseSchema>;
 export type Artifact = z.infer<typeof artifactSchema>;
 
 export const currentRelease = releaseSchema.parse({
-  status: "preparing",
+  status: "published",
   version: "v0.2.0",
-  publishedAt: null,
-  checksumURL: null,
-  artifacts: [],
+  publishedAt: "2026-08-29",
+  checksumURL: `${releaseBaseURL}/v0.2.0/checksums.txt`,
+  artifacts: [
+    {
+      os: "linux",
+      arch: "amd64",
+      format: "tar.gz",
+      url: `${releaseBaseURL}/v0.2.0/orifude_0.2.0_linux_amd64.tar.gz`,
+      sha256: "031d0745469418c3d3c8946e777e6456f52a95ee3e5afc5ff4bd906fc2490873",
+    },
+    {
+      os: "linux",
+      arch: "arm64",
+      format: "tar.gz",
+      url: `${releaseBaseURL}/v0.2.0/orifude_0.2.0_linux_arm64.tar.gz`,
+      sha256: "1ef37a506e9aead816a232c86b6fd29c91204ceed31ef32b7a1be8c001acff00",
+    },
+    {
+      os: "darwin",
+      arch: "amd64",
+      format: "tar.gz",
+      url: `${releaseBaseURL}/v0.2.0/orifude_0.2.0_darwin_amd64.tar.gz`,
+      sha256: "b87bfd54bebbfc80331c5510bef67d1646c6c323696ff3b1c3faeca142c17230",
+    },
+    {
+      os: "darwin",
+      arch: "arm64",
+      format: "tar.gz",
+      url: `${releaseBaseURL}/v0.2.0/orifude_0.2.0_darwin_arm64.tar.gz`,
+      sha256: "dbb964b90cb10e468a6b1e6725cfc77cc9c28cddb020bada32b92ad93d45c027",
+    },
+    {
+      os: "windows",
+      arch: "amd64",
+      format: "zip",
+      url: `${releaseBaseURL}/v0.2.0/orifude_0.2.0_windows_amd64.zip`,
+      sha256: "2e82b72d99036b8f7530d16897bd461509ec733a4eef1cd8fe7e6ffc40a92c17",
+    },
+    {
+      os: "windows",
+      arch: "arm64",
+      format: "zip",
+      url: `${releaseBaseURL}/v0.2.0/orifude_0.2.0_windows_arm64.zip`,
+      sha256: "428986437be69d17b535bf93d7e041df23db553b7df68c717ac560b4d0b32af1",
+    },
+  ],
 });
 
 export const platformNames = {
