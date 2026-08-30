@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 
-import { releaseSchema } from "./releases.ts";
+import { changelogReleases } from "./changelog.ts";
+import { currentRelease, releaseSchema } from "./releases.ts";
 
 const hash = "a".repeat(64);
 const version = "v0.2.0";
@@ -44,5 +45,11 @@ assert.equal(releaseSchema.safeParse(mutableURL).success, false);
 const wrongWindowsFormat = structuredClone(validPublishedRelease);
 wrongWindowsFormat.artifacts[4].format = "tar.gz";
 assert.equal(releaseSchema.safeParse(wrongWindowsFormat).success, false);
+
+assert.equal(changelogReleases[0]?.version, currentRelease.version);
+assert.equal(
+  new Set(changelogReleases.map((release) => release.version)).size,
+  changelogReleases.length,
+);
 
 process.stdout.write("release metadata validation passed\n");

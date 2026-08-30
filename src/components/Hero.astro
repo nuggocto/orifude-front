@@ -2,10 +2,16 @@
 import wordmark160 from "../assets/orifude-wordmark-160.webp";
 import wordmark240 from "../assets/orifude-wordmark-240.webp";
 import wordmark480 from "../assets/orifude-wordmark-480.webp";
+
+interface Props {
+  current?: "home" | "changelog";
+}
+
+const { current = "home" } = Astro.props;
 ---
 
 <header class="site-header" aria-label="Primary navigation">
-  <a class="brand-link" href="#top" aria-label="Orifude home">
+  <a class="brand-link" href="/" aria-label="Orifude home">
     <img
       src={wordmark240.src}
       srcset={`${wordmark160.src} 160w, ${wordmark240.src} 240w, ${wordmark480.src} 480w`}
@@ -17,13 +23,13 @@ import wordmark480 from "../assets/orifude-wordmark-480.webp";
       decoding="sync"
     />
   </a>
-  <nav class="site-nav" aria-label="Page sections">
-    <a class="site-nav__link" href="#journey">How it works</a>
-    <a class="site-nav__link" href="#download">Download</a>
+  <nav class="site-nav" aria-label="Site navigation">
+    <a class="site-nav__link" href="/#journey">How it works</a>
+    <a class="site-nav__link" href="/#download">Download</a>
     <a
       class="site-nav__button site-nav__button--quiet"
-      href="https://github.com/nuggocto/orifude/blob/shrek/CHANGELOG.md"
-      aria-label="Read the Orifude changelog on GitHub"
+      href="/changelog"
+      aria-current={current === "changelog" ? "page" : undefined}
     >
       Changelog
     </a>

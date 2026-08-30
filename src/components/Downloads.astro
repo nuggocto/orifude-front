@@ -17,10 +17,6 @@ const systems = ["linux", "darwin", "windows"] as const;
   <div class="install-paths" aria-labelledby="install-title">
     <div class="install-paths__intro">
       <h3 id="install-title">Start with your package manager.</h3>
-      <p>
-        Homebrew, Scoop, and the AUR install the same published release and
-        verify the archive selected for your machine.
-      </p>
     </div>
 
     <div class="install-command">
@@ -36,19 +32,26 @@ scoop install nuggocto/orifude
 paru -S orifude-bin</code></pre>
     </div>
 
-    <details>
-      <summary>Use the verified POSIX shell installer.</summary>
-      <pre><code>curl -fsSLo install-orifude.sh https://orifude.com/install.sh
+    <div class="install-options">
+      <details>
+        <summary>Use the verified POSIX shell installer.</summary>
+        <pre><code>curl -fsSLo install-orifude.sh https://orifude.com/install.sh
 less install-orifude.sh
 sh install-orifude.sh --version 0.2.0</code></pre>
-    </details>
+      </details>
 
-    <details>
-      <summary>Use the verified PowerShell installer.</summary>
-      <pre><code>Invoke-WebRequest https://orifude.com/install.ps1 -OutFile install-orifude.ps1
+      <details>
+        <summary>Use the verified PowerShell installer.</summary>
+        <pre><code>Invoke-WebRequest https://orifude.com/install.ps1 -OutFile install-orifude.ps1
 Get-Content .\install-orifude.ps1
 .\install-orifude.ps1 -Version 0.2.0</code></pre>
-    </details>
+      </details>
+
+      <p>
+        Homebrew, Scoop, and the AUR install the same published release and
+        verify the archive selected for your machine.
+      </p>
+    </div>
   </div>
 
   <div class="archive-intro">

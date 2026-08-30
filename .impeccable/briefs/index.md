@@ -15,6 +15,10 @@
   and real terminal proof, with the supplied courier resting between them.
   There is no page-wide branch, slogan stack, card grid, glow, or decorative
   technical chrome.
+- Shared navigation: the wordmark returns home; landing section links target
+  `/#journey` and `/#download`; Changelog and GitHub remain visible when those
+  section links leave the header below 58rem. The shared footer closes both
+  routes.
 - Approved reference: `.impeccable/mocks/folded-branch-approved.png`, simplified
   in response to direct user feedback.
 - Memorable moment: the courier carries one folded letter between the human
@@ -35,7 +39,8 @@
 | Release action | One direct install action on the promise sheet | Semantic anchor and CSS |
 | Terminal proof | The real compose, release, claim, unfold, reply, and keepsake journey | Existing VHS WebM, poster, and adjacent transcript |
 | Product story | Three editorial beats with distinct scale, not repeated equal cards | Semantic sections and lists |
-| Privacy boundary | One folded paper section states service-side decryption honestly | Semantic HTML and CSS |
+| Privacy boundary | One folded paper section states service-side decryption honestly; its compact two-column introduction faces inward before the wider fact columns | Semantic HTML and CSS |
+| Package-manager proof | Commands sit left of verified installer disclosures on desktop; the package explanation follows those disclosures, and all three groups reflow in semantic order below 58rem | Semantic HTML, native disclosures, and CSS grid |
 | Download records | Six platform artifacts and hashes remain scannable without a grid of bordered cards | Semantic groups and code text |
 
 ## Sampled visual record

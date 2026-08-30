@@ -78,7 +78,7 @@ components:
 
 **Creative North Star: "The letter in transit"**
 
-Orifude makes a private exchange tangible through two folded sheets and the supplied squirrel courier moving between them. The opening places a human promise beside a real TUI recording. The rest of the page settles into a spacious editorial rhythm, so privacy limits, install paths, and checksums read as plainly as the invitation.
+Orifude makes a private exchange tangible through two folded sheets and the supplied squirrel courier moving between them. The opening places a human promise beside a real TUI recording. The rest of the site settles into a spacious editorial rhythm, so privacy limits, install paths, checksums, and release history read as plainly as the invitation.
 
 Warm paper, charcoal ink, muted moss, and readable literary type give the site a handled quality without turning it into a scrapbook or period piece. Fold lines are sparse and structural. The courier appears once, and every decorative layer yields to text, controls, and product evidence.
 
@@ -88,6 +88,7 @@ Warm paper, charcoal ink, muted moss, and readable literary type give the site a
 - Alegreya carries invitations and section structure; Atkinson Hyperlegible Next carries facts and limits.
 - Warm paper and charcoal dominate, with moss for action and clay for quiet status.
 - Long sections use open editorial grids rather than repeated cards.
+- Release history uses one quiet introductory fold followed by flat editorial notes.
 - The courier marks delivery once and never crosses copy, video controls, or focus outlines.
 
 ## Colors
@@ -145,11 +146,13 @@ The palette stays warm and low-chroma. Paper and charcoal carry most of the page
 
 ## Layout
 
-The header is capped at 100rem. The opening uses an asymmetric two-column grid up to 94rem wide: a larger promise fold and a narrower proof fold, separated by enough room for the courier. Supporting sections usually use an 84rem editorial measure with a statement on one side and evidence on the other. The privacy section returns to a broad 94rem folded sheet.
+The shared header is capped at 100rem. The opening uses an asymmetric two-column grid up to 94rem wide: a larger promise fold and a narrower proof fold, separated by enough room for the courier. Supporting sections usually use an 84rem editorial measure with a statement on one side and evidence on the other. The privacy section returns to a broad 94rem folded sheet. Its introduction uses a tighter two-column alignment, with the inset heading and explanation facing inward before the facts open into a wider pair below.
 
-Spacing is generous and variable. Section gaps commonly grow from 7rem to 13rem, while panel padding grows from 2rem to 9rem. This scale change provides hierarchy without a page full of frames. The package-manager panel appears before the manual archive and checksum controls. The FAQ heading sits directly above a balanced two-column disclosure grid.
+Spacing is generous and variable. Section gaps commonly grow from 7rem to 13rem, while panel padding grows from 2rem to 9rem. This scale change provides hierarchy without a page full of frames. The package-manager panel appears before the manual archive and checksum controls. On desktop, its heading and commands occupy the left column while installer disclosures occupy the right; the package explanation sits beneath those disclosures. The FAQ heading sits directly above a balanced two-column disclosure grid.
 
-At 58rem, the opening and content grids become a single semantic column, sticky copy returns to normal flow, and the FAQ becomes one column. Section links leave the header while the Changelog and GitHub actions remain available. At 38rem, the root becomes 16px, fold padding tightens, and install content reaches the narrow viewport edge without clipping commands. Decorative folds flatten on narrow screens so they cannot crop text or controls. Text remains horizontal and readable at every size.
+The changelog uses the same header, footer, page field, and 84rem editorial measure. A quiet folded introduction opens the route. Each release then uses a flat two-column reading layout with a sticky version header beside grouped notes. Release notes do not introduce a separate visual system.
+
+At 58rem, the opening and content grids become a single semantic column, sticky copy returns to normal flow, and the FAQ becomes one column. The install panel reflows in semantic order: heading, commands, then installer disclosures and their explanation. Changelog releases also become a linear reading flow with static release headers. Section links leave the shared header while the Changelog and GitHub actions remain available. At 38rem, the root becomes 16px, fold padding tightens, and install content reaches the narrow viewport edge without clipping commands. Decorative folds flatten on narrow screens so they cannot crop text or controls. Text remains horizontal and readable at every size.
 
 **The Clear Passage Rule.** The courier may rest between the two opening folds, but it never crosses text, the recording, controls, or a focus outline. Do not add a page-wide branch.
 
@@ -200,7 +203,7 @@ Opening the transcript removes clipping and rotation from the whole proof sheet,
 
 ### Install and archive controls
 
-The package-manager block is one broad proof-charcoal field with a large literary heading and literal commands in monospace. Native disclosures reveal the verified POSIX and PowerShell installers. The manual archive section follows it, grouped by operating system. Moss artifact actions pair architecture and format, while the full SHA-256 value remains visible below each action.
+The package-manager block is one broad proof-charcoal field. On desktop, the large literary heading and literal monospace commands sit on the left. Native disclosures for the verified POSIX and PowerShell installers sit on the right, with the package-manager explanation beneath them. Below 58rem, those groups become one column in the same semantic order. The manual archive section follows, grouped by operating system. Moss artifact actions pair architecture and format, while the full SHA-256 value remains visible below each action.
 
 ### Disclosure grid
 
@@ -208,7 +211,11 @@ The FAQ heading sits immediately above the disclosures. The disclosures form a b
 
 ### Navigation and footer
 
-The supplied wordmark anchors the left side of a spacious header. Section links align right and reveal their underline on hover or focus. Changelog and GitHub use compact moss actions and remain visible at every supported width. Section links disappear below 58rem so the permanent actions fit without clipping. The footer is a flat deep-moss field with the license and project links.
+The supplied wordmark anchors the left side of the shared header and always returns home. Section links target the landing-page journey and download anchors, so they work from either route, and reveal their underline on hover or focus. Changelog and GitHub use compact actions and remain visible at every supported width. Changelog takes the current-page treatment on its own route. Section links disappear below 58rem so the permanent actions fit without clipping. Both routes end with the same flat deep-moss footer, license statement, and project links.
+
+### Changelog release notes
+
+The changelog is a Read-mode route within the same warm-paper, charcoal, and muted-moss identity. One quiet folded introduction establishes the page, then release history returns to the page field. Each desktop release pairs a sticky version, date, and source link with flat grouped notes. Below 58rem, the header becomes static and the release reads from top to bottom in one column.
 
 ### Courier
 
@@ -223,6 +230,9 @@ Use the supplied squirrel courier once between the promise and proof folds. It i
 - **Do** keep the courier clear of text, media controls, and focus outlines.
 - **Do** flatten the proof sheet into an opaque, unrotated reading surface when its transcript opens.
 - **Do** place package-manager installation before manual archives and SHA-256 verification.
+- **Do** keep package commands left of installer disclosures on desktop, with the package explanation beneath the disclosures, then preserve their semantic order in one column on mobile.
+- **Do** keep the privacy introduction compact and inward-facing before its wider facts.
+- **Do** keep changelog release headers sticky beside flat notes on desktop and static above them on mobile.
 - **Do** keep the FAQ heading directly above its two-column disclosure grid, then collapse that grid to one column on mobile.
 - **Do** preserve native controls, visible focus, fallback text, the adjacent transcript, semantic order, and reduced-motion behavior.
 

@@ -38,7 +38,9 @@ TypeScript, and the production build.
 ## Configuration
 
 The initial site requires no environment variables. Release metadata is
-checked into `src/data/releases.ts` and validated with Zod during the build.
+checked into `src/data/releases.ts`, while the matching public release notes
+live in `src/data/changelog.ts`. The build validates the release metadata and
+requires the newest changelog entry to match the published version.
 Cloudflare Pages runs `pnpm build` and publishes `dist` without a post-office
 secret, database binding, or API token. Its small Pages middleware redirects
 `www.orifude.com` to the canonical apex while preserving the path and query.
