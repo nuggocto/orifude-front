@@ -44,9 +44,3 @@ requires the newest changelog entry to match the published version.
 Cloudflare Pages runs `pnpm build` and publishes `dist` without a post-office
 secret, database binding, or API token. Its small Pages middleware redirects
 `www.orifude.com` to the canonical apex while preserving the path and query.
-
-## Assets
-
-Optimized site assets are derived from the original Orifude artwork without
-changing the source files. Their origins and generated recording inputs are
-recorded in [`ASSETS.md`](ASSETS.md).
