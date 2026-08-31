@@ -1,5 +1,0 @@
-{
-  "prompt": "Origin: /home/nuggocto/Pictures/Orifude/Orifude-watermark.png. The supplied wordmark was isolated, trimmed, and resized without altering the artwork.",
-  "source": "/home/nuggocto/Pictures/Orifude/Orifude-watermark.png",
-  "operation": "Removed the white matte, trimmed empty bounds, resized to 1200px wide, and encoded as lossless-alpha WebP without altering the supplied original."
-}

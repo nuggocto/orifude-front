@@ -1,8 +1,0 @@
-{
-  "categories": {
-    "correctness": "error",
-    "perf": "warn",
-    "suspicious": "warn"
-  },
-  "ignorePatterns": ["dist/**", ".astro/**", "node_modules/**"]
-}

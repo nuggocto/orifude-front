@@ -1,3 +1,0 @@
-{
-  "ignorePatterns": ["dist/**", ".astro/**", "node_modules/**"]
-}
