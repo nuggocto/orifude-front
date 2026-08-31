@@ -2,7 +2,7 @@
   "name": "holding-page",
   "private": true,
   "scripts": {
-    "build": "mkdir -p dist && cp index.html dist/index.html"
+    "build": "mkdir -p dist && cp index.html dist/index.html && cp index.html dist/404.html"
   },
   "packageManager": "pnpm@11.3.0"
 }
