@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
 
-// Synthetic release data stays in tests; the public site has no published releases.
+// Synthetic release data stays in tests and never enables public downloads.
 export const changelog = `# Changelog
 
 ## Unreleased

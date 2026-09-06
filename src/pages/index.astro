@@ -16,7 +16,9 @@ import { latestRelease } from '../lib/content';
       <p class="hero-description">Fold a small sheet, brush ink through its layers, and open it to find the pattern.</p>
       <div class="hero-actions">
         <a href="#how-it-works" class="button">See how it folds <Arrow direction="down" /></a>
-        <a href="https://github.com/nuggocto/orifude" class="text-link">Explore the source <Arrow direction="out" /></a>
+        {latestRelease
+          ? <a href="#get-orifude" class="text-link">Get Orifude <Arrow direction="down" /></a>
+          : <a href="https://github.com/nuggocto/orifude" class="text-link">Explore the source <Arrow direction="out" /></a>}
       </div>
       <p class="hero-status">{latestRelease ? `Version ${latestRelease.version} is ready to unfold.` : 'The first release is taking shape.'} <a href="/changelog/">Read the notes <span aria-hidden="true">↗</span></a></p>
     </div>

@@ -5,7 +5,11 @@ test('a published release exposes only reviewed instructions and escapes its not
   const context = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 390, height: 844 } });
   try {
     const page = await context.newPage();
-    await page.goto('http://127.0.0.1:4332/changelog/');
+    await page.goto('http://127.0.0.1:4332/');
+    await page.getByRole('link', { name: 'Get Orifude', exact: true }).click();
+    await expect(page).toHaveURL(/#get-orifude$/);
+    await expect(page.getByRole('heading', { name: 'Make yourself at home.' })).toBeVisible();
+    await page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Changelog' }).click();
     await expect(page.getByRole('heading', { name: 'Orifude 1.0.0' })).toBeVisible();
     await expect(page.getByText('A <script>alert(1)</script> stays plain text.')).toBeVisible();
     await expect(page.locator('script')).toHaveCount(0);
