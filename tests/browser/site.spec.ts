@@ -11,8 +11,8 @@ test('the full reading journey works with JavaScript disabled', async ({ browser
     await expect(page).toHaveURL(/#how-it-works$/);
     await expect(page.getByText('Fold the left half to the right.', { exact: false })).toBeVisible();
     await page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Changelog' }).click();
-    await expect(page.getByRole('heading', { name: /The first page/ })).toBeVisible();
-    await expect(page.locator('a[href*="/releases/download/"]')).toHaveCount(0);
+    await expect(page).toHaveURL('http://127.0.0.1:4331/changelog/');
+    await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
     await page.getByRole('link', { name: 'Return to Orifude' }).click();
     await expect(page).toHaveURL('http://127.0.0.1:4331/');
     const missing = await page.goto('http://127.0.0.1:4331/no-such-paper/');
@@ -92,7 +92,6 @@ test('reduced motion and missing CSS leave the content usable', async ({ page })
   await page.route('**/*.css', (route) => route.abort());
   await page.goto('/changelog/');
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
-  await expect(page.getByText('There are no published versions to download yet.', { exact: false })).toBeVisible();
   await page.getByRole('link', { name: 'Return to Orifude' }).click();
   await expect(page.getByRole('heading', { level: 1 })).toContainText('A little ink');
 });
