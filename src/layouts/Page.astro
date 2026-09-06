@@ -1,0 +1,60 @@
+---
+import { Image } from 'astro:assets';
+import wordmark from '../assets/wordmark.png';
+import Arrow from '../components/Arrow.astro';
+import '../styles/site.css';
+
+interface Props { title: string; description: string; page?: 'home' | 'changelog' | 'missing'; }
+const { title, description, page = 'home' } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#f3efe6" />
+    <meta name="color-scheme" content="light" />
+    {page === 'missing' ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Orifude" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content="https://orifude.com/social.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Orifude, an offline folding and ink puzzle for the terminal, with its squirrel courier." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header wrap">
+      <a href="/" class="wordmark" aria-label="Orifude home">
+        <Image src={wordmark} alt="" width={560} format="webp" loading="eager" />
+      </a>
+      <nav aria-label="Main navigation">
+        <a href="/#how-it-works">How to play</a>
+        <a href="/changelog/" aria-current={page === 'changelog' ? 'page' : undefined}>Changelog</a>
+        <a class="nav-source" href="https://github.com/nuggocto/orifude">GitHub <Arrow direction="out" /></a>
+      </nav>
+    </header>
+    <main id="main" tabindex="-1"><slot /></main>
+    <footer class="site-footer wrap">
+      <div>
+        <a class="footer-name" href="/">orifude</a>
+        <p>Inspired by folding and brushwork.<br />Made to be played at your own pace.</p>
+      </div>
+      <div class="footer-links">
+        <a href="https://github.com/nuggocto/orifude">Source on GitHub <Arrow direction="out" /></a>
+        <a href="/changelog/">Changelog</a>
+        <a href="https://github.com/nuggocto/orifude/blob/shrek/LICENSE">Apache 2.0 license</a>
+      </div>
+      <p class="footer-note">The artwork belongs to Orifude.<br /><a href="/font-licenses.txt">Typeface credits</a></p>
+    </footer>
+  </body>
+</html>

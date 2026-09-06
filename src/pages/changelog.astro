@@ -1,0 +1,29 @@
+---
+import { Image } from 'astro:assets';
+import Page from '../layouts/Page.astro';
+import Arrow from '../components/Arrow.astro';
+import Install from '../components/Install.astro';
+import icon from '../assets/icon.png';
+import { releases, latestRelease } from '../lib/content';
+import { categories } from '../lib/releases';
+const readableDate = (date: string) => new Intl.DateTimeFormat('en', { dateStyle: 'long', timeZone: 'UTC' }).format(new Date(`${date}T00:00:00Z`));
+---
+<Page title="Changelog — Orifude" description="The published release notes for Orifude, an offline folding and ink puzzle for the terminal." page="changelog">
+  <div class="wrap changelog-page">
+    <header class="changelog-heading"><span class="eyebrow">Notes from the branch</span><h1>Every release<br />leaves a mark.</h1><p>Each published version has a home here, with its changes, source, and verified downloads.</p></header>
+    {releases.length === 0 ? <section class="empty-release" aria-labelledby="first-release-title">
+      <Image src={icon} alt="" width={360} format="webp" loading="eager" />
+      <div><span class="eyebrow">Before the first release</span><h2 id="first-release-title">The first page is<br />still being written.</h2><p>Orifude is being prepared for its first puzzle-game release. There are no published versions to download yet.</p><a class="text-link" href="https://github.com/nuggocto/orifude/blob/shrek/CHANGELOG.md">Read the development notes <Arrow direction="out" /></a></div>
+    </section> : <>
+      <nav class="release-index" aria-label="Release versions">{releases.map((release) => <a href={`#v${release.version}`}>{release.version}</a>)}</nav>
+      {releases.map((release) => <article class="release-paper" id={`v${release.version}`}>
+        <header><span class="eyebrow"><time datetime={release.date}>{readableDate(release.date)}</time></span><h2>Orifude {release.version}</h2><p class="release-summary">{release.summary}</p></header>
+        {categories.filter((category) => release.changes[category].length > 0).map((category) => <section><h3>{category}</h3><ul>{release.changes[category].map((change) => <li>{change}</li>)}</ul></section>)}
+        <p class="release-links"><a href={release.url}>GitHub release <Arrow direction="out" /></a><a href={release.tagUrl}>Source tag</a><a href={release.sourceUrl}>Canonical notes</a></p>
+        <p class="small-copy">Verified channels: {release.channels.length ? release.channels.map((channel) => ({ posix: 'POSIX installer', powershell: 'PowerShell', homebrew: 'Homebrew', scoop: 'Scoop', aur: 'orifude-bin' })[channel]).join(', ') : 'Direct release archives'}.</p>
+      </article>)}
+    </>}
+    <a class="back-home text-link" href="/">Return to Orifude <Arrow /></a>
+  </div>
+  {latestRelease && <Install release={latestRelease} />}
+</Page>

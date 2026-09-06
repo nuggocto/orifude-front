@@ -1,0 +1,62 @@
+---
+const steps = [
+  { title: 'Look for the pattern.', description: 'Two marks sit side by side. Your paper starts flat and dry.' },
+  { title: 'Bring the edges together.', description: 'Fold the left half to the right. It settles on top of the other half.' },
+  { title: 'Let one dot travel.', description: 'Touch the brush to the stack. Ink passes through both layers.' },
+  { title: 'Open something lovely.', description: 'Unfold the paper. One dot becomes two, exactly where they belong.' },
+];
+const cells = Array.from({ length: 16 }, (_, index) => ({ x: index % 4, y: Math.floor(index / 4), ink: index === 5 || index === 6 }));
+---
+<ol class="fold-sequence">
+  {steps.map((step, index) => (
+    <li>
+      <div class="fold-drawing">
+        <svg viewBox="0 0 260 230" role="img" aria-labelledby={`fold-title-${index}`}>
+          <title id={`fold-title-${index}`}>{[
+            'A target with two adjacent ink marks in its second row, beside a blank four-by-four paper.',
+            'The left half folds across the center crease onto the right half, leaving two stacked columns.',
+            'A single brush mark reaches the top layer and the bottom layer underneath it.',
+            'The opened four-by-four paper has ink in columns two and three of the second row, matching the target.',
+          ][index]}</title>
+          {index === 0 && <>
+            <text x="57" y="52" text-anchor="middle" class="diagram-label">Target</text>
+            <text x="181" y="52" text-anchor="middle" class="diagram-label">Your paper</text>
+            {cells.map((cell) => <>
+              <rect x={17 + cell.x * 20} y={83 + cell.y * 20} width="20" height="20" class="paper-cell target-cell" />
+              {cell.ink && <circle cx={27 + cell.x * 20} cy={93 + cell.y * 20} r="5" class="ink-dot" />}
+              <rect x={121 + cell.x * 30} y={63 + cell.y * 30} width="30" height="30" class="paper-cell" />
+            </>)}
+          </>}
+          {index === 1 && <>
+            <path d="M50 65h80v140H50Z" class="vacated-paper" />
+            <path d="M135 68h80v140h-80Z" class="paper-under" />
+            {cells.filter((cell) => cell.x >= 2).map((cell) => <rect x={50 + cell.x * 40} y={65 + cell.y * 35} width="40" height="35" class="paper-cell" />)}
+            <path d="M130 62v145" class="crease" />
+            <path d="M61 48c21-38 85-40 111-1m-2-18 3 20-21-2" class="fold-arrow" />
+          </>}
+          {index === 2 && <>
+            <text x="14" y="83" class="diagram-label">Top</text>
+            <text x="14" y="159" class="diagram-label">Bottom</text>
+            <path d="m76 143 126-15 34 45-126 15Z" class="paper-under" />
+            <path d="m76 71 126-15 34 45-126 15Z" class="stack-top" />
+            <path d="M153 22v131" class="ink-through" />
+            <ellipse cx="153" cy="87" rx="12" ry="9" class="ink-dot" />
+            <ellipse cx="153" cy="157" rx="12" ry="9" class="ink-dot" />
+            <path d="m147 139 6 13 6-13" class="fold-arrow" />
+          </>}
+          {index === 3 && <>
+            {cells.map((cell) => <>
+              <rect x={50 + cell.x * 40} y={40 + cell.y * 40} width="40" height="40" class="paper-cell" />
+              {cell.ink && <circle cx={70 + cell.x * 40} cy={60 + cell.y * 40} r="10" class="ink-dot" />}
+            </>)}
+            <path d="M130 39v161" class="opened-crease" />
+          </>}
+        </svg>
+      </div>
+      <div class="fold-caption">
+        <span class="step-number" aria-hidden="true">0{index + 1}</span>
+        <div><h3>{step.title}</h3><p>{step.description}</p></div>
+      </div>
+    </li>
+  ))}
+</ol>

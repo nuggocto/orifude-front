@@ -1,0 +1,62 @@
+---
+import { Image } from 'astro:assets';
+import Page from '../layouts/Page.astro';
+import Arrow from '../components/Arrow.astro';
+import FoldSequence from '../components/FoldSequence.astro';
+import Install from '../components/Install.astro';
+import courier from '../assets/courier.png';
+import terminal from '../assets/terminal.png';
+import { latestRelease } from '../lib/content';
+---
+<Page title="Orifude — A little ink goes a long way" description="Fold a small paper, brush ink through its layers, and unfold the pattern. Orifude is a quiet, offline puzzle game for your terminal.">
+  <section class="hero wrap" aria-labelledby="hero-title">
+    <div class="hero-copy">
+      <p class="eyebrow"><span class="ink-seed" aria-hidden="true"></span> A folding & ink puzzle for your terminal</p>
+      <h1 id="hero-title">A little ink<br />goes a <em>long way.</em></h1>
+      <p class="hero-description">Fold a small sheet, brush ink through its layers, and open it to find the pattern.</p>
+      <div class="hero-actions">
+        <a href="#how-it-works" class="button">See how it folds <Arrow direction="down" /></a>
+        <a href="https://github.com/nuggocto/orifude" class="text-link">Explore the source <Arrow direction="out" /></a>
+      </div>
+      <p class="hero-status">{latestRelease ? `Version ${latestRelease.version} is ready to unfold.` : 'The first release is taking shape.'} <a href="/changelog/">Read the notes <span aria-hidden="true">↗</span></a></p>
+    </div>
+    <div class="hero-art">
+      <Image src={courier} alt="A squirrel holding folded paper sits on a branch inside a hand-painted brush circle." widths={[400, 640, 900, 1254]} sizes="(max-width: 700px) 92vw, (max-width: 1200px) 50vw, 660px" width={900} format="webp" quality={84} loading="eager" fetchpriority="high" />
+      <p class="art-caption">A small paper has arrived.</p>
+    </div>
+  </section>
+
+  <div class="quiet-line wrap"><span>Take your time. Undo is always there.</span></div>
+
+  <section id="how-it-works" class="how-section" aria-labelledby="how-title">
+    <div class="wrap">
+      <div class="section-heading">
+        <div><span class="eyebrow">One fold, one mark</span><h2 id="how-title">There’s more to<br />a little sheet of paper.</h2></div>
+        <p>A fold brings distant places together.<br class="desktop-break" /> A single brush stroke reaches every layer.<br class="desktop-break" /> The surprise comes when you open it.</p>
+      </div>
+      <FoldSequence />
+      <p class="sequence-note">This is a real Orifude puzzle. The opened ink must match the target exactly.</p>
+    </div>
+  </section>
+
+  <section class="terminal-section" aria-labelledby="terminal-title">
+    <div class="wrap">
+      <div class="section-heading">
+        <div><span class="eyebrow">At home in the terminal</span><h2 id="terminal-title">All you need is<br />a little curiosity.</h2></div>
+        <p>Forty handcrafted papers lead from simple marks to layered folds. Use your keyboard, try a different crease, and keep the papers you solve.</p>
+      </div>
+      <figure class="terminal-figure">
+        <div class="terminal-caption"><span>Orifude · One fold, one mark</span><span>A frame from the real game</span></div>
+        <Image src={terminal} alt="The real Orifude lesson after one fold and one brush stroke. The stack lists two inked layers, and the paper says: Ink reached 2 layers. Enter opens the paper." width={1280} widths={[640, 960, 1280]} sizes="(max-width: 700px) 92vw, 1100px" format="webp" loading="lazy" quality={92} />
+        <figcaption>One dot, two layers. Press Enter to see what unfolds. <a href="/terminal.png">Open the full-size capture <Arrow direction="out" /></a></figcaption>
+      </figure>
+      <div class="play-notes">
+        <div><h3>Follow a growing branch.</h3><p>Work through the handcrafted journey, revisit a keepsake, or meet a new paper each day.</p></div>
+        <div><h3>Leave the clock outside.</h3><p>There is no timer or streak to protect. Undo a mark, start again, or come back another day.</p></div>
+        <div><h3>Keep it close.</h3><p>Your progress stays on your computer. Play offline, or bring your own local puzzle packs.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <Install release={latestRelease} />
+</Page>

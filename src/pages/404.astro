@@ -1,0 +1,9 @@
+---
+import { Image } from 'astro:assets';
+import Page from '../layouts/Page.astro';
+import icon from '../assets/icon.png';
+import Arrow from '../components/Arrow.astro';
+---
+<Page title="Page not found — Orifude" description="This page could not be found. Return to Orifude." page="missing">
+  <section class="missing-page wrap"><Image src={icon} alt="" width={280} format="webp" /><div><span class="eyebrow">Page not found</span><h1>This paper took<br />a different path.</h1><p>The address may have changed, or this page may not exist.</p><a href="/" class="button">Return to Orifude <Arrow /></a></div></section>
+</Page>
