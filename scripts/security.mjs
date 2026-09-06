@@ -1,4 +1,6 @@
 export const securityHeaders = {
+  // Keep Cloudflare from injecting bot-detection scripts into the static pages.
+  'Cache-Control': 'public, max-age=0, must-revalidate, no-transform',
   'Content-Security-Policy': "default-src 'none'; img-src 'self'; style-src 'self'; font-src 'self'; script-src 'none'; connect-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; object-src 'none'",
   'X-Content-Type-Options': 'nosniff',
   'X-Frame-Options': 'DENY',
