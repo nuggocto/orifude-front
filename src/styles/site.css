@@ -271,17 +271,41 @@ code { font: inherit; }
   *, *::before, *::after { transition: none !important; }
 }
 
-.packs-section { padding-block: 80px; border-top: 1px solid #dedbcf; }
-.pack-guide { display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; }
-.pack-guide p, .pack-download p { margin-top: 18px; }
-.pack-guide ol { padding-left: 1.3em; margin-block: 20px; }
-.pack-guide li + li { margin-top: 15px; }
-.pack-guide code, .pack-hash code { overflow-wrap: anywhere; }
-.pack-downloads { margin-top: 44px; }
-.pack-download { border-top: 1px solid #dedbcf; padding-block: 28px; }
-.pack-links { display: flex; flex-wrap: wrap; gap: 12px 28px; }
-.pack-hash { overflow-wrap: anywhere; }
+.packs-section { padding-block: 100px; border-bottom: 1px solid #dedbcf; }
+.packs-with-downloads { display: grid; grid-template-columns: 1.15fr 1fr; align-items: start; gap: 80px; }
+.pack-intro { padding-block: 18px; min-width: 0; }
+.pack-intro > p { margin-top: 24px; max-width: 46ch; }
+.pack-intro > .text-link { margin-block: 26px 30px; }
+.pack-intro .pack-offline { margin-top: 18px; color: var(--muted); max-width: 40ch; }
+.pack-downloads { display: grid; gap: 28px; min-width: 0; }
+.pack-download { position: relative; padding: 36px; background: #e6e6d8; min-width: 0; }
+.pack-download::after { content: ''; position: absolute; width: 36px; height: 36px; top: 0; right: 0; background: var(--paper); clip-path: polygon(0 0, 100% 0, 100% 100%); }
+.pack-download .eyebrow { margin-bottom: 18px; padding-right: 12px; }
+.pack-download h3 { font-family: 'Fraunces', Georgia, serif; font-size: 2rem; font-weight: 400; letter-spacing: -.035em; }
+.pack-description { margin-top: 16px; }
+.pack-credit { margin-top: 16px; color: var(--muted); }
+.pack-actions { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; margin-block: 26px; }
+.pack-actions .button { max-width: 100%; text-align: left; overflow-wrap: anywhere; }
+.pack-details { margin: 0; background: transparent; border-block: 1px solid #c8cabb; border-radius: 0; }
+.pack-details summary { padding: 18px 0; }
+.pack-detail-body { padding-bottom: 22px; font-size: var(--small); }
+.pack-detail-body p + p { margin-top: 16px; }
+.pack-detail-body ol { padding-left: 1.3em; margin: 0; }
+.pack-detail-body li + li { margin-top: 16px; }
+.pack-detail-body code { overflow-wrap: anywhere; }
+.pack-detail-body pre { padding: 16px; }
+.pack-links { display: flex; flex-wrap: wrap; gap: 10px 24px; }
+.pack-hash { color: var(--muted); overflow-wrap: anywhere; }
+@media (max-width: 1100px) {
+  .packs-with-downloads { gap: 44px; }
+  .pack-download { padding: 28px; }
+}
 @media (max-width: 800px) {
-  .packs-section { padding-block: 60px; }
-  .pack-guide { grid-template-columns: 1fr; gap: 32px; }
+  .packs-section { padding-block: 76px; }
+  .packs-with-downloads { grid-template-columns: 1fr; gap: 38px; }
+  .pack-intro { padding: 0; }
+}
+@media (max-width: 520px) {
+  .pack-download { padding: 28px 22px; }
+  .pack-actions .button { padding-inline: 18px; }
 }

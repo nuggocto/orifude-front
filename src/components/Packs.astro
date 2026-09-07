@@ -1,38 +1,49 @@
 ---
+import Arrow from './Arrow.astro';
 import catalog from '../content/packs.json';
 import { loadPacks } from '../lib/packs';
 const packs = loadPacks(catalog);
 const guide = 'https://github.com/nuggocto/orifude/blob/shrek/docs/puzzle-authoring.md';
 ---
-<section id="puzzle-packs" class="packs-section wrap" aria-labelledby="packs-title">
-  <div class="section-heading">
-    <div><span class="eyebrow">Share a little paper</span><h2 id="packs-title">Make a puzzle pack.</h2></div>
-    <p>Write your own folds and patterns in plain-text files. Share them for review, or keep them on your computer. Every pack plays offline.</p>
-  </div>
-  <div class="pack-guide">
-    <div>
-      <h3>Submit your papers</h3>
-      <ol>
-        <li>Fork <a href="https://github.com/nuggocto/orifude">Orifude on GitHub</a>. Copy the <a href="https://github.com/nuggocto/orifude/tree/shrek/puzzles/example-pack">example pack</a> into <code>community/your-pack-id/1.0.0/</code>.</li>
-        <li>Edit the puzzles and <code>pack.toml</code>. Include your name and a license that permits redistribution. Play every puzzle, then run <code>orifude verify PATH</code> and <code>orifude solve PATH</code> on the folder.</li>
-        <li>Open a <a href="https://github.com/nuggocto/orifude/compare/shrek...shrek?expand=1&amp;template=puzzle-pack.md">pack pull request</a> from your fork to <code>shrek</code>. Include the command results, play notes, and any source credits.</li>
-        <li>Isolated CI runs the validator and solver. A maintainer reviews the puzzles, text, and license before publishing a versioned ZIP and checksum here.</li>
-      </ol>
-      <p><a href={guide}>Read the pack format and submission guide</a> for a complete example, limits, and update instructions.</p>
-    </div>
-    <div>
-      <h3>Play a shared pack</h3>
-      <p>Download a reviewed ZIP and its checksum file. <a href={`${guide}#download-and-install-a-published-pack`}>Check the SHA-256 checksum</a>, then run <code>orifude pack install FILENAME.zip</code>. Open Orifude and choose Puzzle packs.</p>
-      <p>The game never downloads content for you. To update a pack, remove its installed version before installing the new ZIP. Your saved progress and keepsakes remain.</p>
-      <p>Pack versions are separate from game releases. These packs work with Orifude 1.0.0 or later.</p>
-    </div>
+<section id="puzzle-packs" class:list={['packs-section', 'wrap', { 'packs-with-downloads': packs.length > 0 }]} aria-labelledby="packs-title">
+  <div class="pack-intro">
+    <span class="eyebrow">Share a little paper</span>
+    <h2 id="packs-title">Make a puzzle pack.</h2>
+    <p>Have a pattern in mind? Turn it into a paper someone else can solve. Start with our example pack, try your own folds, and send it for review.</p>
+    <a class="text-link" href={guide}>A guide to making packs <Arrow /></a>
+    <details class="pack-details">
+      <summary>How to submit a pack <span aria-hidden="true">+</span></summary>
+      <div class="pack-detail-body">
+        <ol>
+          <li>Fork <a href="https://github.com/nuggocto/orifude">Orifude on GitHub</a> and copy the <a href="https://github.com/nuggocto/orifude/tree/shrek/puzzles/example-pack">example pack</a> into <code>community/your-pack-id/1.0.0/</code>.</li>
+          <li>Edit the puzzles and <code>pack.toml</code>. Include your name and a license that allows redistribution. Play every puzzle, then run <code>orifude verify PATH</code> and <code>orifude solve PATH</code> on the folder.</li>
+          <li>Open a <a href="https://github.com/nuggocto/orifude/compare/shrek...shrek?expand=1&amp;template=puzzle-pack.md">pack pull request</a> from your fork to <code>shrek</code>. Include the command results, play notes, and source credits.</li>
+          <li>Isolated CI runs the validator and solver. A maintainer reviews the puzzles, text, and license before publishing a versioned ZIP and checksum here.</li>
+        </ol>
+      </div>
+    </details>
+    <p class="small-copy pack-offline">You can also keep your creations to yourself. Every pack plays offline.</p>
   </div>
   {packs.length > 0 && <div class="pack-downloads" aria-label="Reviewed puzzle packs">
     {packs.map((pack) => <article class="pack-download">
-      <h3>{pack.title} <span class="small-copy">{pack.version}</span></h3>
-      <p>{pack.description} {pack.puzzles} puzzles. {pack.authors.join(', ')} · {pack.license}.</p>
-      <p class="pack-links"><a href={pack.zipUrl}>Download {pack.title} ZIP</a><a href={pack.checksumUrl}>SHA-256 checksums</a><a href={pack.releaseUrl}>Release and review</a><a href={pack.sourceUrl}>Pack source</a></p>
-      <p class="pack-hash small-copy">ZIP SHA-256: <code>{pack.sha256}</code></p>
+      <span class="eyebrow">Reviewed puzzle pack · {pack.version}</span>
+      <h3>{pack.title}</h3>
+      <p class="pack-description">{pack.description}</p>
+      <p class="small-copy pack-credit">{pack.puzzles} puzzles by {pack.authors.join(', ')}<br />{pack.license} · Orifude 1.0.0 or later</p>
+      <div class="pack-actions">
+        <a class="button" href={pack.zipUrl}>Download {pack.title} ZIP <Arrow direction="down" /></a>
+        <a class="small-copy" href={pack.checksumUrl}>SHA-256 checksums</a>
+      </div>
+      <details class="pack-details">
+        <summary>How to install <span aria-hidden="true">+</span></summary>
+        <div class="pack-detail-body">
+          <p>Download the ZIP and checksum file, then <a href={`${guide}#download-and-install-a-published-pack`}>check the SHA-256 checksum</a>. Install the ZIP with:</p>
+          <pre><code>orifude pack install FILENAME.zip</code></pre>
+          <p>Open Orifude and choose Puzzle packs. To update a pack, remove the installed version first. Your saved progress and keepsakes remain.</p>
+          <p class="pack-links"><a href={pack.releaseUrl}>Release and review</a><a href={pack.sourceUrl}>Pack source</a></p>
+          <p class="pack-hash small-copy">ZIP SHA-256<br /><code>{pack.sha256}</code></p>
+        </div>
+      </details>
     </article>)}
   </div>}
 </section>
