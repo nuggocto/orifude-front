@@ -245,6 +245,7 @@ code { font: inherit; }
   .install-page { padding-block: 48px 70px; }
   .install-method { padding: 24px 16px; }
   .hero .eyebrow { font-size: var(--small); gap: 8px; }
+  .hero h1 em { white-space: normal; }
   .hero-actions { align-items: flex-start; flex-direction: column; }
   .hero-art { margin-top: 15px; }
   .hero-art .art-caption { font-size: var(--small); }

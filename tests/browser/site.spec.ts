@@ -82,6 +82,13 @@ test('pages reflow at narrow widths and enlarged text', async ({ page }) => {
     await page.evaluate(() => { document.documentElement.style.fontSize = '200%'; });
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   }
+  await page.setViewportSize({ width: 320, height: 900 });
+  await page.goto('/');
+  await page.evaluate(async () => {
+    document.documentElement.style.fontSize = '200%';
+    await document.fonts.ready;
+  });
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 });
 
 test('page landmarks, names, and contrast pass automated accessibility checks', async ({ page }) => {
