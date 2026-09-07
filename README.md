@@ -73,9 +73,9 @@ ordinary site builds use the checked-in assets and need no system font.
 
 ## Publishing release notes
 
-There are no published puzzle-game releases yet. An empty release list is
-intentional: the site links to source and development notes, with no download or
-package commands.
+The reviewed release list controls the public version, changelog entries, and
+installation instructions. An empty list shows source and development links
+without download or package commands.
 
 `src/content/changelog.md` is an exact snapshot of the canonical main-repository
 changelog. `src/content/releases.json` records its immutable source commit and
@@ -133,6 +133,9 @@ Canonical metadata and the sitemap use `https://orifude.com`.
 
 Git integration builds preview branches and publishes `shrek` to production.
 Verify a Pages preview first, then the production routes, headers, artwork,
-and links. Configure `www.orifude.com` to redirect permanently to the apex while
-preserving the path and query, and check an unknown URL returns HTTP 404. Those
-edge and domain checks require the deployed site.
+and links. The owner chose the apex domain for publication and waived the `www`
+redirect on 2026-09-07. Check that an unknown URL returns HTTP 404 and retains
+the restrictive CSP. Cloudflare currently injects a bot-detection script on 404
+responses; `script-src 'none'` blocks it. Removing the injection requires zone
+permissions unavailable to the configured Pages credential. This accepted
+hosting limitation must not be worked around by allowing scripts.
