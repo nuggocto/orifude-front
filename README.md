@@ -154,3 +154,19 @@ responses; the script hash restriction blocks it. Removing the injection require
 permissions unavailable to the configured Pages credential. This accepted
 hosting limitation must not be worked around by allowing Cloudflare's script
 or all same-origin scripts.
+
+## Puzzle packs
+
+The landing page's `#puzzle-packs` section explains authoring, pull requests,
+isolated validation, maintainer review, and local installation. Pack releases
+have their own versions; they do not change the native game's release catalog.
+
+After public publication and verification, append the release's `pack.json`
+record to `src/content/packs.json`, adding the immutable `sourceCommit` and real
+`verifiedAt` date. Verify the downloaded ZIP, SHA256SUMS, GitHub attestation,
+and local installation first. Keep the evidence in the native repository's
+NOTEBOOK. The static loader validates these reviewed records and derives every
+link from the fixed repository, pack ID, and version. It makes no build-time or
+browser network requests. An empty catalog shows submission instructions without
+invented downloads. Run data, build, browser, preview, and production checks for
+catalog updates too.

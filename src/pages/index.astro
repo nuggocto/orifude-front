@@ -3,6 +3,7 @@ import { Image } from 'astro:assets';
 import Page from '../layouts/Page.astro';
 import Arrow from '../components/Arrow.astro';
 import FoldSequence from '../components/FoldSequence.astro';
+import Packs from '../components/Packs.astro';
 import courier from '../assets/courier.png';
 import terminal from '../assets/terminal.png';
 import { latestRelease } from '../lib/content';
@@ -58,6 +59,8 @@ import { latestRelease } from '../lib/content';
       </div>
     </div>
   </section>
+
+  <Packs />
 
   <section id="get-orifude" class="get-paper wrap" aria-labelledby="get-title">
     <div class="get-intro">

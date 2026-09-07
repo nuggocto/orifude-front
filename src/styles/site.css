@@ -270,3 +270,18 @@ code { font: inherit; }
   :root { scroll-behavior: auto; }
   *, *::before, *::after { transition: none !important; }
 }
+
+.packs-section { padding-block: 80px; border-top: 1px solid #dedbcf; }
+.pack-guide { display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; }
+.pack-guide p, .pack-download p { margin-top: 18px; }
+.pack-guide ol { padding-left: 1.3em; margin-block: 20px; }
+.pack-guide li + li { margin-top: 15px; }
+.pack-guide code, .pack-hash code { overflow-wrap: anywhere; }
+.pack-downloads { margin-top: 44px; }
+.pack-download { border-top: 1px solid #dedbcf; padding-block: 28px; }
+.pack-links { display: flex; flex-wrap: wrap; gap: 12px 28px; }
+.pack-hash { overflow-wrap: anywhere; }
+@media (max-width: 800px) {
+  .packs-section { padding-block: 60px; }
+  .pack-guide { grid-template-columns: 1fr; gap: 32px; }
+}
