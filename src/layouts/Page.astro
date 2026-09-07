@@ -4,7 +4,7 @@ import wordmark from '../assets/wordmark.png';
 import Arrow from '../components/Arrow.astro';
 import '../styles/site.css';
 
-interface Props { title: string; description: string; page?: 'home' | 'changelog' | 'missing'; }
+interface Props { title: string; description: string; page?: 'home' | 'install' | 'changelog' | 'missing'; }
 const { title, description, page = 'home' } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
@@ -39,6 +39,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
       </a>
       <nav aria-label="Main navigation">
         <a href="/#how-it-works">How to play</a>
+        <a href="/install/" aria-current={page === 'install' ? 'page' : undefined}>Install</a>
         <a href="/changelog/" aria-current={page === 'changelog' ? 'page' : undefined}>Changelog</a>
         <a class="nav-source" href="https://github.com/nuggocto/orifude">GitHub <Arrow direction="out" /></a>
       </nav>
@@ -50,6 +51,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
         <p>Inspired by folding and brushwork.<br />Made to be played at your own pace.</p>
       </div>
       <div class="footer-links">
+        <a href="/install/">Install Orifude</a>
         <a href="https://github.com/nuggocto/orifude">Source on GitHub <Arrow direction="out" /></a>
         <a href="/changelog/">Changelog</a>
         <a href="https://github.com/nuggocto/orifude/blob/shrek/LICENSE">Apache 2.0 license</a>

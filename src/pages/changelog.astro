@@ -2,9 +2,8 @@
 import { Image } from 'astro:assets';
 import Page from '../layouts/Page.astro';
 import Arrow from '../components/Arrow.astro';
-import Install from '../components/Install.astro';
 import icon from '../assets/icon.png';
-import { releases, latestRelease } from '../lib/content';
+import { releases } from '../lib/content';
 import { categories } from '../lib/releases';
 const readableDate = (date: string) => new Intl.DateTimeFormat('en', { dateStyle: 'long', timeZone: 'UTC' }).format(new Date(`${date}T00:00:00Z`));
 ---
@@ -25,5 +24,4 @@ const readableDate = (date: string) => new Intl.DateTimeFormat('en', { dateStyle
     </>}
     <a class="back-home text-link" href="/">Return to Orifude <Arrow /></a>
   </div>
-  {latestRelease && <Install release={latestRelease} />}
 </Page>

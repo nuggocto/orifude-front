@@ -1,0 +1,12 @@
+---
+import Page from '../layouts/Page.astro';
+import Install from '../components/Install.astro';
+import { latestRelease } from '../lib/content';
+import { createHash } from 'node:crypto';
+import copyScript from '../../public/copy-command.js?raw';
+const copyScriptIntegrity = `sha256-${createHash('sha256').update(copyScript).digest('base64')}`;
+---
+<Page title="Install Orifude — Linux, macOS & Windows" description="Install Orifude on Linux, macOS, or Windows. Copy the commands for yay, Homebrew, Scoop, or the official installers." page="install">
+  <Install release={latestRelease} />
+  <script is:inline src="/copy-command.js" integrity={copyScriptIntegrity} defer></script>
+</Page>

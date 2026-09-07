@@ -3,7 +3,6 @@ import { Image } from 'astro:assets';
 import Page from '../layouts/Page.astro';
 import Arrow from '../components/Arrow.astro';
 import FoldSequence from '../components/FoldSequence.astro';
-import Install from '../components/Install.astro';
 import courier from '../assets/courier.png';
 import terminal from '../assets/terminal.png';
 import { latestRelease } from '../lib/content';
@@ -17,7 +16,7 @@ import { latestRelease } from '../lib/content';
       <div class="hero-actions">
         <a href="#how-it-works" class="button">See how it folds <Arrow direction="down" /></a>
         {latestRelease
-          ? <a href="#get-orifude" class="text-link">Get Orifude <Arrow direction="down" /></a>
+          ? <a href="/install/" class="text-link">Get Orifude <Arrow /></a>
           : <a href="https://github.com/nuggocto/orifude" class="text-link">Explore the source <Arrow direction="out" /></a>}
       </div>
       <p class="hero-status">{latestRelease ? `Version ${latestRelease.version} is ready to unfold.` : 'The first release is taking shape.'} <a href="/changelog/">Read the notes <span aria-hidden="true">↗</span></a></p>
@@ -60,5 +59,15 @@ import { latestRelease } from '../lib/content';
     </div>
   </section>
 
-  <Install release={latestRelease} />
+  <section id="get-orifude" class="get-paper wrap" aria-labelledby="get-title">
+    <div class="get-intro">
+      <span class="eyebrow">A paper of your own</span>
+      <h2 id="get-title">Make yourself at home.</h2>
+      <p>{latestRelease ? 'Choose the installation method for your computer, then open your first paper. Orifude plays entirely offline.' : 'The first release is being prepared. Until then, you can explore the code or build Orifude yourself.'}</p>
+    </div>
+    <div class="get-actions">
+      <a class="button button-dark" href="/install/">{latestRelease ? 'Install Orifude' : 'Build from source'} <Arrow /></a>
+      <p class="small-copy">For Linux, macOS, and Windows.</p>
+    </div>
+  </section>
 </Page>

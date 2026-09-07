@@ -109,6 +109,6 @@ export function installationInstructions(release: Release, channel: Channel) {
     ];
     case 'homebrew': return ['brew install nuggocto/tap/orifude'];
     case 'scoop': return ['scoop bucket add nuggocto https://github.com/nuggocto/scoop-bucket\nscoop install nuggocto/orifude'];
-    case 'aur': return ['git clone https://aur.archlinux.org/orifude-bin.git\ncd orifude-bin', 'makepkg -si'];
+    case 'aur': return ['yay -S orifude-bin'];
   }
 }
