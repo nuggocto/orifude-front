@@ -88,6 +88,7 @@ test('installer instructions separate a pinned download from execution', () => {
   assert.match(windowsDownload, /if \(\$LASTEXITCODE -ne 0\) \{ throw/);
   assert.doesNotMatch(windowsDownload, /Invoke-Expression|powershell\.exe/);
   assert.match(windowsRun, /-ErrorAction Stop/);
+  assert.match(windowsRun, /powershell\.exe[^\n]*-ExecutionPolicy Bypass[^\n]*-File \.\\install\.ps1/);
 });
 
 test('an unverified package channel cannot acquire installation commands', () => {

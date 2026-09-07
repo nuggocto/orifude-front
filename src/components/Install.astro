@@ -29,6 +29,7 @@ const labels: Record<Channel, string> = {
           <pre><code>{command}</code></pre>
         </>)}
         {(channel === 'posix' || channel === 'powershell') && <p>Add the destination to your PATH through your usual shell or system settings. The installer leaves your profile unchanged.</p>}
+        {channel === 'powershell' && <p>The command allows the inspected script in its own PowerShell process without changing your saved execution policy.</p>}
         {channel === 'posix' && <p>For Linux kernel 5.10 or newer on x86_64 and ARM64, and macOS 13 or newer on Intel and Apple Silicon. Requires curl, tar, and sha256sum or shasum.</p>}
         {(channel === 'powershell' || channel === 'scoop') && <p>For Windows 10 22H2 or newer on x86_64. Windows ARM64 is not supported.</p>}
         {channel === 'homebrew' && <p>The formula supports macOS 13 or newer on Intel and Apple Silicon.</p>}

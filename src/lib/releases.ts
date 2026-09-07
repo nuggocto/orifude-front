@@ -105,7 +105,7 @@ export function installationInstructions(release: Release, channel: Channel) {
     ];
     case 'powershell': return [
       `curl.exe --fail --location --proto '=https' --proto-redir '=https' --tlsv1.2 \u0060\n  --output install.ps1 ${base}/install.ps1\nif ($LASTEXITCODE -ne 0) { throw 'Installer download failed.' }`,
-      'New-Item -ItemType Directory -Force -ErrorAction Stop -Path "$env:LOCALAPPDATA\\Programs\\Orifude"\npowershell.exe -NoProfile -File .\\install.ps1 -BinDir "$env:LOCALAPPDATA\\Programs\\Orifude"',
+      'New-Item -ItemType Directory -Force -ErrorAction Stop -Path "$env:LOCALAPPDATA\\Programs\\Orifude"\npowershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File .\\install.ps1 -BinDir "$env:LOCALAPPDATA\\Programs\\Orifude"',
     ];
     case 'homebrew': return ['brew install nuggocto/tap/orifude'];
     case 'scoop': return ['scoop bucket add nuggocto https://github.com/nuggocto/scoop-bucket\nscoop install nuggocto/orifude'];
