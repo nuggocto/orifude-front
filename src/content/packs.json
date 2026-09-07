@@ -1,1 +1,18 @@
-[]
+[
+  {
+    "authors": [
+      "Orifude contributors"
+    ],
+    "description": "Three small papers showing the community pack format.",
+    "fingerprint": "b42255f5b3c3283a5b8bb92cf5ba5b89b6ca07495f6344ec756a26a889016f41",
+    "id": "paper-garden",
+    "license": "Apache-2.0",
+    "puzzles": 3,
+    "requires": "1.0.0",
+    "sha256": "bdce44bad07e92faf4bc1d564b14b913e1e90a6b9581c4ad9f3633984eeef2e6",
+    "title": "Paper garden",
+    "version": "1.0.0",
+    "sourceCommit": "54a7f7d2ccd2c292c73f5425b8fc4c8d87fd90e5",
+    "verifiedAt": "2026-09-07"
+  }
+]
