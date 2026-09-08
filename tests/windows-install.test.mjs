@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, realpathSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { test } from 'node:test';
@@ -109,7 +109,8 @@ exit 0
 const installerSha256 = createHash('sha256').update(installer).digest('hex');
 
 async function runInstall(t, { curlExit = 0, installerExit = 0, corruptDownload = false, reinstall = false, previousInstall = false, destinationOnPath = false } = {}) {
-  const root = mkdtempSync(join(tmpdir(), "orifude install's test-"));
+  // .NET GetTempPath expands Windows 8.3 aliases that Node's tmpdir preserves.
+  const root = realpathSync.native(mkdtempSync(join(tmpdir(), "orifude install's test-")));
   t.after(() => rmSync(root, { recursive: true, force: true }));
   const temporary = join(root, 'temporary files');
   const localAppData = join(root, 'local app data');
