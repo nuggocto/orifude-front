@@ -1,209 +1,114 @@
 # Website maintenance
 
-The static presentation for [Orifude](https://github.com/nuggocto/orifude), an
-offline Rust puzzle for the terminal. Astro builds the landing page, an
-installation page at `/install/`, the release changelog, and a real not-found
-page. The Install link in the top navigation opens the commands directly.
+See the [README](../README.md) for setup, checks, and Cloudflare build settings.
 
-Use Node 24.19.0 from `.node-version` and pnpm 11.3.0 from `package.json`.
+## Browser checks
 
-```sh
-pnpm install --frozen-lockfile
-pnpm dev
-```
+Tests own ports 4331 and 4332 and exercise the built site plus an isolated release
+fixture. Global setup owns both servers and removes the fixture on success or
+failure. An occupied port fails instead of reusing an existing server. Tests have
+bounded timeouts and no automatic retries.
 
-For the built site, including its security policy:
+Linux CI runs Chromium, Firefox, and WebKit. Windows runs Chromium and Firefox.
+Windows WebKit's headless clipboard and default link-focus behavior do not support
+this test suite. Linux WebKit runs every assertion, including native paste and
+keyboard navigation; it does not establish native Safari compatibility.
 
-```sh
-pnpm check
-pnpm build
-pnpm preview
-```
+Coverage includes reading without JavaScript or CSS, keyboard navigation, 404s,
+narrow reflow, enlarged text, reduced motion, local assets, and axe accessibility
+checks. These supplement visual review; they do not establish full WCAG conformance
+or mobile-device support. Clipboard tests paste the copied text through native
+browser editing. Separate denial and missing-API cases check manual copying.
 
-Open `http://127.0.0.1:4321`; stop the preview with Ctrl+C. The preview applies the
-security headers before routing so not-found responses receive them too.
-The development server needs its own scripts for live updates. Review the built
-preview when checking the policy or the page's actual network requests.
+Windows PowerShell 5.1 tests execute the generated launcher with a local transfer
+fixture. POSIX tests execute their copied block too. They check complete transfers,
+script failures, and cleanup without installing the game. The native repository
+checks the real installers, archives, saved PATH, and packaged player journeys.
 
-## Checks
+CI uses no deployment credentials. README and maintenance-only edits skip CI;
+manual dispatch remains available. Source, assets, release records, configuration,
+and workflow changes run the full checks.
 
-```sh
-pnpm exec playwright install --with-deps chromium firefox webkit
-pnpm test:browser
-```
+## Static output and artwork
 
-The browser tests own ports 4331 and 4332. They test the real static output and
-an isolated release fixture. That fixture exercises installation instructions
-and HTML escaping without putting invented releases in the public build. Test
-servers and temporary content are owned by Playwright global setup and its returned
-teardown, including setup failures. Tests have bounded timeouts and no automatic
-retries. An occupied port fails instead of reusing another server.
+The build allows only `public/copy-command.js`, loaded on `/install/` with an
+integrity hash. It rejects other scripts, inline code and styles, missing pages,
+and missing assets. Limits are 100 KiB for local fonts, 30 KiB for gzip CSS, and
+5 KiB for gzip clipboard JavaScript. Font notices live in `public/font-licenses.txt`.
+The clipboard helper writes only the visible command after user activation; it
+never reads the clipboard or makes network requests.
 
-The browser matrix is explicit:
-
-| Test host | Browser projects |
-| --- | --- |
-| Linux CI | Chromium, Firefox, WebKit |
-| Windows CI and local Windows | Chromium, Firefox |
-
-Windows needs only `pnpm exec playwright install chromium firefox`. Other hosts
-retain all three projects. WebKit's native Windows automation port is not a
-supported browser target: its headless clipboard differs from native paste, and
-its default link-focus setting skips ordinary anchors. Headed mode fixes copying,
-but not link focus. The Linux WebKit job still runs every assertion, including
-native paste and keyboard navigation. This is not a claim that Windows WebKit was
-fixed, or that Linux WebKit establishes native Safari compatibility.
-
-The tests cover reading with JavaScript disabled, keyboard navigation, the
-not-found response, narrow reflow, enlarged text, reduced motion, missing CSS,
-local assets under the security policy, and axe accessibility checks. Automated
-checks supplement visual and keyboard review; they do not establish full WCAG
-conformance or native Safari and mobile-device support. Clipboard checks paste
-each copied command through the browser's native editing action in all three
-engines. Chromium receives an explicit write permission in its automated
-context; denial and missing-API cases separately check the manual-copy fallback.
-
-`pnpm build` allows only `public/copy-command.js`, loaded on the installation
-page with an integrity hash. It rejects other scripts, inline code or styles,
-missing pages, and missing public assets. Bundled fonts are limited to 100 KiB,
-gzip CSS to 30 KiB, and gzip clipboard JavaScript to 5 KiB. Font files are local,
-with their OFL notices in `public/font-licenses.txt`.
-The CI workflow runs the locked build and the matrix above without deployment
-credentials. Neither job skips individual browser assertions.
-README and maintenance-only edits skip CI. Manual dispatch remains available;
-source, release records, assets, configuration, and workflow edits run all checks.
-
-The Windows job also runs `tests/windows-install.test.mjs` through `pnpm check`. These tests
-execute the generated command in Windows PowerShell 5.1 with private
-directories and a local transfer fixture. They cover installation, reinstallation,
-failed downloads, installer failure, and cleanup without installing the game or
-changing the account's saved settings. POSIX launcher tests execute the copied
-block with a local transfer fixture, including failed downloads and script errors.
-
-With the built preview running, `node scripts/measure-browser.mjs` measures five
-cold desktop and mobile loads and saves screenshots under `.preview/`. It uses
-Chromium with 150 ms network latency, a 1.6 Mbit/s download limit, and fourfold CPU
-slowdown. It records FCP, LCP, layout shift, and loaded response-body bytes against
-a 500 KiB page budget. These are local lab measurements, not field Core Web Vitals
-or a substitute for checking the deployed site.
-
-## Artwork and the paper example
-
-The original PNGs in `src/assets` come from the owner's Orifude artwork collection.
-Astro generates responsive WebP files during the build. The four SVG drawings in
-`src/components/FoldSequence.astro` explain the native first lesson: fold the left
-half of a four-by-four paper to the right, ink both layers once, then open the
-paper and match the target. They do not run the puzzle engine.
-
-`src/content/journey.cast` is the native repository's reviewed recording at
+Original artwork lives in `src/assets`; Astro generates responsive WebP files.
+The SVGs in `FoldSequence.astro` explain the native first lesson and do not run
+the puzzle engine. `src/content/journey.cast` comes from native commit
 [`a14d4c9`](https://github.com/nuggocto/orifude/commit/a14d4c94a86e44b84d7ddbe7b43eaf31c8dc638e).
-The terminal still preserves its ink frame. `node scripts/prepare-artwork.mjs`
-regenerates that still, the icons, social image, and font notices. It is a manual
-asset task that uses JetBrainsMono Nerd Font installed on the author's machine;
-ordinary site builds use the checked-in assets and need no system font.
+Run `node scripts/prepare-artwork.mjs` to regenerate the terminal still, icons,
+social image, and font notices. That manual task needs JetBrainsMono Nerd Font;
+ordinary builds use checked-in assets and need no system font.
 
-## Publishing release notes
+With the built preview running, `node scripts/measure-browser.mjs` saves screenshots
+and five cold desktop/mobile measurements under `.preview/`. It uses Chromium,
+150 ms latency, 1.6 Mbit/s downloads, and fourfold CPU slowdown. It records FCP,
+LCP, layout shift, and loaded response bytes against a 500 KiB page budget. These
+are local lab measurements, not field results or deployed-site verification.
 
-The reviewed release list controls the public version, changelog entries, and
-installation instructions. An empty list shows source and development links
-without download or package commands.
+## Release records
 
-`src/content/changelog.md` is an exact snapshot of the canonical main-repository
-changelog. `src/content/releases.json` records its immutable source commit and
-SHA-256. Its Git attribute preserves LF bytes on Windows too; do not normalize
-the text during verification or change the hash to match checkout conversions.
-Import a later snapshot explicitly:
+`src/content/changelog.md` is an exact snapshot of the native changelog.
+`src/content/releases.json` pins its source commit and SHA-256. Preserve LF bytes
+on Windows; do not normalize the snapshot or change its hash to match converted
+line endings. Import a snapshot with the command in the README.
 
-```sh
-pnpm import:changelog ../orifude FULL_COMMIT_SHA
-```
+After publication and verification, add a record with numeric semantic `version`,
+publication `date`, immutable `tagCommit`, `verifiedAt`, and verified `channels`.
+Channels are `posix`, `powershell`, `homebrew`, `scoop`, and `aur`. PowerShell also
+requires `powershellSha256`, checked against the immutable install.ps1 asset and
+its attestation. The page displays that hash under optional download verification.
 
-After the native release has been published and verified, add a reviewed record
-to `releases.json`. Each record needs a numeric semantic `version`, publication
-`date`, immutable `tagCommit`, `verifiedAt` date, and the verified `channels`.
-Channel values are `posix`, `powershell`, `homebrew`, `scoop`, and `aur`. An empty
-channel list permits direct release archives without claiming package support.
-Advertising PowerShell also requires `powershellSha256`, the exact `install.ps1`
-hash checked against the immutable release attestation. A missing or malformed
-hash fails the build. The page shows it under optional download verification.
+The native operator must verify the release, tag, complete archive and installer
+set, and each advertised package channel first. Keep the evidence in the native
+NOTEBOOK. The offline frontend build validates record shape and the source hash;
+it does not check remote release existence. An empty list shows development links.
+An empty channel list offers archives without claiming installer or package support.
+Only the latest release's reviewed channels appear on the installation page.
 
-The matching changelog section must start with `## X.Y.Z - YYYY-MM-DD`, followed
-by a short summary and at least one bullet under `### Added`, `### Changed`,
-`### Fixed`, or `### Security`. Bracketed versions are also accepted. Indented
-continuations join their preceding bullet. Notes render as escaped plain text;
-HTML and Markdown links do not become executable markup or unchecked URLs.
+Each matching changelog section starts with `## X.Y.Z - YYYY-MM-DD` (bracketed
+versions also work), a short summary, and at least one bullet under `### Added`,
+`### Changed`, `### Fixed`, or `### Security`. Indented lines continue a bullet.
+Notes render as escaped plain text; avoid inline Markdown formatting and links.
 
-The native release operator must verify the immutable GitHub release, its tag
-commit, the complete archive and installer set, and each advertised package
-channel before adding that record. The record is a maintainer's attestation;
-the offline frontend build checks its shape and source hash, not remote release
-existence. Preserve the native workflow evidence with the release review.
-Package instructions on `/install/` are shown only for the latest release and
-its reviewed channels. Arch Linux uses `yay -S orifude-bin` with yay already
-installed. Source, release, and installer URLs are derived from the fixed GitHub
-repository and the validated version. Each platform offers one copyable download-and-run block. It finishes a bounded
-HTTPS transfer into a private directory before invoking the exact release script,
-then removes its temporary files. It trusts that immutable release as the bootstrap
-source; archive checks remain inside the installer. Optional inspection and GitHub
-attestation verification are described on the page and in the native guide.
-The Windows installer creates its destination and saves user PATH; the launcher
-leaves its parent window and saved execution policy unchanged. POSIX leaves shell
-profiles unchanged.
+Both launchers finish a bounded HTTPS download into a private directory before
+running the exact release script, then clean up. They trust the immutable GitHub
+release as the bootstrap source. Archive checks remain in the installers. The
+page links separate inspection and attestation instructions. Windows saves user
+PATH; POSIX leaves shell profiles unchanged. Saved execution policy stays unchanged.
 
-
-Each command has an optional Copy button. The script writes the visible command
-only after a click or keyboard activation. It never reads the clipboard or
-makes a network request. Success and failure are announced beside the button;
-without JavaScript or the Clipboard API, commands remain selectable text.
-
-Run the full checks and inspect all pages before publishing a content update.
+Run data, build, browser, preview, and production checks for release updates.
 Importing notes alone never adds a public release.
 
 ## Cloudflare Pages
 
-This repository targets Cloudflare Pages with Git integration. Expected settings:
-
-| Setting | Value |
-| --- | --- |
-| Production branch | `shrek` |
-| Build command | `pnpm build` |
-| Output directory | `dist` |
-| Node version | `24.19.0` |
-| pnpm version | `11.3.0` |
-| Canonical domain | `orifude.com` |
-
-Set `PNPM_VERSION=11.3.0` for both production and previews; `.node-version` selects
-Node. Cloudflare documents these overrides in its
-[build-image reference](https://developers.cloudflare.com/pages/configuration/build-image/).
-
-`scripts/security.mjs` generates `dist/_headers` and supplies the same security
-policy to the local preview. The only script allowed by CSP is the exact SHA-256
-of the clipboard helper. Other scripts, frames, network connections, and
-external fonts are blocked. The Pages host patterns add `noindex` to preview hosts.
+Git integration publishes `shrek` to production and other branches to previews.
+Set `PNPM_VERSION=11.3.0` in both environments; `.node-version` selects Node.
+See Cloudflare's [build-image reference](https://developers.cloudflare.com/pages/configuration/build-image/).
 Canonical metadata and the sitemap use `https://orifude.com`.
 
-Git integration builds preview branches and publishes `shrek` to production.
-Verify a Pages preview first, then the production routes, headers, artwork,
-and links. The owner chose the apex domain for publication and waived the `www`
-redirect on 2026-09-07. Check that an unknown URL returns HTTP 404 and retains
-the restrictive CSP. Cloudflare currently injects a bot-detection script on 404
-responses; the script hash restriction blocks it. Removing the injection requires zone
-permissions unavailable to the configured Pages credential. This accepted
-hosting limitation must not be worked around by allowing Cloudflare's script
-or all same-origin scripts.
+`scripts/security.mjs` supplies the preview policy and generates `dist/_headers`.
+CSP permits only the clipboard helper's exact hash and blocks other scripts,
+frames, network connections, and external fonts. Preview hosts receive `noindex`.
+Check routes, headers, artwork, links, and a real HTTP 404 after publication.
+
+The owner accepted the apex domain without a `www` redirect on 2026-09-07.
+Cloudflare injects a bot-detection script on 404s, which CSP blocks. Removing it
+requires zone permissions unavailable to the Pages credential. Keep that
+restriction; do not allow the injected script or all same-origin scripts.
 
 ## Puzzle packs
 
-The landing page's `#puzzle-packs` section explains authoring, pull requests,
-isolated validation, maintainer review, and local installation. Pack releases
-have their own versions; they do not change the native game's release catalog.
-
-After public publication and verification, append the release's `pack.json`
-record to `src/content/packs.json`, adding the immutable `sourceCommit` and real
-`verifiedAt` date. Verify the downloaded ZIP, SHA256SUMS, GitHub attestation,
-and local installation first. Keep the evidence in the native repository's
-NOTEBOOK. The static loader validates these reviewed records and derives every
-link from the fixed repository, pack ID, and version. It makes no build-time or
-browser network requests. An empty catalog shows submission instructions without
-invented downloads. Run data, build, browser, preview, and production checks for
-catalog updates too.
+Packs have independent versions. After verifying the published ZIP, SHA256SUMS,
+GitHub attestation, and local installation, append the release's `pack.json`
+record to `src/content/packs.json` with immutable `sourceCommit` and real
+`verifiedAt`. Keep evidence in the native NOTEBOOK and run the release-update
+checks above. The loader derives links from the fixed repository, pack ID, and
+version without network requests. An empty catalog keeps submission instructions
+and offers no downloads. Pack records do not change the native release catalog.
