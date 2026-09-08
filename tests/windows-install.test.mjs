@@ -109,9 +109,10 @@ exit 0
 const installerSha256 = createHash('sha256').update(installer).digest('hex');
 
 async function runInstall(t, { curlExit = 0, installerExit = 0, corruptDownload = false, reinstall = false, previousInstall = false, destinationOnPath = false } = {}) {
-  // .NET GetTempPath expands Windows 8.3 aliases that Node's tmpdir preserves.
-  const root = realpathSync.native(mkdtempSync(join(tmpdir(), "orifude install's test-")));
+  let root = mkdtempSync(join(tmpdir(), "orifude install's test-"));
   t.after(() => rmSync(root, { recursive: true, force: true }));
+  // .NET GetTempPath expands Windows 8.3 aliases that Node's tmpdir preserves.
+  root = realpathSync.native(root);
   const temporary = join(root, 'temporary files');
   const localAppData = join(root, 'local app data');
   const destination = join(localAppData, 'Programs', 'Orifude');
