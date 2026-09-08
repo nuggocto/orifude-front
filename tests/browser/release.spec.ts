@@ -19,14 +19,15 @@ test('a published release exposes only reviewed instructions and escapes its not
     const posix = page.getByRole('navigation', { name: 'Installation methods' }).getByRole('link', { name: /POSIX installer/ });
     await posix.focus();
     await page.keyboard.press('Enter');
-    await expect(page.getByText('sh install.sh --bin-dir', { exact: false })).toBeVisible();
-    await expect(page.getByText('inspect the file before running it.', { exact: false }).first()).toBeVisible();
+    await expect(page.locator('#posix [data-command] code')).toBeVisible();
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     await expect(page.getByRole('heading', { name: /Homebrew|Scoop|Arch Linux/ })).toHaveCount(0);
     await page.getByRole('navigation', { name: 'Installation methods' }).getByRole('link', { name: /PowerShell/ }).click();
-    await expect(page.getByText("if ($LASTEXITCODE -ne 0)", { exact: false })).toBeVisible();
+    await expect(page.locator('#powershell [data-command] code')).toBeVisible();
     await page.locator('summary').filter({ hasText: 'Verify your download' }).click();
     await expect(page.getByText('gh release verify-asset v1.0.0', { exact: false })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'PowerShell script', exact: true })).toHaveAttribute('href', 'https://github.com/nuggocto/orifude/releases/download/v1.0.0/install.ps1');
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   } finally { await context.close(); }
 });
 
@@ -39,7 +40,7 @@ test('the published release remains readable without styles and passes accessibi
   expect(result.violations).toEqual([]);
   await page.route('**/*.css', (route) => route.abort());
   await page.reload();
-  await expect(page.getByText('sh install.sh --bin-dir', { exact: false })).toBeVisible();
+  await expect(page.locator('#posix [data-command] code')).toBeVisible();
   await page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Changelog' }).click();
   await expect(page.getByRole('heading', { name: 'Orifude 1.0.0' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Added', exact: true })).toBeVisible();

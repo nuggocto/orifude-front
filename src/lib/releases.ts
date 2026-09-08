@@ -101,29 +101,22 @@ export function installationInstructions(release: Release, channel: Channel) {
   if (!release.channels.includes(channel)) throw new Error('This installation channel has not been verified');
   const base = `${repository}/releases/download/v${release.version}`;
   switch (channel) {
-    case 'posix': return [
-      `curl --fail --location --proto '=https' --proto-redir '=https' --tlsv1.2 \\\n  --output install.sh ${base}/install.sh`,
-      'mkdir -p "$HOME/.local/bin" &&\n  sh install.sh --bin-dir "$HOME/.local/bin"',
-    ];
-    case 'powershell': return [[
-      '& {',
-      "$ErrorActionPreference = 'Stop';",
-      "$work = Join-Path ([IO.Path]::GetTempPath()) ('orifude-install-' + [Guid]::NewGuid().ToString('N'));",
-      '[void](New-Item -ItemType Directory -Path $work);',
-      'try {',
-      "$script = Join-Path $work 'install.ps1';",
-      `curl.exe --fail --silent --show-error --location --max-redirs 5 --proto '=https' --proto-redir '=https' --tlsv1.2 --connect-timeout 15 --max-time 120 --max-filesize 1048576 --output $script ${base}/install.ps1;`,
-      "if ($LASTEXITCODE -ne 0) { throw 'Installer download failed.' };",
-      `if ((Get-FileHash -Algorithm SHA256 -LiteralPath $script).Hash.ToLowerInvariant() -cne '${release.powershellSha256}') { throw 'Installer checksum mismatch.' };`,
-      "$bin = Join-Path $env:LOCALAPPDATA 'Programs\\Orifude';",
-      '[void](New-Item -ItemType Directory -Force -Path $bin);',
-      'powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File $script -BinDir $bin;',
-      "if ($LASTEXITCODE -ne 0) { throw 'Installation failed.' };",
-      "$env:PATH = (@($bin) + @($env:PATH -split ';' | Where-Object { $_ -ne $bin })) -join ';';",
-      "Write-Output 'Ready. Run orifude in this window to play.';",
-      '} finally { Remove-Item -LiteralPath $work -Recurse -Force }',
-      '}',
-    ].join(' ')];
+    case 'posix': return [`(
+  d=$(mktemp -d) || exit
+  trap 'rm -rf "$d"' EXIT
+  curl -fL --proto '=https' --proto-redir '=https' --tlsv1.2 --max-redirs 5 --connect-timeout 15 --max-time 120 --max-filesize 1048576 -o "$d/install.sh" ${base}/install.sh &&
+    sh "$d/install.sh"
+)`];
+    case 'powershell': return [`& {
+  $d = New-Item -ItemType Directory -Path (Join-Path $env:TEMP ([guid]::NewGuid())) -ErrorAction Stop
+  try {
+    $p = Join-Path $d.FullName 'install.ps1'
+    curl.exe -fL --proto '=https' --proto-redir '=https' --tlsv1.2 --max-redirs 5 --connect-timeout 15 --max-time 120 --max-filesize 1048576 -o $p ${base}/install.ps1
+    if ($LASTEXITCODE) { throw 'Installer download failed.' }
+    powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File $p
+    if ($LASTEXITCODE) { throw 'Installation failed.' }
+  } finally { Remove-Item -LiteralPath $d.FullName -Recurse -Force }
+}`];
     case 'homebrew': return ['brew install nuggocto/tap/orifude'];
     case 'scoop': return ['scoop bucket add nuggocto https://github.com/nuggocto/scoop-bucket\nscoop install nuggocto/orifude'];
     case 'aur': return ['yay -S orifude-bin'];

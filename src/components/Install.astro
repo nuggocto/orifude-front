@@ -28,19 +28,17 @@ const labels: Record<Channel, string> = {
     {release.channels.map((channel) => <section class="install-method" id={channel} aria-labelledby={`${channel}-title`}>
       <h2 id={`${channel}-title`}>{labels[channel]}</h2>
       <div>
-        {channel === 'posix' && <p>Download the installer first. After the download succeeds, inspect the file before running it.</p>}
-        {channel === 'powershell' && <p>Copy this one line into Windows PowerShell and press Enter. It downloads and checks the release installer, then installs Orifude in your user account. No administrator window is needed.</p>}
+        {channel === 'posix' && <p>Copy this block into your terminal. It downloads the installer and installs Orifude in <code>~/.local/bin</code>.</p>}
+        {channel === 'powershell' && <p>Copy this block into Windows PowerShell and press Enter. It installs Orifude in your user account. No administrator window is needed.</p>}
         {channel === 'homebrew' && <p>With Homebrew installed, run:</p>}
         {channel === 'scoop' && <p>With Scoop installed, add our bucket and install Orifude:</p>}
         {channel === 'aur' && <p>With yay installed, run this command. Review the AUR package when prompted.</p>}
-        {installationInstructions(release, channel).map((command, index) => <>
-          {index > 0 && <p>After inspecting the downloaded file, run:</p>}
+        {installationInstructions(release, channel).map((command, index) =>
           <Command command={command} label={`${labels[channel]} command ${index + 1}`} />
-        </>)}
-        {channel === 'posix' && <p>Add the destination to your PATH through your usual shell or system settings. The installer leaves your profile unchanged.</p>}
+        )}
+        {channel === 'posix' && <p>Run <code>orifude</code> to play. If your shell cannot find it, run <code>~/.local/bin/orifude</code> and add <code>~/.local/bin</code> to PATH through your shell settings.</p>}
         {channel === 'powershell' && <>
-          <p>When it finishes, run <code>orifude</code> in the same window. The command adds <code>%LOCALAPPDATA%\Programs\Orifude</code> to this window's PATH only. It leaves your profile and saved execution policy unchanged.</p>
-          <p>Prefer to inspect the script first, or use Orifude from a new window? Follow the <a href={`${repository}/blob/shrek/docs/distribution.md#installing-an-exact-published-version`}>step-by-step instructions</a>. You can also open the <a href={`${repository}/releases/download/v${release.version}/install.ps1`}>exact release installer</a> before running the command.</p>
+          <p>Close and reopen your terminal, then run <code>orifude</code>. The installer adds <code>%LOCALAPPDATA%\Programs\Orifude</code> to your user PATH.</p>
         </>}
         {channel === 'posix' && <p>For Linux kernel 5.10 or newer on x86_64 and ARM64, and macOS 13 or newer on Intel and Apple Silicon. Requires curl, tar, and sha256sum or shasum.</p>}
         {(channel === 'powershell' || channel === 'scoop') && <p>For Windows 10 22H2 or newer on x86_64. Windows ARM64 is not supported.</p>}
@@ -57,6 +55,9 @@ const labels: Record<Channel, string> = {
     <details>
       <summary>Verify your download <span aria-hidden="true">+</span></summary>
       <div class="install-body">
+        <p>The commands trust the installer from the exact GitHub release over HTTPS. Each installer checks the downloaded archive against its embedded SHA-256 before replacing Orifude.</p>
+        <p>To inspect the script first or choose a custom directory, follow the <a href={`${repository}/blob/shrek/docs/distribution.md#installing-an-exact-published-version`}>installation guide</a>. Download the <a href={`${repository}/releases/download/v${release.version}/install.sh`}>POSIX script</a> or <a href={`${repository}/releases/download/v${release.version}/install.ps1`}>PowerShell script</a> for inspection.</p>
+        {release.powershellSha256 && <p>The reviewed PowerShell script SHA-256 is <code>{release.powershellSha256}</code>.</p>}
         <p>GitHub CLI can verify the immutable release and an asset you downloaded. Replace the final filename with your local release asset.</p>
         <Command command={`gh release verify v${release.version} --repo nuggocto/orifude\ngh release verify-asset v${release.version} ./DOWNLOADED_ASSET --repo nuggocto/orifude`} label="download verification commands" />
       </div>
