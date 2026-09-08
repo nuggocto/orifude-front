@@ -9,7 +9,14 @@
       "date": "2026-09-07",
       "tagCommit": "f5db86de6407e6da81d3acb53ff0474de048340e",
       "verifiedAt": "2026-09-07",
-      "channels": ["posix", "powershell", "homebrew", "scoop", "aur"]
+      "channels": [
+        "posix",
+        "powershell",
+        "homebrew",
+        "scoop",
+        "aur"
+      ],
+      "powershellSha256": "6c9c350f406bd2cc901a84f34130ec324ce6772536038bd581ef57d9c77de4e3"
     }
   ]
 }

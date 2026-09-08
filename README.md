@@ -35,8 +35,24 @@ pnpm test:browser
 The browser tests own ports 4331 and 4332. They test the real static output and
 an isolated release fixture. That fixture exercises installation instructions
 and HTML escaping without putting invented releases in the public build. Test
-servers and temporary content are removed afterward. Tests have bounded timeouts
-and no automatic retries. An occupied port fails instead of reusing another server.
+servers and temporary content are owned by Playwright global setup and its returned
+teardown, including setup failures. Tests have bounded timeouts and no automatic
+retries. An occupied port fails instead of reusing another server.
+
+The browser matrix is explicit:
+
+| Test host | Browser projects |
+| --- | --- |
+| Linux CI | Chromium, Firefox, WebKit |
+| Windows CI and local Windows | Chromium, Firefox |
+
+Windows needs only `pnpm exec playwright install chromium firefox`. Other hosts
+retain all three projects. WebKit's native Windows automation port is not a
+supported browser target: its headless clipboard differs from native paste, and
+its default link-focus setting skips ordinary anchors. Headed mode fixes copying,
+but not link focus. The Linux WebKit job still runs every assertion, including
+native paste and keyboard navigation. This is not a claim that Windows WebKit was
+fixed, or that Linux WebKit establishes native Safari compatibility.
 
 The tests cover reading with JavaScript disabled, keyboard navigation, the
 not-found response, narrow reflow, enlarged text, reduced motion, missing CSS,
@@ -52,8 +68,14 @@ page with an integrity hash. It rejects other scripts, inline code or styles,
 missing pages, and missing public assets. Bundled fonts are limited to 100 KiB,
 gzip CSS to 30 KiB, and gzip clipboard JavaScript to 5 KiB. Font files are local,
 with their OFL notices in `public/font-licenses.txt`.
-The CI workflow runs the locked build and all three browser engines without
-deployment credentials.
+The CI workflow runs the locked build and the matrix above without deployment
+credentials. Neither job skips individual browser assertions.
+
+The Windows job also runs `tests/windows-install.test.mjs` through `pnpm check`. These tests
+execute the generated one-line command in Windows PowerShell 5.1 with private
+directories and a local transfer fixture. They cover installation, reinstallation,
+failed downloads, changed script bytes, installer failure, cleanup, and PATH
+behavior without installing the game or changing the account's saved settings.
 
 With the built preview running, `node scripts/measure-browser.mjs` measures five
 cold desktop and mobile loads and saves screenshots under `.preview/`. It uses
@@ -85,7 +107,9 @@ without download or package commands.
 
 `src/content/changelog.md` is an exact snapshot of the canonical main-repository
 changelog. `src/content/releases.json` records its immutable source commit and
-SHA-256. Import a later snapshot explicitly:
+SHA-256. Its Git attribute preserves LF bytes on Windows too; do not normalize
+the text during verification or change the hash to match checkout conversions.
+Import a later snapshot explicitly:
 
 ```sh
 pnpm import:changelog ../orifude FULL_COMMIT_SHA
@@ -96,6 +120,9 @@ to `releases.json`. Each record needs a numeric semantic `version`, publication
 `date`, immutable `tagCommit`, `verifiedAt` date, and the verified `channels`.
 Channel values are `posix`, `powershell`, `homebrew`, `scoop`, and `aur`. An empty
 channel list permits direct release archives without claiming package support.
+Advertising PowerShell also requires `powershellSha256`, the exact `install.ps1`
+hash checked against the immutable release attestation. A missing or malformed
+hash fails the build rather than offering an unchecked command.
 
 The matching changelog section must start with `## X.Y.Z - YYYY-MM-DD`, followed
 by a short summary and at least one bullet under `### Added`, `### Changed`,
@@ -111,8 +138,14 @@ existence. Preserve the native workflow evidence with the release review.
 Package instructions on `/install/` are shown only for the latest release and
 its reviewed channels. Arch Linux uses `yay -S orifude-bin` with yay already
 installed. Source, release, and installer URLs are derived from the fixed GitHub
-repository and the validated version. Installer downloads and execution remain
-separate commands so the downloaded file can be inspected first.
+repository and the validated version. Windows uses one copyable command: download
+the complete installer to a private temporary directory, check its reviewed
+SHA-256, then run it with a process-scoped execution-policy option. Only successful
+installation adds the binary directory to the current window's PATH; saved PATH,
+profiles, and execution policy stay unchanged. Cleanup removes the temporary
+script on success and failure. The page links the exact script and the native
+guide's inspect-first alternative. POSIX keeps its separate download and execution
+commands.
 
 Each command has an optional Copy button. The script writes the visible command
 only after a click or keyboard activation. It never reads the clipboard or

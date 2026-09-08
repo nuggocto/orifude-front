@@ -31,6 +31,8 @@ const invalidRecords = [
   ['verification before publication', { verifiedAt: '2026-08-31' }],
   ['a duplicate installation channel', { channels: ['posix', 'posix'] }],
   ['an injected release URL', { url: 'https://example.invalid/download' }],
+  ['a missing PowerShell installer checksum', { powershellSha256: undefined }],
+  ['command text in an installer checksum', { powershellSha256: "'; Write-Error injected; '" }],
 ];
 for (const [name, patch] of invalidRecords) {
   test(`rejects ${name}`, () => {
@@ -76,19 +78,25 @@ test('releases are newest first, with numeric version ordering on the same date'
   assert.deepEqual(loadReleases(input, notes).map((release) => release.version), ['1.10.0', '1.2.0', '1.0.0']);
 });
 
-test('installer instructions separate a pinned download from execution', () => {
+test('POSIX instructions keep the inspect-first download separate from execution', () => {
   const [release] = loadReleases(manifest(), changelog);
   const [download, run] = installationInstructions(release, 'posix');
   assert.match(download, /--fail.*--location.*--proto '=https'/);
   assert.match(download, /releases\/download\/v1\.0\.0\/install\.sh/);
   assert.doesNotMatch(download, /\|\s*(sh|bash)|\n\s*sh /);
   assert.match(run, /mkdir -p .*&&\n\s+sh install\.sh --bin-dir/);
-  const [windowsDownload, windowsRun] = installationInstructions(release, 'powershell');
-  assert.match(windowsDownload, /releases\/download\/v1\.0\.0\/install\.ps1/);
-  assert.match(windowsDownload, /if \(\$LASTEXITCODE -ne 0\) \{ throw/);
-  assert.doesNotMatch(windowsDownload, /Invoke-Expression|powershell\.exe/);
-  assert.match(windowsRun, /-ErrorAction Stop/);
-  assert.match(windowsRun, /powershell\.exe[^\n]*-ExecutionPolicy Bypass[^\n]*-File \.\\install\.ps1/);
+});
+
+test('Windows instructions provide one bounded HTTPS install command without streaming code into a shell', () => {
+  const [release] = loadReleases(manifest(), changelog);
+  const commands = installationInstructions(release, 'powershell');
+  assert.equal(commands.length, 1);
+  const [command] = commands;
+  assert.doesNotMatch(command, /[\r\n]|Invoke-Expression|\biex\b|\|\s*powershell/i);
+  assert.match(command, /releases\/download\/v1\.0\.0\/install\.ps1/);
+  assert.match(command, /--fail.*--location.*--proto '=https'.*--proto-redir '=https'.*--tlsv1\.2/);
+  assert.match(command, /--connect-timeout 15 --max-time 120 --max-filesize 1048576/);
+  assert.ok(command.includes(release.powershellSha256));
 });
 
 test('an unverified package channel cannot acquire installation commands', () => {

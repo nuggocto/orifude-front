@@ -22,6 +22,6 @@ The first papers are ready to open.
 export function manifest(notes = changelog) {
   return {
     source: { commit: 'a'.repeat(40), sha256: createHash('sha256').update(notes).digest('hex') },
-    releases: [{ version: '1.0.0', date: '2026-09-01', tagCommit: 'b'.repeat(40), verifiedAt: '2026-09-02', channels: ['posix', 'powershell', 'homebrew', 'scoop', 'aur'] }],
+    releases: [{ version: '1.0.0', date: '2026-09-01', tagCommit: 'b'.repeat(40), verifiedAt: '2026-09-02', channels: ['posix', 'powershell', 'homebrew', 'scoop', 'aur'], powershellSha256: 'c'.repeat(64) }],
   };
 }

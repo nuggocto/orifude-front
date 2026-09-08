@@ -31,7 +31,9 @@ export const manifestSchema = z.object({
     tagCommit: commit,
     verifiedAt: date,
     channels: z.array(z.enum(channelNames)).max(channelNames.length),
-  }).strict()).max(128),
+    powershellSha256: z.string().regex(/^[a-f0-9]{64}$/).optional(),
+  }).strict().refine((entry) => !entry.channels.includes('powershell') || entry.powershellSha256,
+    'PowerShell installation requires its reviewed installer SHA-256')).max(128),
 }).strict();
 
 function releaseNotes(changelog: string, releaseVersion: string, releaseDate: string) {
@@ -103,10 +105,25 @@ export function installationInstructions(release: Release, channel: Channel) {
       `curl --fail --location --proto '=https' --proto-redir '=https' --tlsv1.2 \\\n  --output install.sh ${base}/install.sh`,
       'mkdir -p "$HOME/.local/bin" &&\n  sh install.sh --bin-dir "$HOME/.local/bin"',
     ];
-    case 'powershell': return [
-      `curl.exe --fail --location --proto '=https' --proto-redir '=https' --tlsv1.2 \u0060\n  --output install.ps1 ${base}/install.ps1\nif ($LASTEXITCODE -ne 0) { throw 'Installer download failed.' }`,
-      'New-Item -ItemType Directory -Force -ErrorAction Stop -Path "$env:LOCALAPPDATA\\Programs\\Orifude"\npowershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File .\\install.ps1 -BinDir "$env:LOCALAPPDATA\\Programs\\Orifude"',
-    ];
+    case 'powershell': return [[
+      '& {',
+      "$ErrorActionPreference = 'Stop';",
+      "$work = Join-Path ([IO.Path]::GetTempPath()) ('orifude-install-' + [Guid]::NewGuid().ToString('N'));",
+      '[void](New-Item -ItemType Directory -Path $work);',
+      'try {',
+      "$script = Join-Path $work 'install.ps1';",
+      `curl.exe --fail --silent --show-error --location --max-redirs 5 --proto '=https' --proto-redir '=https' --tlsv1.2 --connect-timeout 15 --max-time 120 --max-filesize 1048576 --output $script ${base}/install.ps1;`,
+      "if ($LASTEXITCODE -ne 0) { throw 'Installer download failed.' };",
+      `if ((Get-FileHash -Algorithm SHA256 -LiteralPath $script).Hash.ToLowerInvariant() -cne '${release.powershellSha256}') { throw 'Installer checksum mismatch.' };`,
+      "$bin = Join-Path $env:LOCALAPPDATA 'Programs\\Orifude';",
+      '[void](New-Item -ItemType Directory -Force -Path $bin);',
+      'powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File $script -BinDir $bin;',
+      "if ($LASTEXITCODE -ne 0) { throw 'Installation failed.' };",
+      "$env:PATH = (@($bin) + @($env:PATH -split ';' | Where-Object { $_ -ne $bin })) -join ';';",
+      "Write-Output 'Ready. Run orifude in this window to play.';",
+      '} finally { Remove-Item -LiteralPath $work -Recurse -Force }',
+      '}',
+    ].join(' ')];
     case 'homebrew': return ['brew install nuggocto/tap/orifude'];
     case 'scoop': return ['scoop bucket add nuggocto https://github.com/nuggocto/scoop-bucket\nscoop install nuggocto/orifude'];
     case 'aur': return ['yay -S orifude-bin'];
