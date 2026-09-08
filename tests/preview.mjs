@@ -1,5 +1,5 @@
 import { startPreview } from '../scripts/preview.mjs';
-import { cp, mkdtemp, rm, symlink, unlink, writeFile } from 'node:fs/promises';
+import { cp, mkdtemp, realpath, rm, symlink, unlink, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -10,7 +10,7 @@ import { changelog, manifest } from './release-fixture.mjs';
 // Playwright owns teardown directly; Windows cannot gracefully signal a webServer child.
 export default async function setup() {
   const root = fileURLToPath(new URL('../', import.meta.url));
-  const fixture = await mkdtemp(join(tmpdir(), 'orifude-release-'));
+  let fixture = await mkdtemp(join(tmpdir(), 'orifude-release-'));
   const servers = [];
   async function stop() {
     const stopped = await Promise.allSettled(servers.map((server) => server.stop()));
@@ -21,6 +21,8 @@ export default async function setup() {
     if (failure) throw failure.reason;
   }
   try {
+    // Windows TEMP may use an 8.3 alias; Astro must build and resolve CSS from one path.
+    fixture = await realpath(fixture);
     for (const file of ['src', 'public', 'scripts', 'astro.config.mjs', 'tsconfig.json', 'package.json']) {
       await cp(join(root, file), join(fixture, file), { recursive: true });
     }
