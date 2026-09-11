@@ -21,7 +21,7 @@ test('a published release exposes only reviewed instructions and escapes its not
     await page.keyboard.press('Enter');
     await expect(page.locator('#posix [data-command] code')).toBeVisible();
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-    await expect(page.getByRole('heading', { name: /Homebrew|Scoop|Arch Linux/ })).toHaveCount(0);
+    await expect(page.getByRole('heading', { name: /Homebrew|Scoop|Arch Linux|NixOS/ })).toHaveCount(0);
     await page.getByRole('navigation', { name: 'Installation methods' }).getByRole('link', { name: /PowerShell/ }).click();
     await expect(page.locator('#powershell [data-command] code')).toBeVisible();
     await page.locator('summary').filter({ hasText: 'Verify your download' }).click();

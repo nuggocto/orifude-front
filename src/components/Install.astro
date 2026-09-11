@@ -11,6 +11,7 @@ const labels: Record<Channel, string> = {
   homebrew: 'macOS · Homebrew',
   scoop: 'Windows · Scoop',
   aur: 'Arch Linux · yay',
+  nix: 'Linux · Nix & NixOS',
 };
 ---
 <div class="install-page wrap">
@@ -33,6 +34,7 @@ const labels: Record<Channel, string> = {
         {channel === 'homebrew' && <p>With Homebrew installed, run:</p>}
         {channel === 'scoop' && <p>With Scoop installed, add our bucket and install Orifude:</p>}
         {channel === 'aur' && <p>With yay installed, run this command. Review the AUR package when prompted.</p>}
+        {channel === 'nix' && <p>With Nix and flakes enabled, run the game from this release:</p>}
         {installationInstructions(release, channel).map((command, index) =>
           <Command command={command} label={`${labels[channel]} command ${index + 1}`} />
         )}
@@ -44,6 +46,7 @@ const labels: Record<Channel, string> = {
         {(channel === 'powershell' || channel === 'scoop') && <p>For Windows 10 22H2 or newer on x86_64. Windows ARM64 is not supported.</p>}
         {channel === 'homebrew' && <p>The formula supports macOS 13 or newer on Intel and Apple Silicon.</p>}
         {channel === 'aur' && <p>The orifude-bin package installs the verified Linux binary for x86_64 or ARM64.</p>}
+        {channel === 'nix' && <p>The flake builds from pinned source inputs on Linux x86_64 and ARM64. See the <a href={`${repository}/blob/v${release.version}/docs/distribution.md#nix-and-nixos`}>Nix guide</a> to install it in your profile or add it to your NixOS configuration.</p>}
       </div>
     </section>)}
     <section class="install-method" aria-labelledby="play-title">

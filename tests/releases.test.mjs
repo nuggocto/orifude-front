@@ -83,4 +83,5 @@ test('an unverified package channel cannot acquire installation commands', () =>
   input.releases[0].channels = ['posix'];
   const [release] = loadReleases(input, changelog);
   assert.throws(() => installationInstructions(release, 'homebrew'), /has not been verified/);
+  assert.throws(() => installationInstructions(release, 'nix'), /has not been verified/);
 });

@@ -61,13 +61,15 @@ line endings. Import a snapshot with the command in the README.
 
 After publication and verification, add a record with numeric semantic `version`,
 publication `date`, immutable `tagCommit`, `verifiedAt`, and verified `channels`.
-Channels are `posix`, `powershell`, `homebrew`, `scoop`, and `aur`. PowerShell also
+Channels are `posix`, `powershell`, `homebrew`, `scoop`, `aur`, and `nix`. PowerShell also
 requires `powershellSha256`, checked against the immutable install.ps1 asset and
 its attestation. The page displays that hash under optional download verification.
 
 The native operator must verify the release, tag, complete archive and installer
-set, and each advertised package channel first. Keep the evidence in the native
-NOTEBOOK. The offline frontend build validates record shape and the source hash;
+set, and each advertised package channel first. Advertise Nix only after the
+tagged flake passes its installed-player checks on Linux x86_64 and ARM64.
+Keep the evidence in the native repository's `docs/release-qa.md`.
+The offline frontend build validates record shape and the source hash;
 it does not check remote release existence. An empty list shows development links.
 An empty channel list offers archives without claiming installer or package support.
 Only the latest release's reviewed channels appear on the installation page.
@@ -108,7 +110,7 @@ restriction; do not allow the injected script or all same-origin scripts.
 Packs have independent versions. After verifying the published ZIP, SHA256SUMS,
 GitHub attestation, and local installation, append the release's `pack.json`
 record to `src/content/packs.json` with immutable `sourceCommit` and real
-`verifiedAt`. Keep evidence in the native NOTEBOOK and run the release-update
+`verifiedAt`. Keep evidence in the native `docs/release-qa.md` and run the release-update
 checks above. The loader derives links from the fixed repository, pack ID, and
 version without network requests. An empty catalog keeps submission instructions
 and offers no downloads. Pack records do not change the native release catalog.

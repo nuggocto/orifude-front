@@ -2,7 +2,7 @@ import { createHash } from 'node:crypto';
 import { z } from 'astro/zod';
 
 export const repository = 'https://github.com/nuggocto/orifude';
-export const channelNames = ['posix', 'powershell', 'homebrew', 'scoop', 'aur'] as const;
+export const channelNames = ['posix', 'powershell', 'homebrew', 'scoop', 'aur', 'nix'] as const;
 export const categories = ['Added', 'Changed', 'Fixed', 'Security'] as const;
 export type Channel = (typeof channelNames)[number];
 
@@ -120,5 +120,6 @@ export function installationInstructions(release: Release, channel: Channel) {
     case 'homebrew': return ['brew install nuggocto/tap/orifude'];
     case 'scoop': return ['scoop bucket add nuggocto https://github.com/nuggocto/scoop-bucket\nscoop install nuggocto/orifude'];
     case 'aur': return ['yay -S orifude-bin'];
+    case 'nix': return [`nix run github:nuggocto/orifude/v${release.version}`];
   }
 }

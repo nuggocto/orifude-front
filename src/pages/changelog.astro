@@ -19,7 +19,7 @@ const readableDate = (date: string) => new Intl.DateTimeFormat('en', { dateStyle
         <header><span class="eyebrow"><time datetime={release.date}>{readableDate(release.date)}</time></span><h2>Orifude {release.version}</h2><p class="release-summary">{release.summary}</p></header>
         {categories.filter((category) => release.changes[category].length > 0).map((category) => <section><h3>{category}</h3><ul>{release.changes[category].map((change) => <li>{change}</li>)}</ul></section>)}
         <p class="release-links"><a href={release.url}>GitHub release <Arrow direction="out" /></a><a href={release.tagUrl}>Source tag</a><a href={release.sourceUrl}>Canonical notes</a></p>
-        <p class="small-copy">Verified channels: {release.channels.length ? release.channels.map((channel) => ({ posix: 'POSIX installer', powershell: 'PowerShell', homebrew: 'Homebrew', scoop: 'Scoop', aur: 'orifude-bin' })[channel]).join(', ') : 'Direct release archives'}.</p>
+        <p class="small-copy">Verified channels: {release.channels.length ? release.channels.map((channel) => ({ posix: 'POSIX installer', powershell: 'PowerShell', homebrew: 'Homebrew', scoop: 'Scoop', aur: 'orifude-bin', nix: 'Nix flake' })[channel]).join(', ') : 'Direct release archives'}.</p>
       </article>)}
     </>}
     <a class="back-home text-link" href="/">Return to Orifude <Arrow /></a>
