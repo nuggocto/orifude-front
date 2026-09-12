@@ -1,9 +1,24 @@
 {
   "source": {
-    "commit": "535d9a708ee9ecd3db79ca59923e80bd87ec59c6",
-    "sha256": "918d4ca4d23d067780403d68c1663dfb3b1e9ab9600eb161571b25b232280219"
+    "commit": "54b2130bf0197a643a1f781a6818db1d0959072a",
+    "sha256": "9ee9e1c03d526bd8a91e907bd3245f466266855b42c0c32ba9621c7eb2ab7939"
   },
   "releases": [
+    {
+      "version": "1.0.3",
+      "date": "2026-09-12",
+      "tagCommit": "54b2130bf0197a643a1f781a6818db1d0959072a",
+      "verifiedAt": "2026-09-12",
+      "channels": [
+        "posix",
+        "powershell",
+        "homebrew",
+        "scoop",
+        "aur",
+        "nix"
+      ],
+      "powershellSha256": "6f818c68fb3034626846b09748c727ee0078b030f5a6dd140effd8810777d7ca"
+    },
     {
       "version": "1.0.2",
       "date": "2026-09-11",
