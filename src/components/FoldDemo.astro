@@ -1,0 +1,27 @@
+---
+const cells = Array.from({ length: 16 }, (_, index) => index === 5 || index === 6);
+---
+<figure class="fold-demo" aria-labelledby="fold-demo-caption">
+  <input type="checkbox" id="fold-replay" class="replay-toggle" />
+  <div class="demo-stage" aria-hidden="true">
+    <div class="demo-target">
+      <span>Target</span>
+      <div class="mini-grid">{cells.map((ink) => <i class:list={{ ink }}></i>)}</div>
+    </div>
+    <div class="demo-paper">
+      <svg class="demo-arrow" viewBox="0 0 200 48" fill="none"><path d="M24 44C52 6 148 6 176 40m-15-6 15 6 3-16" /></svg>
+      <div class="sheet">
+        <div class="half half-right"><i class="dot"></i></div>
+        <div class="half half-left">
+          <div class="face face-front"><i class="dot"></i></div>
+          <div class="face face-back"></div>
+        </div>
+        <i class="drop"></i>
+      </div>
+    </div>
+  </div>
+  <figcaption id="fold-demo-caption">
+    <span>The first paper in Orifude. Fold once, brush once, then open it.</span>
+    <label for="fold-replay">Fold it again</label>
+  </figcaption>
+</figure>

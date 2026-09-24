@@ -7,10 +7,9 @@ const guide = 'https://github.com/nuggocto/orifude/blob/shrek/docs/puzzle-author
 ---
 <section id="puzzle-packs" class:list={['packs-section', 'wrap', { 'packs-with-downloads': packs.length > 0 }]} aria-labelledby="packs-title">
   <div class="pack-intro">
-    <span class="eyebrow">Share a little paper</span>
     <h2 id="packs-title">Make a puzzle pack.</h2>
     <p>Have a pattern in mind? Turn it into a paper someone else can solve. Start with our example pack, try your own folds, and send it for review.</p>
-    <a class="text-link" href={guide}>A guide to making packs <Arrow /></a>
+    <a class="text-link" href={guide}>A guide to making packs</a>
     <details class="pack-details">
       <summary>How to submit a pack <span aria-hidden="true">+</span></summary>
       <div class="pack-detail-body">
@@ -26,7 +25,7 @@ const guide = 'https://github.com/nuggocto/orifude/blob/shrek/docs/puzzle-author
   </div>
   {packs.length > 0 && <div class="pack-downloads" aria-label="Reviewed puzzle packs">
     {packs.map((pack) => <article class="pack-download">
-      <span class="eyebrow">Reviewed puzzle pack · {pack.version}</span>
+      <p class="small-copy pack-meta">Reviewed puzzle pack, version {pack.version}</p>
       <h3>{pack.title}</h3>
       <p class="pack-description">{pack.description}</p>
       <p class="small-copy pack-credit">{pack.puzzles} puzzles by {pack.authors.join(', ')}<br />{pack.license} · Orifude 1.0.0 or later</p>
