@@ -53,8 +53,11 @@ captured from the published 1.1.0 binary at release commit
 [`eb2c309`](https://github.com/nuggocto/orifude/commit/eb2c3094c2198bc3b29ad07087f24318e7035ab9).
 Recapture it with the lesson frame when the play screen changes.
 Run `node scripts/prepare-artwork.mjs` to regenerate the terminal still, icons,
-social image, and font notices. That manual task needs JetBrainsMono Nerd Font;
-ordinary builds use checked-in assets and need no system font.
+and font notices. That manual task needs JetBrainsMono Nerd Font; ordinary builds
+use checked-in assets and need no system font. Run `node scripts/prepare-social.mjs`
+to redraw `public/social.jpg`, the 1200 by 630 link preview. It renders the site's
+paper, Alegreya, and artwork in Playwright's Chromium, so it needs the installed
+browsers.
 
 With the built preview running, `node scripts/measure-browser.mjs` saves screenshots
 and five cold desktop/mobile measurements under `.preview/`. It uses Chromium,

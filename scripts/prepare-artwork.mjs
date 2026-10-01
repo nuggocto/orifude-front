@@ -20,15 +20,9 @@ await copyFile(asset('terminal.png'), publicFile('terminal.png'));
 for (const [name, size] of [['favicon.png', 64], ['apple-touch-icon.png', 180]]) {
   await sharp(asset('icon.png').pathname).resize(size, size).png().toFile(publicFile(name).pathname);
 }
-const courier = await sharp(asset('courier.png').pathname).resize(560).png().toBuffer();
-const wordmark = await sharp(asset('wordmark.png').pathname).resize(830).png().toBuffer();
-const copy = Buffer.from('<svg xmlns="http://www.w3.org/2000/svg" width="640" height="220"><g fill="#30352c" font-family="serif" font-size="42"><text x="25" y="70">A little ink goes a long way.</text><text x="25" y="122" font-family="sans-serif" font-size="25">An offline puzzle for your terminal.</text></g></svg>');
-await sharp({ create: { width: 1200, height: 630, channels: 3, background: '#f9f7f1' } })
-  .composite([{ input: courier, left: 625, top: 35, blend: 'darken' }, { input: wordmark, left: -165, top: 65, blend: 'darken' }, { input: copy, left: 35, top: 300 }])
-  .jpeg({ quality: 88, mozjpeg: true }).toFile(publicFile('social.jpg').pathname);
 const licenses = await Promise.all(['@fontsource-variable/alegreya'].map(async (font) => {
   const license = await readFile(new URL(`node_modules/${font}/LICENSE`, root), 'utf8');
   return `${font}\n${license}`;
 }));
 await writeFile(publicFile('font-licenses.txt'), licenses.join('\n\n'));
-console.log('Prepared the supplied artwork, native recording still, and font credits.');
+console.log('Prepared the icons, native recording still, and font credits. Run scripts/prepare-social.mjs for the link preview.');
