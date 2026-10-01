@@ -26,7 +26,7 @@ const copy = Buffer.from('<svg xmlns="http://www.w3.org/2000/svg" width="640" he
 await sharp({ create: { width: 1200, height: 630, channels: 3, background: '#f9f7f1' } })
   .composite([{ input: courier, left: 625, top: 35, blend: 'darken' }, { input: wordmark, left: -165, top: 65, blend: 'darken' }, { input: copy, left: 35, top: 300 }])
   .jpeg({ quality: 88, mozjpeg: true }).toFile(publicFile('social.jpg').pathname);
-const licenses = await Promise.all(['@fontsource/fraunces', '@fontsource-variable/source-sans-3'].map(async (font) => {
+const licenses = await Promise.all(['@fontsource-variable/alegreya'].map(async (font) => {
   const license = await readFile(new URL(`node_modules/${font}/LICENSE`, root), 'utf8');
   return `${font}\n${license}`;
 }));

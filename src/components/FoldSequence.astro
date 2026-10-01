@@ -31,7 +31,7 @@ const cells = Array.from({ length: 16 }, (_, index) => ({ x: index % 4, y: Math.
             <path d="M50 65h80v140H50Z" class="vacated-paper" />
             <path d="M135 68h80v140h-80Z" class="paper-under" />
             {cells.filter((cell) => cell.x >= 2).map((cell) => <rect x={50 + cell.x * 40} y={65 + cell.y * 35} width="40" height="35" class="paper-cell" />)}
-            <path d="M130 62v145" class="crease" />
+            <path d="M130 62v145" class="fold-crease" />
             <path d="M61 48c21-38 85-40 111-1m-2-18 3 20-21-2" class="fold-arrow" />
           </>}
           {index === 2 && <>
@@ -54,7 +54,7 @@ const cells = Array.from({ length: 16 }, (_, index) => ({ x: index % 4, y: Math.
         </svg>
       </div>
       <div class="fold-caption">
-        <span class="step-number" aria-hidden="true">0{index + 1}</span>
+        <span class="step-number" aria-hidden="true">{index + 1}</span>
         <div><h3>{step.title}</h3><p>{step.description}</p></div>
       </div>
     </li>

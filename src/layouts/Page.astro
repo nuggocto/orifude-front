@@ -15,7 +15,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#e9eae1" />
+    <meta name="theme-color" content="#46503f" />
     <meta name="color-scheme" content="light" />
     {page === 'missing' ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
     <meta property="og:type" content="website" />
@@ -33,18 +33,21 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
-    <header class="site-header wrap">
-      <a href="/" class="wordmark" aria-label="Orifude home">
-        <Image src={wordmark} alt="" width={560} format="webp" loading="eager" />
-      </a>
-      <nav aria-label="Main navigation">
-        <a href="/#how-it-works">How to play</a>
-        <a href="/install/" aria-current={page === 'install' ? 'page' : undefined}>Install</a>
-        <a href="/changelog/" aria-current={page === 'changelog' ? 'page' : undefined}>Changelog</a>
-        <a class="nav-source" href="https://github.com/nuggocto/orifude">GitHub <Arrow direction="out" /></a>
-      </nav>
-    </header>
-    <main id="main" tabindex="-1"><slot /></main>
+    <!-- One sheet of kozo paper laid on dyed paper; every page is printed on it. -->
+    <div class="sheet">
+      <header class="site-header wrap">
+        <a href="/" class="wordmark" aria-label="Orifude home">
+          <Image src={wordmark} alt="" width={560} format="webp" loading="eager" />
+        </a>
+        <nav aria-label="Main navigation">
+          <a href="/#how-it-works">How to play</a>
+          <a href="/install/" aria-current={page === 'install' ? 'page' : undefined}>Install</a>
+          <a href="/changelog/" aria-current={page === 'changelog' ? 'page' : undefined}>Changelog</a>
+          <a class="nav-source" href="https://github.com/nuggocto/orifude">GitHub <Arrow direction="out" /></a>
+        </nav>
+      </header>
+      <main id="main" tabindex="-1"><slot /></main>
+    </div>
     <footer class="site-footer wrap">
       <div>
         <a class="footer-name" href="/">orifude</a>

@@ -1,0 +1,25 @@
+---
+import frame from '../content/lesson-frame.txt?raw';
+
+// The frame is real text captured from the game, so it stays sharp at any
+// zoom. Runs of box drawing and ink take the colors the game gives them.
+const kind = (character: string) => {
+  const code = character.codePointAt(0) ?? 0;
+  if (character === '●' || character === '◉' || character === '#') return 'ink';
+  if ((code >= 0x2500 && code <= 0x257f) || character === '<') return 'line';
+  return 'text';
+};
+const runs: { kind: string; text: string }[] = [];
+for (const character of frame.trimEnd()) {
+  const next = character === '\n' ? 'text' : kind(character);
+  const current = runs.at(-1);
+  if (current?.kind === next) current.text += character;
+  else runs.push({ kind: next, text: character });
+}
+---
+<figure class="terminal" aria-labelledby="terminal-caption">
+  <div class="terminal-scroll" tabindex="0" role="region" aria-label="Orifude lesson frame">
+    <pre aria-hidden="true">{runs.map((run) => run.kind === 'text' ? run.text : <span class={run.kind}>{run.text}</span>)}</pre>
+  </div>
+  <figcaption id="terminal-caption">The lesson in your terminal, one fold and one dot in. The stack shows both inked layers and the row each began on. Press Enter to open the paper.</figcaption>
+</figure>

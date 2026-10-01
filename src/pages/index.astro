@@ -1,75 +1,102 @@
 ---
 import { Image } from 'astro:assets';
 import Page from '../layouts/Page.astro';
-import Arrow from '../components/Arrow.astro';
 import FoldDemo from '../components/FoldDemo.astro';
 import FoldSequence from '../components/FoldSequence.astro';
 import Packs from '../components/Packs.astro';
+import TerminalFrame from '../components/TerminalFrame.astro';
 import courier from '../assets/courier.png';
-import terminal from '../assets/terminal.png';
 import { latestRelease } from '../lib/content';
+
+// The journey's chapters and the gift each one sends home, as the game names them.
+const chapters = [
+  { title: 'Ink on paper', gift: 'a first leaf', mark: '◆' },
+  { title: 'Across the crease', gift: 'a pair of leaves', mark: '◇' },
+  { title: 'Gathered layers', gift: 'a berry cluster', mark: '●' },
+  { title: 'Uneven edges', gift: 'a folded boat', mark: '△' },
+  { title: 'Fold order', gift: 'a small bird', mark: '▾' },
+  { title: 'The long brush', gift: 'a longer branch', mark: '◇' },
+  { title: 'Mixed brushwork', gift: 'a berry sprig', mark: '●' },
+  { title: 'Under the canopy', gift: 'the full canopy', mark: '◆' },
+];
 ---
 <Page title="Orifude — A little ink goes a long way" description="Fold a small paper, brush ink through its layers, and unfold the pattern. Orifude is a quiet, offline puzzle game for your terminal.">
-  <section class="hero wrap" aria-labelledby="hero-title">
-    <div class="hero-copy">
-      <h1 id="hero-title">A little ink<br />goes a long way.</h1>
-      <p class="hero-description">Orifude is a folding and ink puzzle for your terminal. Fold a small sheet, brush ink through its layers, and open it to find the pattern.</p>
-      <div class="hero-actions">
-        <a href="#how-it-works" class="button">See how it folds <Arrow direction="down" /></a>
-        {latestRelease
-          ? <a href="/install/" class="text-link">Get Orifude</a>
-          : <a href="https://github.com/nuggocto/orifude" class="text-link">Explore the source <Arrow direction="out" /></a>}
+  <section class="panel panel-hero" aria-labelledby="hero-title">
+    <div class="wrap hero">
+      <div class="hero-copy">
+        <h1 id="hero-title">A little ink goes a long way.</h1>
+        <p class="hero-description">Orifude is a folding and ink puzzle for your terminal. Fold a small sheet, brush ink through its layers, and open it to find the pattern.</p>
+        <div class="hero-actions">
+          <a href="#how-it-works" class="button">See how it folds</a>
+          {latestRelease
+            ? <a href="/install/" class="text-link">Get Orifude</a>
+            : <a href="https://github.com/nuggocto/orifude" class="text-link">Explore the source</a>}
+        </div>
+        <p class="hero-status">{latestRelease ? `Version ${latestRelease.version} is ready to unfold.` : 'The first release is taking shape.'} <a href="/changelog/">Read the notes</a></p>
       </div>
-      <p class="hero-status">{latestRelease ? `Version ${latestRelease.version} is ready to unfold.` : 'The first release is taking shape.'} <a href="/changelog/">Read the notes</a></p>
+      <FoldDemo />
     </div>
-    <FoldDemo />
   </section>
 
-  <p class="fold-line fold-line-valley"><span>Take your time. Undo is always there.</span></p>
+  <p class="crease crease-valley"><span>Take your time. Undo is always there.</span></p>
 
-  <section id="how-it-works" class="how-section wrap" aria-labelledby="how-title">
-    <div class="section-heading">
-      <h2 id="how-title">There’s more to<br />a little sheet of paper.</h2>
-      <p>A fold brings distant places together. A single brush stroke reaches every layer. The surprise comes when you open it.</p>
-    </div>
-    <FoldSequence />
-    <p class="sequence-note">This is a real Orifude puzzle. The opened ink must match the target exactly.</p>
-  </section>
-
-  <section class="terminal-section" aria-labelledby="terminal-title">
+  <section id="how-it-works" class="panel" aria-labelledby="how-title">
     <div class="wrap">
       <div class="section-heading">
-        <h2 id="terminal-title">All you need is<br />a little curiosity.</h2>
-        <p>Forty handcrafted papers lead from simple marks to layered folds. Use your keyboard, try a different crease, and keep the papers you solve.</p>
+        <h2 id="how-title">There’s more to a little sheet of paper.</h2>
+        <p>A fold brings distant places together. A single brush stroke reaches every layer. The surprise comes when you open it.</p>
       </div>
-      <figure class="terminal-figure">
-        <Image src={terminal} alt="The real Orifude lesson after one fold and one brush stroke. The stack lists two inked layers, and the paper says: Ink reached 2 layers. Enter opens the paper." width={1280} widths={[640, 960, 1280]} sizes="(max-width: 700px) 92vw, 1180px" format="webp" loading="lazy" quality={92} />
-        <figcaption><span>A frame from the real game. One dot, two layers. Press Enter to see what unfolds.</span> <a href="/terminal.png">Open the full-size capture <Arrow direction="out" /></a></figcaption>
-      </figure>
-      <div class="play-notes">
-        <div><h3>Follow a growing branch.</h3><p>Work through the handcrafted journey, revisit a keepsake, or meet a new paper each day.</p></div>
+      <FoldSequence />
+      <p class="aside">This is the real first lesson. The opened ink must match the target exactly.</p>
+    </div>
+  </section>
+
+  <div class="crease crease-mountain" aria-hidden="true"></div>
+
+  <section class="panel" aria-labelledby="terminal-title">
+    <div class="wrap">
+      <div class="section-heading">
+        <h2 id="terminal-title">All you need is a little curiosity.</h2>
+        <p>Every paper is drawn in your terminal. Use the keyboard to choose a crease, place the brush, and look through the stack before you open it.</p>
+      </div>
+      <TerminalFrame />
+      <div class="notes">
         <div><h3>Leave the clock outside.</h3><p>There is no timer or streak to protect. Undo a mark, start again, or come back another day.</p></div>
-        <div><h3>Keep it close.</h3><p>Your progress stays on your computer. Play offline, or bring your own local puzzle packs.</p></div>
+        <div><h3>Keep what you solve.</h3><p>Every finished paper becomes a keepsake you can replay one step at a time.</p></div>
+        <div><h3>Keep it close.</h3><p>Your progress stays on your computer. Play offline, or bring your own puzzle packs.</p></div>
       </div>
     </div>
   </section>
+
+  <div class="crease crease-valley" aria-hidden="true"></div>
+
+  <section class="panel" aria-labelledby="journey-title">
+    <div class="wrap journey">
+      <figure class="courier">
+        <Image src={courier} alt="A squirrel holding a folded paper sits on a berry branch inside a brush circle." widths={[400, 640, 900]} sizes="(max-width: 800px) 70vw, 460px" width={900} format="webp" quality={84} loading="lazy" />
+      </figure>
+      <div class="journey-copy">
+        <h2 id="journey-title">Forty papers, eight gifts.</h2>
+        <p>The journey moves from single marks to layered folds in eight chapters. Finish one, and the squirrel carries a gift home to your branch. Between chapters, open today’s paper or wander the endless garden.</p>
+        <ol class="chapters">
+          {chapters.map((chapter) => <li><span class="gift" aria-hidden="true">{chapter.mark}</span><span class="chapter-title">{chapter.title}</span><span class="chapter-gift">{chapter.gift}</span></li>)}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <div class="crease crease-mountain" aria-hidden="true"></div>
 
   <Packs />
 
-  <div class="fold-line fold-line-mountain" aria-hidden="true"></div>
+  <div class="crease crease-valley" aria-hidden="true"></div>
 
-  <section id="get-orifude" class="get-paper wrap" aria-labelledby="get-title">
-    <figure class="get-art">
-      <Image src={courier} alt="A squirrel holding folded paper sits on a branch inside a hand-painted brush circle." widths={[400, 640, 900]} sizes="(max-width: 800px) 80vw, 520px" width={900} format="webp" quality={84} loading="lazy" />
-      <figcaption>A small paper has arrived.</figcaption>
-    </figure>
-    <div class="get-intro">
+  <section id="get-orifude" class="panel panel-closing" aria-labelledby="get-title">
+    <div class="wrap closing">
       <h2 id="get-title">Make yourself at home.</h2>
       <p>{latestRelease ? 'Choose the installation method for your computer, then open your first paper. Orifude plays entirely offline.' : 'The first release is being prepared. Until then, you can explore the code or build Orifude yourself.'}</p>
-      <div class="get-actions">
-        <a class="button" href="/install/">{latestRelease ? 'Install Orifude' : 'Build from source'}</a>
-        <p class="small-copy">For Linux, macOS, and Windows.</p>
-      </div>
+      <a class="button" href="/install/">{latestRelease ? 'Install Orifude' : 'Build from source'}</a>
+      <p class="aside">For Linux, macOS, and Windows.</p>
     </div>
   </section>
 </Page>

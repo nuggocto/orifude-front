@@ -1,0 +1,24 @@
+╭ Pattern to match ───────────────╮╭ Folded paper ────────────────────╮╭ Stack, bottom to top ─╮
+│              1 2 3 4            ││               1 2 3 4            ││ Row 2, column 3       │
+│            1 . . . .            ││             1     2 2            ││ 2 layers began at:    │
+│            2 . # # .            ││             2     ◉ 2            ││ 1 ● row 2, col 3      │
+│            3 . . . .            ││             3     2 2            ││ 2 ● row 2, col 2      │
+│            4 . . . .            ││             4     2 2            ││                       │
+│                                 ││                                  ││                       │
+│     ╭────╮ ╭ Squirrel says ───╮ ││                                  ││                       │
+│  ╭─╯    ╰╮ │ The target is    │ ││                                  ││                       │
+│  ╭╯  ╱╲╱╲╰<│ inked.           │ ││                                  ││                       │
+│  │  ( ●)─╯ │ Press Enter to   │ ││                                  ││                       │
+│   ╰╮ ╱╰─╯  │ open.            │ ││                                  ││                       │
+│    ╰─╯╱╲╲  │                  │ ││                                  ││                       │
+│      ╰╯─╯  ╰──────────────────╯ ││                                  ││                       │
+│                                 ││                                  ││                       │
+╰─────────────────────────────────╯╰──────────────────────────────────╯╰───────────────────────╯
+╭ Paper ───────────────────────────────────────────────────────────────────────────────────────╮
+│ One fold, one mark   Folds 1/1   Ink 1/1                                                     │
+│ Ready: Open paper · Enter unfolds and compares                                               │
+│ Last step: Ink reached 2 layers. Enter opens the paper.                                      │
+│ Made: Right at crease 2, Dot at row 2, column 3                                              │
+│ Guide: The target is inked. Press Enter to open.                                             │
+╰──────────────────────────────────────────────────────────────────────────────────────────────╯
+                 Arrows inspect · Tab tool/open · Enter open · ? help · q quit

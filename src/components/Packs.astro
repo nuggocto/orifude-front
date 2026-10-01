@@ -5,7 +5,8 @@ import { loadPacks } from '../lib/packs';
 const packs = loadPacks(catalog);
 const guide = 'https://github.com/nuggocto/orifude/blob/shrek/docs/puzzle-authoring.md';
 ---
-<section id="puzzle-packs" class:list={['packs-section', 'wrap', { 'packs-with-downloads': packs.length > 0 }]} aria-labelledby="packs-title">
+<section id="puzzle-packs" class="panel" aria-labelledby="packs-title">
+  <div class:list={['wrap', 'packs', { 'packs-with-downloads': packs.length > 0 }]}>
   <div class="pack-intro">
     <h2 id="packs-title">Make a puzzle pack.</h2>
     <p>Have a pattern in mind? Turn it into a paper someone else can solve. Start with our example pack, try your own folds, and send it for review.</p>
@@ -28,7 +29,7 @@ const guide = 'https://github.com/nuggocto/orifude/blob/shrek/docs/puzzle-author
       <p class="small-copy pack-meta">Reviewed puzzle pack, version {pack.version}</p>
       <h3>{pack.title}</h3>
       <p class="pack-description">{pack.description}</p>
-      <p class="small-copy pack-credit">{pack.puzzles} puzzles by {pack.authors.join(', ')}<br />{pack.license} · Orifude 1.0.0 or later</p>
+      <p class="small-copy pack-credit">{pack.puzzles} puzzles by {pack.authors.join(', ')}<br />{pack.license}, for Orifude 1.0.0 or later</p>
       <div class="pack-actions">
         <a class="button" href={pack.zipUrl}>Download {pack.title} ZIP <Arrow direction="down" /></a>
         <a class="small-copy" href={pack.checksumUrl}>SHA-256 checksums</a>
@@ -45,4 +46,5 @@ const guide = 'https://github.com/nuggocto/orifude/blob/shrek/docs/puzzle-author
       </details>
     </article>)}
   </div>}
+  </div>
 </section>
