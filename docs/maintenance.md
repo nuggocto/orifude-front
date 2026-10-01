@@ -44,8 +44,8 @@ the puzzle engine. The landing page sets `src/content/lesson-frame.txt` as text:
 a 100-column capture of the native lesson after one fold and one dot. Recapture
 it when the play screen changes. Paper grain, fibers, and the torn sheet edge are
 small SVGs in `public/paper/`; the policy blocks `data:` images, so keep them as
-files. The site uses one bundled family, Alegreya, at three sizes. `src/content/journey.cast` comes from native commit
-[`a14d4c9`](https://github.com/nuggocto/orifude/commit/a14d4c94a86e44b84d7ddbe7b43eaf31c8dc638e).
+files. The site uses one bundled family, Alegreya, at three sizes. `src/content/journey.cast` comes from the published 1.1.0 binary, release commit
+[`eb2c309`](https://github.com/nuggocto/orifude/commit/eb2c3094c2198bc3b29ad07087f24318e7035ab9).
 Run `node scripts/prepare-artwork.mjs` to regenerate the terminal still, icons,
 social image, and font notices. That manual task needs JetBrainsMono Nerd Font;
 ordinary builds use checked-in assets and need no system font.
