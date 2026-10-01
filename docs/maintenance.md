@@ -9,7 +9,9 @@ fixture. Global setup owns both servers and removes the fixture on success or
 failure. An occupied port fails instead of reusing an existing server. Tests have
 bounded timeouts and no automatic retries.
 
-Linux CI runs Chromium, Firefox, and WebKit. Windows runs Chromium and Firefox.
+Linux CI runs Chromium, Firefox, and WebKit inside Microsoft's Playwright image,
+pinned by digest. Update its version tag and digest together with
+`@playwright/test`. Windows runs Chromium and Firefox.
 Windows WebKit's headless clipboard and default link-focus behavior do not support
 this test suite. Linux WebKit runs every assertion, including native paste and
 keyboard navigation; it does not establish native Safari compatibility.
