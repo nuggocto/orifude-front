@@ -1,6 +1,10 @@
 import { test, expect } from '@playwright/test';
 
 test('each Copy button puts exactly its visible command on the clipboard', async ({ page, context, browserName }) => {
+  // Eight copy-and-paste round trips run after the landing page, and this is
+  // often a worker's first test, so it also pays the browser's cold start. On
+  // Windows Firefox that has taken 17 to 32 seconds of a 30-second budget.
+  test.slow();
   // Chromium's automated context requires an explicit clipboard permission.
   if (browserName === 'chromium') await context.grantPermissions(['clipboard-write'], { origin: 'http://127.0.0.1:4331' });
   await page.goto('/');
