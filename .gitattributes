@@ -1,2 +1,5 @@
 # The reviewed snapshot hash includes its LF bytes.
 src/content/changelog.md text eol=lf
+# The served installers must stay byte-identical to the release assets.
+public/install.sh -text
+public/install.ps1 -text
