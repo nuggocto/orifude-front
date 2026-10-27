@@ -22,10 +22,13 @@ checks. These supplement visual review; they do not establish full WCAG conforma
 or mobile-device support. Clipboard tests paste the copied text through native
 browser editing. Separate denial and missing-API cases check manual copying.
 
-Windows PowerShell 5.1 tests execute the generated launcher with a local transfer
-fixture. POSIX tests execute their copied block too. They check complete transfers,
-script failures, and cleanup without installing the game. The native repository
-checks the real installers, archives, saved PATH, and packaged player journeys.
+Windows PowerShell 5.1 tests run the real `irm | iex` command against a local
+HTTP server under the Restricted client policy. POSIX tests run the real
+`curl | sh` command with only the transfer replaced. Both check a complete run,
+an installer failure, and that truncated copies of the served release scripts run
+nothing. The Windows tests also check that the installer's error preference and
+strict mode stay inside its script block. The native repository checks the real
+installers, archives, saved PATH, and packaged player journeys.
 
 CI uses no deployment credentials. README and maintenance-only edits skip CI;
 manual dispatch remains available. Source, assets, release records, configuration,
@@ -75,8 +78,15 @@ line endings. Import a snapshot with the command in the README.
 After publication and verification, add a record with numeric semantic `version`,
 publication `date`, immutable `tagCommit`, `verifiedAt`, and verified `channels`.
 Channels are `posix`, `powershell`, `homebrew`, `scoop`, `aur`, and `nix`. PowerShell also
-requires `powershellSha256`, checked against the immutable install.ps1 asset and
-its attestation. The page displays that hash under optional download verification.
+requires `powershellSha256`, and POSIX requires `posixSha256`. Check each against
+the immutable release asset and its attestation. The page displays both hashes
+under optional download verification.
+
+The site serves the latest release's installers at `/install.sh` and
+`/install.ps1` as plain text. Copy the release assets byte for byte into
+`public/` with the new record. The build fails unless each file matches the
+latest record's hash and names its version. Releases before 1.1.2 have
+installers that are not safe to pipe, so never serve them.
 
 The native operator must verify the release, tag, complete archive and installer
 set, and each advertised package channel first. Advertise Nix only after the

@@ -13,7 +13,12 @@ export const securityHeaders = {
   'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=(), usb=()',
 };
 
+// Installers are read by curl and Invoke-RestMethod; plain text keeps irm returning a string.
+export const installerPaths = ['/install.sh', '/install.ps1'];
+export const installerContentType = 'text/plain; charset=utf-8';
+
 export function pagesHeaders() {
   const lines = Object.entries(securityHeaders).map(([name, value]) => `  ${name}: ${value}`);
-  return `/*\n${lines.join('\n')}\n\nhttps://:project.pages.dev/*\n  X-Robots-Tag: noindex\n\nhttps://:version.:project.pages.dev/*\n  X-Robots-Tag: noindex\n`;
+  const installers = installerPaths.map((path) => `${path}\n  Content-Type: ${installerContentType}\n`).join('\n');
+  return `/*\n${lines.join('\n')}\n\n${installers}\nhttps://:project.pages.dev/*\n  X-Robots-Tag: noindex\n\nhttps://:version.:project.pages.dev/*\n  X-Robots-Tag: noindex\n`;
 }

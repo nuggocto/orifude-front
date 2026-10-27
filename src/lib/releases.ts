@@ -31,6 +31,7 @@ export const manifestSchema = z.object({
     tagCommit: commit,
     verifiedAt: date,
     channels: z.array(z.enum(channelNames)).max(channelNames.length),
+    posixSha256: z.string().regex(/^[a-f0-9]{64}$/).optional(),
     powershellSha256: z.string().regex(/^[a-f0-9]{64}$/).optional(),
   }).strict().refine((entry) => !entry.channels.includes('powershell') || entry.powershellSha256,
     'PowerShell installation requires its reviewed installer SHA-256')).max(128),
@@ -97,26 +98,18 @@ export function loadReleases(input: unknown, changelog: string) {
 
 export type Release = ReturnType<typeof loadReleases>[number];
 
+export const site = 'https://orifude.com';
+
+/** The site serves the latest release's installers at these paths; the build checks their hashes. */
+export const installerPaths = { posix: 'install.sh', powershell: 'install.ps1' } as const;
+
 export function installationInstructions(release: Release, channel: Channel) {
   if (!release.channels.includes(channel)) throw new Error('This installation channel has not been verified');
-  const base = `${repository}/releases/download/v${release.version}`;
   switch (channel) {
-    case 'posix': return [`(
-  d=$(mktemp -d) || exit
-  trap 'rm -rf "$d"' EXIT
-  curl -fL --proto '=https' --proto-redir '=https' --tlsv1.2 --max-redirs 5 --connect-timeout 15 --max-time 120 --max-filesize 1048576 -o "$d/install.sh" ${base}/install.sh &&
-    sh "$d/install.sh"
-)`];
-    case 'powershell': return [`& {
-  $d = New-Item -ItemType Directory -Path (Join-Path $env:TEMP ([guid]::NewGuid())) -ErrorAction Stop
-  try {
-    $p = Join-Path $d.FullName 'install.ps1'
-    curl.exe -fL --proto '=https' --proto-redir '=https' --tlsv1.2 --max-redirs 5 --connect-timeout 15 --max-time 120 --max-filesize 1048576 -o $p ${base}/install.ps1
-    if ($LASTEXITCODE) { throw 'Installer download failed.' }
-    powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File $p
-    if ($LASTEXITCODE) { throw 'Installation failed.' }
-  } finally { Remove-Item -LiteralPath $d.FullName -Recurse -Force }
-}`];
+    case 'posix':
+      if (!release.posixSha256) throw new Error('POSIX installation requires its reviewed installer SHA-256');
+      return [`curl -fsS ${site}/${installerPaths.posix} | sh`];
+    case 'powershell': return [`irm ${site}/${installerPaths.powershell} | iex`];
     case 'homebrew': return ['brew install nuggocto/tap/orifude'];
     case 'scoop': return ['scoop bucket add nuggocto https://github.com/nuggocto/scoop-bucket\nscoop install nuggocto/orifude'];
     case 'aur': return ['yay -S orifude-bin'];

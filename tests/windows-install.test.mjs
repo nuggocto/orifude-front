@@ -1,8 +1,9 @@
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, realpathSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, realpathSync, rmSync } from 'node:fs';
+import { createServer } from 'node:http';
 import { tmpdir } from 'node:os';
-import { dirname, join } from 'node:path';
+import { join } from 'node:path';
 import { test } from 'node:test';
 import { installationInstructions, loadReleases } from '../src/lib/releases.ts';
 import { changelog, manifest } from './release-fixture.mjs';
@@ -84,74 +85,54 @@ async function runPowerShell(executable, args, options) {
   }
 }
 
-const installer = `param([string]$BinDir = (Join-Path $env:LOCALAPPDATA 'Programs\\Orifude'))
-$ErrorActionPreference = 'Stop'
-[IO.File]::WriteAllText($env:ORIFUDE_TEST_EXECUTION, ([ordered]@{
-  destination = $BinDir
-  script = $PSCommandPath
-  processId = $PID
-  version = $PSVersionTable.PSVersion.ToString()
-  policy = [string](Get-ExecutionPolicy -Scope Process)
-  path = $env:PATH
-  arguments = [Environment]::GetCommandLineArgs()
-} | ConvertTo-Json -Compress))
-if ($BinDir -cne (Join-Path $env:LOCALAPPDATA 'Programs\\Orifude')) {
-  throw 'Unexpected fixture destination.'
-}
+const published = readFileSync(new URL('../public/install.ps1', import.meta.url), 'utf8');
 
-if ([int]$env:ORIFUDE_TEST_INSTALLER_EXIT -ne 0) {
-  exit ([int]$env:ORIFUDE_TEST_INSTALLER_EXIT)
+// Mirrors the published structure: a parameter block, then one script block.
+const fixture = `[CmdletBinding()]
+param([string]$BinDir = (Join-Path $env:LOCALAPPDATA 'Programs\\Orifude'), [switch]$NoPath)
+& {
+  $ErrorActionPreference = 'Stop'
+  Set-StrictMode -Version Latest
+  [IO.File]::WriteAllText($env:ORIFUDE_TEST_EXECUTION, ([ordered]@{
+    destination = $BinDir
+    processId = $PID
+    version = $PSVersionTable.PSVersion.ToString()
+  } | ConvertTo-Json -Compress))
+  if ($env:ORIFUDE_TEST_FAIL) { throw 'Fixture installer failed.' }
+  [void][IO.Directory]::CreateDirectory($BinDir)
+  [IO.File]::WriteAllText((Join-Path $BinDir 'installed.txt'), 'installed fixture')
 }
-[void][IO.Directory]::CreateDirectory($BinDir)
-[IO.File]::WriteAllText((Join-Path $BinDir 'installed.txt'), 'installed fixture')
-exit 0
 `;
 
-async function runInstall(t, { curlExit = 0, installerExit = 0, reinstall = false, previousInstall = false } = {}) {
+async function serve(t, body) {
+  const server = createServer((request, response) => {
+    if (request.url !== '/install.ps1') { response.writeHead(404).end(); return; }
+    response.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8', 'Content-Length': Buffer.byteLength(body) });
+    response.end(body);
+  });
+  await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
+  t.after(() => new Promise((resolve) => server.close(resolve)));
+  return `http://127.0.0.1:${server.address().port}`;
+}
+
+async function runInstall(t, served, { fail = false, parseOnly = false } = {}) {
   let root = mkdtempSync(join(tmpdir(), "orifude install's test-"));
   t.after(() => rmSync(root, { recursive: true, force: true }));
   // .NET GetTempPath expands Windows 8.3 aliases that Node's tmpdir preserves.
   root = realpathSync.native(root);
-  const temporary = join(root, 'temporary files');
   const localAppData = join(root, 'local app data');
   const destination = join(localAppData, 'Programs', 'Orifude');
-  const installed = join(destination, 'installed.txt');
-  mkdirSync(temporary);
   mkdirSync(localAppData);
-  writeFileSync(join(temporary, 'keep.txt'), 'unrelated temporary file');
-  if (previousInstall) {
-    mkdirSync(destination, { recursive: true });
-    writeFileSync(installed, 'previous fixture');
-  }
-  const source = join(root, 'fixture installer.ps1');
-  writeFileSync(source, installer);
-  const input = manifest();
-  const [release] = loadReleases(input, changelog);
+  const [release] = loadReleases(manifest(), changelog);
   const commands = installationInstructions(release, 'powershell');
-  assert.equal(commands.length, 1, 'Windows installation must be one copyable command');
-  const [command] = commands;
+  assert.deepEqual(commands, ['irm https://orifude.com/install.ps1 | iex'], 'Windows installation must be one short command');
+  // Only the host changes; Invoke-RestMethod, Invoke-Expression, and parsing are real.
+  let command = commands[0].replace('https://orifude.com', await serve(t, served));
+  if (parseOnly) command = command.replace('| iex', "| ForEach-Object { [void][scriptblock]::Create($_); throw 'parsed completely' }");
 
-  // Only the transfer is replaced. Child execution, exit handling, and cleanup are real.
   const wrapper = `
-function curl.exe {
-  $outputIndex = [Array]::IndexOf($args, '--output')
-  if ($outputIndex -lt 0) { $outputIndex = [Array]::IndexOf($args, '-o') }
-  if ($outputIndex -lt 0 -or $outputIndex + 1 -ge $args.Count) {
-    throw 'Fixture curl needs an output file.'
-  }
-  if ($args -notcontains '${release.url.replace('/tag/', '/download/')}/install.ps1') {
-    throw 'Fixture curl received an unexpected release URL.'
-  }
-  $download = [IO.Path]::GetFullPath([string]$args[$outputIndex + 1])
-  if ([IO.Path]::GetDirectoryName([IO.Path]::GetDirectoryName($download)) -ne $env:TEMP) {
-    throw 'Fixture curl refuses writes outside its private temporary directory.'
-  }
-  [IO.File]::Copy($env:ORIFUDE_TEST_SOURCE, $download, $true)
-  [IO.File]::WriteAllText($env:ORIFUDE_TEST_DOWNLOAD, ([ordered]@{
-    path = $download
-  } | ConvertTo-Json -Compress))
-  $global:LASTEXITCODE = [int]$env:ORIFUDE_TEST_CURL_EXIT
-}
+$ErrorActionPreference = 'Continue'
+Set-StrictMode -Off
 function Read-PersistentSettings {
   [ordered]@{
     userPath = [Environment]::GetEnvironmentVariable('Path', 'User')
@@ -161,72 +142,41 @@ function Read-PersistentSettings {
   }
 }
 $testBefore = Read-PersistentSettings
-$testInitialPath = $env:PATH
 $testPolicyBefore = [string](Get-ExecutionPolicy -Scope Process -ErrorAction Stop)
-$testResults = @()
-for ($testAttempt = 0; $testAttempt -lt ${reinstall ? 2 : 1}; $testAttempt++) {
-  $testPathBefore = $env:PATH
-  $testError = $null
-  try {
-    ${command}
-  } catch {
-    $testError = $_.Exception.Message
-  }
-  $testExecution = $null
-  if ([IO.File]::Exists($env:ORIFUDE_TEST_EXECUTION)) {
-    $testExecution = [IO.File]::ReadAllText($env:ORIFUDE_TEST_EXECUTION) | ConvertFrom-Json -ErrorAction Stop
-  }
-  $testInstalled = $null
-  if ([IO.File]::Exists($env:ORIFUDE_TEST_INSTALLED)) {
-    $testInstalled = [IO.File]::ReadAllText($env:ORIFUDE_TEST_INSTALLED)
-  }
-  $testDownload = $null
-  if ([IO.File]::Exists($env:ORIFUDE_TEST_DOWNLOAD)) {
-    $testDownload = [IO.File]::ReadAllText($env:ORIFUDE_TEST_DOWNLOAD) | ConvertFrom-Json -ErrorAction Stop
-  }
-  $testResults += [ordered]@{
-    error = $testError
-    pathBefore = $testPathBefore
-    path = $env:PATH
-    execution = $testExecution
-    installed = $testInstalled
-    download = $testDownload
-    temporaryEntries = @([IO.Directory]::GetFileSystemEntries($env:TEMP))
-  }
-  if ($testAttempt + 1 -lt ${reinstall ? 2 : 1}) {
-    [IO.File]::WriteAllText($env:ORIFUDE_TEST_INSTALLED, 'previous fixture')
-    [IO.File]::Delete($env:ORIFUDE_TEST_EXECUTION)
-  }
+$testError = $null
+try {
+  ${command}
+} catch {
+  $testError = $_.Exception.GetType().Name + ': ' + $_.Exception.Message
+}
+# Strict mode would make this unset variable an error; the installer must not leave it on.
+$testStrict = try { $null -eq $testUnsetVariable } catch { 'strict' }
+$testExecution = $null
+if ([IO.File]::Exists($env:ORIFUDE_TEST_EXECUTION)) {
+  $testExecution = [IO.File]::ReadAllText($env:ORIFUDE_TEST_EXECUTION) | ConvertFrom-Json -ErrorAction Stop
 }
 [IO.File]::WriteAllText($env:ORIFUDE_TEST_RESULT, ([ordered]@{
   version = $PSVersionTable.PSVersion.ToString()
   processId = $PID
-  initialPath = $testInitialPath
+  error = $testError
+  errorActionPreference = [string]$ErrorActionPreference
+  strict = $testStrict
   policyBefore = $testPolicyBefore
   policyAfter = [string](Get-ExecutionPolicy -Scope Process -ErrorAction Stop)
   persistentBefore = $testBefore
   persistentAfter = (Read-PersistentSettings)
-  attempts = $testResults
-} | ConvertTo-Json -Depth 6 -Compress))
+  execution = $testExecution
+} | ConvertTo-Json -Depth 4 -Compress))
 `;
   const powershellDirectory = join(process.env.SystemRoot, 'System32', 'WindowsPowerShell', 'v1.0');
-  const otherPath = `${powershellDirectory};${join(process.env.SystemRoot, 'System32')}`;
-  const initialPath = otherPath;
   // PowerShell 5.1 must resolve its own modules, even when launched from PowerShell 7.
   const env = Object.fromEntries(Object.entries(process.env).filter(([key]) =>
-    !/^(TEMP|TMP|LOCALAPPDATA|PATH|PSModulePath|PSExecutionPolicyPreference)$/i.test(key)));
+    !/^(LOCALAPPDATA|PSModulePath|PSExecutionPolicyPreference|ORIFUDE_TEST_FAIL)$/i.test(key)));
   Object.assign(env, {
-    TEMP: temporary,
-    TMP: temporary,
     LOCALAPPDATA: localAppData,
-    PATH: initialPath,
-    ORIFUDE_TEST_SOURCE: source,
     ORIFUDE_TEST_EXECUTION: join(root, 'execution.json'),
-    ORIFUDE_TEST_DOWNLOAD: join(root, 'download.json'),
-    ORIFUDE_TEST_INSTALLED: installed,
     ORIFUDE_TEST_RESULT: join(root, 'result.json'),
-    ORIFUDE_TEST_CURL_EXIT: String(curlExit),
-    ORIFUDE_TEST_INSTALLER_EXIT: String(installerExit),
+    ...(fail ? { ORIFUDE_TEST_FAIL: '1' } : {}),
   });
   const child = await runPowerShell(join(powershellDirectory, 'powershell.exe'), [
     '-NoProfile', '-NonInteractive', '-ExecutionPolicy', 'Restricted',
@@ -235,61 +185,45 @@ for ($testAttempt = 0; $testAttempt -lt ${reinstall ? 2 : 1}; $testAttempt++) {
   assert.equal(child.status, 0, `PowerShell harness failed:\n${child.stdout}\n${child.stderr}`);
   const result = JSON.parse(readFileSync(env.ORIFUDE_TEST_RESULT, 'utf8'));
   assert.match(result.version, /^5\.1\./, 'Exercise Windows PowerShell, not PowerShell 7');
-  assert.equal(result.policyBefore, 'Restricted');
+  assert.equal(result.policyBefore, 'Restricted', 'irm | iex must work under the default client policy');
   assert.equal(result.policyAfter, result.policyBefore, 'The calling shell policy must not change');
   assert.deepEqual(result.persistentAfter, result.persistentBefore, 'No persistent PATH or policy changes');
-  assert.equal(result.initialPath, initialPath);
-  for (const attempt of result.attempts) {
-    assert.ok(attempt.download, `Installer download did not reach the fixture: ${attempt.error}`);
-    assert.equal(dirname(dirname(attempt.download.path)), temporary, 'Download belongs in a private temporary subdirectory');
-    assert.deepEqual(attempt.temporaryEntries, [join(temporary, 'keep.txt')], 'Each command cleans its own work directory');
-  }
-  assert.deepEqual(readdirSync(temporary), ['keep.txt']);
-  assert.equal(readFileSync(join(temporary, 'keep.txt'), 'utf8'), 'unrelated temporary file');
-  return { ...result, destination, installed };
+  assert.equal(result.errorActionPreference, 'Continue', "The installer's error preference stays in its script block");
+  assert.equal(result.strict, true, "The installer's strict mode stays in its script block");
+  return { ...result, destination };
 }
 
-test('Windows installation and reinstall invoke the default installer and clean temporary files', windowsOnly, async (t) => {
-  const result = await runInstall(t, { reinstall: true });
-  const [first, second] = result.attempts;
-  assert.equal(first.error, null);
-  assert.equal(second.error, null);
-  assert.equal(first.installed, 'installed fixture');
-  assert.equal(second.installed, 'installed fixture', 'Reinstall replaces the previous fixture');
-  assert.equal(first.path, result.initialPath, 'The launcher leaves PATH to the installer');
-  assert.equal(second.path, first.path, 'Reinstall leaves the parent PATH unchanged');
-  assert.notEqual(first.download.path, second.download.path, 'Each attempt owns a fresh work directory');
-  for (const attempt of result.attempts) {
-    assert.equal(attempt.execution.destination, result.destination);
-    assert.equal(attempt.execution.script, attempt.download.path);
-    assert.notEqual(attempt.execution.processId, result.processId, 'Run the installer in a real child process');
-    assert.match(attempt.execution.version, /^5\.1\./);
-    assert.equal(attempt.execution.policy, 'Bypass');
-    assert.equal(attempt.execution.path, attempt.pathBefore, 'PATH changes only after the installer succeeds');
-    assert.ok(attempt.execution.arguments.includes('-NoProfile'));
-    assert.ok(attempt.execution.arguments.includes('-NonInteractive'));
-  }
-  assert.equal(readFileSync(result.installed, 'utf8'), 'installed fixture');
+test('irm | iex runs the served installer with its defaults in the calling shell', windowsOnly, async (t) => {
+  const result = await runInstall(t, fixture);
+  assert.equal(result.error, null);
+  assert.equal(result.execution.destination, result.destination);
+  assert.equal(result.execution.processId, result.processId, 'iex runs in the calling shell');
+  assert.match(result.execution.version, /^5\.1\./);
+  assert.equal(readFileSync(join(result.destination, 'installed.txt'), 'utf8'), 'installed fixture');
 });
 
-test('a failed Windows download never executes even a complete installer', windowsOnly, async (t) => {
-  const result = await runInstall(t, { curlExit: 23 });
-  const [attempt] = result.attempts;
-  assert.match(attempt.error, /download.*fail|fail.*download/i);
-  assert.equal(attempt.execution, null);
+test('a failing installer reports its error and leaves the calling shell open', windowsOnly, async (t) => {
+  const result = await runInstall(t, fixture, { fail: true });
+  assert.match(result.error, /Fixture installer failed/);
+  assert.ok(result.execution, 'The installer ran before failing');
   assert.equal(existsSync(result.destination), false);
-  assert.equal(attempt.path, result.initialPath);
 });
 
-test('a nonzero Windows installer preserves the previous fixture and leaves PATH unchanged', windowsOnly, async (t) => {
-  const result = await runInstall(t, { installerExit: 17, previousInstall: true });
-  const [attempt] = result.attempts;
-  assert.match(attempt.error, /install.*(fail|exit)|fail.*install/i);
-  assert.equal(attempt.execution.destination, result.destination, 'The verified installer actually ran');
-  assert.equal(attempt.installed, 'previous fixture');
-  assert.equal(readFileSync(result.installed, 'utf8'), 'previous fixture');
-  assert.equal(attempt.path, result.initialPath);
+test('the published installer parses in Windows PowerShell 5.1', windowsOnly, async (t) => {
+  // Parse the downloaded text as iex would, without running the real installer.
+  const result = await runInstall(t, published, { parseOnly: true });
+  assert.match(result.error, /parsed completely/);
+  assert.equal(existsSync(result.destination), false);
 });
+
+const closing = published.trimEnd().lastIndexOf('}');
+for (const [name, cut] of [['halfway', Math.floor(published.length / 2)], ['before its closing brace', closing]]) {
+  test(`a published installer cut off ${name} runs nothing`, windowsOnly, async (t) => {
+    const result = await runInstall(t, published.slice(0, cut));
+    assert.match(result.error, /Parse/, 'A partial script must fail to parse');
+    assert.equal(existsSync(result.destination), false);
+  });
+}
 
 test('the harness deadline stops a stalled PowerShell descendant before fixture cleanup', windowsOnly, async (t) => {
   const root = mkdtempSync(join(tmpdir(), 'orifude stalled install-'));

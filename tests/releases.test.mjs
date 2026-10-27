@@ -33,6 +33,7 @@ const invalidRecords = [
   ['an injected release URL', { url: 'https://example.invalid/download' }],
   ['a missing PowerShell installer checksum', { powershellSha256: undefined }],
   ['command text in an installer checksum', { powershellSha256: "'; Write-Error injected; '" }],
+  ['command text in a POSIX installer checksum', { posixSha256: "'; rm -rf ~; '" }],
 ];
 for (const [name, patch] of invalidRecords) {
   test(`rejects ${name}`, () => {
@@ -84,4 +85,14 @@ test('an unverified package channel cannot acquire installation commands', () =>
   const [release] = loadReleases(input, changelog);
   assert.throws(() => installationInstructions(release, 'homebrew'), /has not been verified/);
   assert.throws(() => installationInstructions(release, 'nix'), /has not been verified/);
+});
+
+test('installer commands use the short site URLs and need a reviewed POSIX hash', () => {
+  const [release] = loadReleases(manifest(), changelog);
+  assert.deepEqual(installationInstructions(release, 'posix'), ['curl -fsS https://orifude.com/install.sh | sh']);
+  assert.deepEqual(installationInstructions(release, 'powershell'), ['irm https://orifude.com/install.ps1 | iex']);
+  const input = manifest();
+  delete input.releases[0].posixSha256;
+  const [unreviewed] = loadReleases(input, changelog);
+  assert.throws(() => installationInstructions(unreviewed, 'posix'), /reviewed installer SHA-256/);
 });

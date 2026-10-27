@@ -29,8 +29,8 @@ const labels: Record<Channel, string> = {
     {release.channels.map((channel) => <section class="install-method" id={channel} aria-labelledby={`${channel}-title`}>
       <h2 id={`${channel}-title`}>{labels[channel]}</h2>
       <div>
-        {channel === 'posix' && <p>Copy this block into your terminal. It downloads the installer and installs Orifude in <code>~/.local/bin</code>.</p>}
-        {channel === 'powershell' && <p>Copy this block into Windows PowerShell and press Enter. It installs Orifude in your user account. No administrator window is needed.</p>}
+        {channel === 'posix' && <p>Paste this into your terminal. It installs Orifude in <code>~/.local/bin</code>.</p>}
+        {channel === 'powershell' && <p>Paste this into Windows PowerShell and press Enter. It installs Orifude in your user account. No administrator window is needed.</p>}
         {channel === 'homebrew' && <p>With Homebrew installed, run:</p>}
         {channel === 'scoop' && <p>With Scoop installed, add our bucket and install Orifude:</p>}
         {channel === 'aur' && <p>With yay installed, run this command. Review the AUR package when prompted.</p>}
@@ -58,8 +58,9 @@ const labels: Record<Channel, string> = {
     <details>
       <summary>Verify your download <span aria-hidden="true">+</span></summary>
       <div class="install-body">
-        <p>The commands trust the installer from the exact GitHub release over HTTPS. Each installer checks the downloaded archive against its embedded SHA-256 before replacing Orifude.</p>
+        <p>orifude.com serves exact copies of the installers from the {release.version} GitHub release, and the site is not published unless each copy matches its reviewed SHA-256. Each installer checks the downloaded archive against its embedded SHA-256 before replacing Orifude. If the download stops partway, nothing runs.</p>
         <p>To inspect the script first or choose a custom directory, follow the <a href={`${repository}/blob/shrek/docs/distribution.md#installing-an-exact-published-version`}>installation guide</a>. Download the <a href={`${repository}/releases/download/v${release.version}/install.sh`}>POSIX script</a> or <a href={`${repository}/releases/download/v${release.version}/install.ps1`}>PowerShell script</a> for inspection.</p>
+        {release.posixSha256 && <p>The reviewed POSIX script SHA-256 is <code>{release.posixSha256}</code>.</p>}
         {release.powershellSha256 && <p>The reviewed PowerShell script SHA-256 is <code>{release.powershellSha256}</code>.</p>}
         <p>GitHub CLI can verify the immutable release and an asset you downloaded. Replace the final filename with your local release asset.</p>
         <Command command={`gh release verify v${release.version} --repo nuggocto/orifude\ngh release verify-asset v${release.version} ./DOWNLOADED_ASSET --repo nuggocto/orifude`} label="download verification commands" />
